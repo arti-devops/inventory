@@ -4,9 +4,7 @@ import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.Scroller;
-import com.vaadin.flow.router.Route;
 
-@Route("")
 public class MainAppLayout extends AppLayout {
 
     H1 title;
