@@ -16,7 +16,7 @@ public class PhoneView extends VerticalLayout {
     H2 title;
 
     public PhoneView(PhoneService phoneService){
-        title = new H2("Téléphone");
+        title = new H2("Téléphones");
         add(title);
         add(new Paragraph("Inventaire des téléphone IP de l'ARTI"));
 
