@@ -5,6 +5,7 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 import com.arti.inventory.backend.model.Computer;
 import com.arti.inventory.backend.service.ComputerService;
 import com.arti.inventory.ui.MainAppLayout;
+import com.arti.inventory.ui.DeviceStatusRenderer;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,7 +16,8 @@ public class ComputerView extends VerticalLayout{
 
     H2 title;
 
-    public ComputerView(ComputerService computerService){
+    public ComputerView(ComputerService computerService, 
+                        DeviceStatusRenderer<Computer> deviceStatusRenderer){
         
         title = new H2("Liste des ordinateurs");
         add(title);
@@ -25,6 +27,8 @@ public class ComputerView extends VerticalLayout{
         GridCrud<Computer> crud = new GridCrud<>(Computer.class);
         crud.getGrid().setColumns("name","ip","brand","connexionMode","serie",
                                 "direction","assignedTo","purchaseDate","online");
+
+        crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
         crud.setCrudListener(computerService);
 
         setSizeFull();
