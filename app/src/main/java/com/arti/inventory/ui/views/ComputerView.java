@@ -26,6 +26,8 @@ public class ComputerView extends VerticalLayout{
         crud.getGrid().setColumns("name","ip","brand","connexionMode","serie",
                                 "direction","assignedTo","purchaseDate","online");
         crud.setCrudListener(computerService);
+
+        setSizeFull();
         add(crud);
     }
 }
