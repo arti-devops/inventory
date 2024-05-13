@@ -14,21 +14,20 @@ import com.vaadin.flow.router.Route;
 @Route(value = "computers", layout = MainAppLayout.class)
 public class ComputerView extends VerticalLayout{
 
-    H2 title;
+    H2 title = new H2("Ordinateurs");
+    Paragraph paragraph = new Paragraph("Inventaire des ordinateurs de l'ARTI");
 
     public ComputerView(ComputerService computerService, 
                         DeviceStatusRenderer<Computer> deviceStatusRenderer){
         
-        title = new H2("Liste des ordinateurs");
-        add(title);
-        add(new Paragraph("Inventaire des ordinateurs de l'ARTI"));
+        add(title, paragraph);
 
         // Crud
         GridCrud<Computer> crud = new GridCrud<>(Computer.class);
         crud.getGrid().setColumns("name","ip","brand","connexionMode","serie",
-                                "direction","assignedTo","purchaseDate","online");
-
+                                "direction","assignedTo","purchaseDate");
         crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
+        
         crud.setCrudListener(computerService);
 
         setSizeFull();
