@@ -11,7 +11,6 @@ public class AppNavigation extends SideNav{
                 new SideNavItem("Ordinateurs", "/computers", VaadinIcon.RECORDS.create()),
                 new SideNavItem("Imprimantes", "/printers", VaadinIcon.RECORDS.create()),
                 new SideNavItem("Téléphones IP", "/phones", VaadinIcon.RECORDS.create()),
-                new SideNavItem("Serveurs", "/servers", VaadinIcon.RECORDS.create()),
                 new SideNavItem("Adresses IP", "/ip", VaadinIcon.RECORDS.create()));
     }
 }
