@@ -10,9 +10,11 @@ import com.arti.inventory.ui.render.SqlDateTimeRenderer;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "phones", layout = MainAppLayout.class)
+@PageTitle("INV-ARTI | Téléphones")
 public class PhoneView extends VerticalLayout {
 
     H2 title = new H2("Téléphones");
