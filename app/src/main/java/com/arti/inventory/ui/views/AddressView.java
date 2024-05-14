@@ -3,6 +3,7 @@ package com.arti.inventory.ui.views;
 import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.arti.inventory.backend.model.Address;
+import com.arti.inventory.backend.model.Phone;
 import com.arti.inventory.backend.service.AddressService;
 import com.arti.inventory.ui.MainAppLayout;
 import com.vaadin.flow.component.html.H2;
@@ -24,8 +25,17 @@ public class AddressView extends VerticalLayout {
 
         GridCrud<Address> crud = new GridCrud<>(Address.class);
         crud.getGrid().setColumns("ipv4", "hostname", "deviceType", "connexionMode", "assignedTo", "direction");
+        renameComputerDeviceTableHeader(crud);
+
+        // Additional columns
         crud.getGrid().addColumn(createDeviceStatusComponentRenderer()).setHeader("Statut");
+        
+        crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(addressService);
+
+        // Crud form
+        crud.getCrudFormFactory().setVisibleProperties("ipv4", "hostname", "deviceType", "connexionMode", "assignedTo", "direction");
+        crud.getCrudFormFactory().setFieldCaptions("Adresse IP", "Nom/Hostname", "Type de périphérique", "Connexion", "Bénéficiaire", "Direction");
 
         setSizeFull();
         add(crud);
@@ -35,13 +45,19 @@ public class AddressView extends VerticalLayout {
         Boolean isOnline = device.getOnline();
         String theme = String.format("badge %s", isOnline ? "success" : "error");
         span.getElement().setAttribute("theme", theme);
-        span.setText(isOnline ? "En ligne" : "Hors ligne");
+        span.setText(isOnline ? "En service" : "Désalloué");
     };
 
     private static ComponentRenderer<Span, Address> createDeviceStatusComponentRenderer() {
         return new ComponentRenderer<>(Span::new, deviceStatusComponentUpdater);
     }
 
-
+    private void renameComputerDeviceTableHeader(GridCrud<Address> crud){
+        crud.getGrid().getColumnByKey("ipv4").setHeader("Adresse IP");
+        crud.getGrid().getColumnByKey("deviceType").setHeader("Type de périphérique");
+        crud.getGrid().getColumnByKey("connexionMode").setHeader("Connexion");
+        crud.getGrid().getColumnByKey("assignedTo").setHeader("Bénéficiaire");
+        crud.getGrid().getColumnByKey("direction").setHeader("Direction");
+    }
 
 }

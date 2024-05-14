@@ -3,6 +3,8 @@ package com.arti.inventory.backend.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +30,8 @@ public class Address {
     private String deviceType;
 
     @Column(name = "connexion_mode")
-    private String connexionMode;
+    @Enumerated(EnumType.STRING)
+    private ConnexionMode connexionMode;
 
     @Column(name = "assigned_to")
     private String assignedTo;
