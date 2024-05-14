@@ -29,24 +29,29 @@ public class PhoneView extends VerticalLayout {
         crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo");
         renameComputerDeviceTableHeader(crud);
 
+        // Addition columns
         crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");
         crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
         
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(phoneService);
+
+        // Crud form
+        crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","ip","connexionMode","direction","assignedTo");
+        crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Addresse IP","Mode de connexion","Direction","Bénéficiaire");
         
         setSizeFull();
         add(crud);
     }
 
     private void renameComputerDeviceTableHeader(GridCrud<Phone> crud){
-        crud.getGrid().getColumnByKey("name").setHeader("Nom de l'ordinateur");
+        crud.getGrid().getColumnByKey("name").setHeader("Nom du téléphone");
         crud.getGrid().getColumnByKey("ip").setHeader("Adresse IP");
         crud.getGrid().getColumnByKey("brand").setHeader("Marque");
         crud.getGrid().getColumnByKey("connexionMode").setHeader("Connexion");
-        crud.getGrid().getColumnByKey("serie").setHeader("Numero de serie");
+        crud.getGrid().getColumnByKey("serie").setHeader("Numéro de série");
         crud.getGrid().getColumnByKey("direction").setHeader("Direction");
-        crud.getGrid().getColumnByKey("assignedTo").setHeader("Utilisateur");
+        crud.getGrid().getColumnByKey("assignedTo").setHeader("Bénéficiaire");
     }  
 
 }
