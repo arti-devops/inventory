@@ -34,17 +34,21 @@ public class PrinterView extends VerticalLayout {
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(printerService);
 
+        // Crud form
+        crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","ip","connexionMode","direction","assignedTo","ink1","ink2","ink3","ink4","detailsPage");
+        crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Addresse IP","Mode de connexion","Direction","Bénéficiaire","Cartouche 1","Cartouche 2","Cartouche 3","Cartouche 4","Page de détails");
+
         setSizeFull();
         add(crud);
     }
 
     private void renameComputerDeviceTableHeader(GridCrud<Printer> crud){
-        crud.getGrid().getColumnByKey("name").setHeader("Nom de l'ordinateur");
+        crud.getGrid().getColumnByKey("name").setHeader("Nom de l'imprimante");
         crud.getGrid().getColumnByKey("ip").setHeader("Adresse IP");
         crud.getGrid().getColumnByKey("brand").setHeader("Marque");
         crud.getGrid().getColumnByKey("connexionMode").setHeader("Connexion");
-        crud.getGrid().getColumnByKey("serie").setHeader("Numero de serie");
+        crud.getGrid().getColumnByKey("serie").setHeader("Numéro de série");
         crud.getGrid().getColumnByKey("direction").setHeader("Direction");
-        crud.getGrid().getColumnByKey("assignedTo").setHeader("Utilisateur");
+        crud.getGrid().getColumnByKey("assignedTo").setHeader("Bénéficiaire");
     }  
 }
