@@ -28,12 +28,15 @@ public class ComputerView extends VerticalLayout{
         GridCrud<Computer> crud = new GridCrud<>(Computer.class);
         crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo");
         renameComputerDeviceTableHeader(crud);
-        
+
         crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Achat");
         crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
         
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(computerService);
+        
+        // Crud form
+        crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","ip","connexionMode","direction","assignedTo");
 
         setSizeFull();
         add(crud);
