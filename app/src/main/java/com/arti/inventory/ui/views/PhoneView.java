@@ -6,6 +6,7 @@ import com.arti.inventory.backend.model.Phone;
 import com.arti.inventory.backend.service.PhoneService;
 import com.arti.inventory.ui.DeviceStatusRenderer;
 import com.arti.inventory.ui.MainAppLayout;
+import com.arti.inventory.ui.render.SqlDateTimeRenderer;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -18,20 +19,34 @@ public class PhoneView extends VerticalLayout {
     Paragraph paragraph = new Paragraph("Inventaire des téléphones de l'ARTI");
 
     public PhoneView(PhoneService phoneService,
-                     DeviceStatusRenderer<Phone> deviceStatusRenderer){  
+                     DeviceStatusRenderer<Phone> deviceStatusRenderer,
+                     SqlDateTimeRenderer<Phone> sqlDateTimeRenderer){  
         
         add(title, paragraph);
 
         // CRUD
         GridCrud<Phone> crud = new GridCrud<>(Phone.class);
-        crud.getGrid().setColumns("name","ip","brand","connexionMode","serie",
-                                "direction","assignedTo","purchaseDate");
+        crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo");
+        renameComputerDeviceTableHeader(crud);
+
+        crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");
         crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
         
+        crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(phoneService);
         
         setSizeFull();
         add(crud);
     }
+
+    private void renameComputerDeviceTableHeader(GridCrud<Phone> crud){
+        crud.getGrid().getColumnByKey("name").setHeader("Nom de l'ordinateur");
+        crud.getGrid().getColumnByKey("ip").setHeader("Adresse IP");
+        crud.getGrid().getColumnByKey("brand").setHeader("Marque");
+        crud.getGrid().getColumnByKey("connexionMode").setHeader("Connexion");
+        crud.getGrid().getColumnByKey("serie").setHeader("Numero de serie");
+        crud.getGrid().getColumnByKey("direction").setHeader("Direction");
+        crud.getGrid().getColumnByKey("assignedTo").setHeader("Utilisateur");
+    }  
 
 }
