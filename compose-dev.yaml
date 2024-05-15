@@ -10,3 +10,13 @@ services:
       source: /var/run/docker.sock
       target: /var/run/docker.sock
 
+  api:
+    image: vimagick/json-server
+    command: -h 0.0.0.0 -p 3000 -w db.json
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    volumes:
+      - ./data:/data
+    restart: always

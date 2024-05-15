@@ -3,7 +3,8 @@
     "vscjava.vscode-java-pack",
     "vscjava.vscode-maven",
     "vmware.vscode-boot-dev-pack",
-    "vaadin.vaadin-vscode"
+    "vaadin.vaadin-vscode",
+    "gruntfuggly.todo-tree"
     ]
   }
   
