@@ -7,6 +7,7 @@ import com.arti.inventory.backend.service.PrinterService;
 import com.arti.inventory.ui.DeviceStatusRenderer;
 import com.arti.inventory.ui.MainAppLayout;
 import com.arti.inventory.ui.render.SqlDateTimeRenderer;
+import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -39,6 +40,12 @@ public class PrinterView extends VerticalLayout {
         // Crud form
         crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","ip","connexionMode","direction","assignedTo","ink1","ink2","ink3","ink4","detailsPage");
         crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Addresse IP","Mode de connexion","Direction","Bénéficiaire","Cartouche 1","Cartouche 2","Cartouche 3","Cartouche 4","Page de détails");
+
+        // Add Context Menu
+        GridContextMenu<Printer> contextMenu = new GridContextMenu<>(crud.getGrid());
+        contextMenu.addItem("Voir les détails", event -> crud.getGrid().getSelectionModel().getFirstSelectedItem().ifPresent(printer -> {
+            getUI().ifPresent(ui -> ui.navigate("printers/" + printer.getId()));
+        }));
 
         setSizeFull();
         add(crud);
