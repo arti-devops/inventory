@@ -22,4 +22,6 @@ public class Printer extends Device {
     @Column(name = "details_page")
     private String detailsPage;
 
+    private transient PrinterDetail details;
+
 }
