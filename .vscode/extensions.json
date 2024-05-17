@@ -4,7 +4,8 @@
     "vscjava.vscode-maven",
     "vmware.vscode-boot-dev-pack",
     "vaadin.vaadin-vscode",
-    "gruntfuggly.todo-tree"
+    "gruntfuggly.todo-tree",
+    "ms-azuretools.vscode-docker"
     ]
   }
   
