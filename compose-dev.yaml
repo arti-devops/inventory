@@ -9,14 +9,26 @@ services:
     - type: bind
       source: /var/run/docker.sock
       target: /var/run/docker.sock
+    expose:
+    - "8080"
+    ports:
+    - "8080:8080"
+    networks:
+    - dev-network
 
   api:
     image: vimagick/json-server
     command: -h 0.0.0.0 -p 3000 -w db.json
     ports:
-      - "3000:3000"
+    - "3000:3000"
     expose:
-      - "3000"
+    - "3000"
     volumes:
-      - ./data:/data
+    - ./data:/data
     restart: always
+    networks:
+    - dev-network
+
+networks:
+  dev-network:
+    driver: bridge
