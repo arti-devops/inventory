@@ -31,8 +31,9 @@ public class PrinterView extends VerticalLayout {
         crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo");
         renameComputerDeviceTableHeader(crud);
 
-        crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");
-        crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
+        // Additional columns
+        //crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");
+        //crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
 
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(printerService);
