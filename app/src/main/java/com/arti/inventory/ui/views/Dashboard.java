@@ -26,11 +26,16 @@ public class Dashboard extends VerticalLayout{
         add(new Paragraph("Le tableau de board n'est pas encore implementé."));
 
         HorizontalLayout cardContainer = new HorizontalLayout();
-        for(int i = 0; i < 15; i++){
-            Card card = new Card();
-            cardContainer.add(card);
-            cardContainer.setFlexGrow(1, card);
-        }
+        Card card = new Card("Ordinateurs", "10");
+        Card card2 = new Card("Imprimantes", "5");
+        Card card3 = new Card("Téléphones IP", "32");
+        
+        cardContainer.add(card, card2, card3);
+        //cardContainer.add(card2);
+        //cardContainer.add(card3);
+        cardContainer.setFlexGrow(1, card, card2, card3);
+        //cardContainer.setFlexGrow(1, card2);
+        //cardContainer.setFlexGrow(1, card3);
         //add(card);
         cardContainer.addClassName(LumoUtility.FlexWrap.WRAP);
         add(cardContainer);
@@ -38,12 +43,12 @@ public class Dashboard extends VerticalLayout{
 
     public class Card extends VerticalLayout {
     
-        public Card(){
+        public Card(String label, String stat){
             // CARD
             Div cardContent = new Div();
-            cardContent.add(new Paragraph("Ordinateurs"));
+            cardContent.add(new Paragraph(label));
             cardContent.add(new Hr());
-            H1 statNumber = new H1("49");
+            H1 statNumber = new H1(stat);
             Anchor tableLink = new Anchor("localhost:8080", "Voir le tableau");
             statNumber.getStyle().set("font-size", "80px");
             statNumber.getStyle().set("text-align", "center");
