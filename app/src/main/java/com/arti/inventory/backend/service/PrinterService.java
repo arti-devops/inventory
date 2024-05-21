@@ -29,12 +29,6 @@ public class PrinterService implements CrudListener<Printer> {
     @Override
     public Collection<Printer> findAll() {
         List<Printer> printers = repository.findAll().subList(1, 12);
-        RestTemplate restTemplate = new RestTemplateBuilder().build();
-        printers.forEach(printer -> {
-            PrinterDetail details = restTemplate.getForObject("http://api:3000/printers/"+printer.getId(), PrinterDetail.class);
-            printer.setOnline(details.status());
-            printer.setDetails(details);
-        });
         return printers;
     }
 
@@ -55,8 +49,17 @@ public class PrinterService implements CrudListener<Printer> {
 
     public Printer findOne(Long id) {
         Printer printer = repository.findById(id).orElse(null);
+        return getDetails(printer);
+    }
+
+    private Printer getDetails(Printer printer) {
+        if (printer == null) {
+            System.err.println("Printer is null");
+            return null;
+        }
         RestTemplate restTemplate = new RestTemplateBuilder().build();
         PrinterDetail details = restTemplate.getForObject("http://api:3000/printers/"+printer.getId(), PrinterDetail.class);
+        printer.setOnline(details.status());
         printer.setDetails(details);
         return printer;
     }
