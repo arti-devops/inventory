@@ -1,5 +1,7 @@
 services:
   web:
-    build: ./app/Dockerfile-prod
+    build:
+      context: ./app
+      dockerfile: Dockerfile-prod
     ports:
-    - "8080:8080"
+    - "80:80"
