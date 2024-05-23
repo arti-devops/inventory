@@ -1,4 +1,4 @@
-package com.arti.inventory.ui;
+package com.arti.inventory.ui.component;
 
 import org.springframework.stereotype.Component;
 

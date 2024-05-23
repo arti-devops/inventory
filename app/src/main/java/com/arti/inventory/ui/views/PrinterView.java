@@ -4,8 +4,8 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.arti.inventory.backend.model.Printer;
 import com.arti.inventory.backend.service.PrinterService;
-import com.arti.inventory.ui.DeviceStatusRenderer;
 import com.arti.inventory.ui.MainAppLayout;
+import com.arti.inventory.ui.component.DeviceStatusRenderer;
 import com.arti.inventory.ui.render.SqlDateTimeRenderer;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.H2;
@@ -33,7 +33,7 @@ public class PrinterView extends VerticalLayout {
 
         // Additional columns
         //crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");
-        //crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
+        crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
 
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(printerService);

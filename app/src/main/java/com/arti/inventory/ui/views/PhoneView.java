@@ -4,8 +4,8 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.arti.inventory.backend.model.Phone;
 import com.arti.inventory.backend.service.PhoneService;
-import com.arti.inventory.ui.DeviceStatusRenderer;
 import com.arti.inventory.ui.MainAppLayout;
+import com.arti.inventory.ui.component.DeviceStatusRenderer;
 import com.arti.inventory.ui.render.SqlDateTimeRenderer;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
