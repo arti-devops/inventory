@@ -1,0 +1,26 @@
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: prod.Dockerfile
+    ports:
+    - "80:80"
+    restart: always
+    environment:
+      - SPRING_ACTIVE_PROFILE=prod
+    networks:
+      - prod-network
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+    - "3000:3000"
+    restart: always
+    networks:
+      - prod-network
+
+networks:
+  prod-network:
+    driver: bridge

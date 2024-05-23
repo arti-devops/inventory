@@ -11,22 +11,33 @@ services:
     - type: bind
       source: /var/run/docker.sock
       target: /var/run/docker.sock
-    expose:
-    - "8080"
+    networks:
+    - dev-network
+    restart: always
+    depends_on:
+    - api
+
+  aapi:
+    image: vimagick/json-server
+    command: -h 0.0.0.0 -p 3005 -w db.json
     ports:
-    - "8080:8080"
+    - "3005:3005"
+    expose:
+    - "3005"
+    volumes:
+    - ./data:/data
+    restart: always
     networks:
     - dev-network
 
   api:
-    image: vimagick/json-server
-    command: -h 0.0.0.0 -p 3000 -w db.json
+    build:
+      context: ./api
+      dockerfile: Dockerfile
     ports:
     - "3000:3000"
-    expose:
-    - "3000"
     volumes:
-    - ./data:/data
+    - ./api:/app
     restart: always
     networks:
     - dev-network

@@ -48,7 +48,8 @@ public class AppCmdRunner implements CommandLineRunner{
         // Call the API here
         List<Printer> printers = printerRepository.findAll().subList(10, 11);
         RestTemplate restTemplate = new RestTemplateBuilder().build();
-        String url = "http://api:3000/printers/";
+        //TODO fix the url
+        String url = "http://aapi:3005/printers/";
 
         printers.forEach(printer -> {
             PrinterDetail detail = restTemplate.getForObject(url+printer.getId(), PrinterDetail.class);
