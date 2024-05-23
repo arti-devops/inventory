@@ -59,7 +59,7 @@ public class PrinterService implements CrudListener<Printer>, DeviceService {
         }
         RestTemplate restTemplate = new RestTemplateBuilder().build();
         //TODO Fix the URL
-        PrinterDetail details = restTemplate.getForObject("http://aapi:3005/printers/"+printer.getId(), PrinterDetail.class);
+        PrinterDetail details = restTemplate.getForObject("http://api:3000/printers?cat="+printer.getCategory().getValue()+"&url="+printer.getDetailsPage(), PrinterDetail.class);
         printer.setOnline(details.status());
         printer.setDetails(details);
         return printer;
