@@ -4,7 +4,7 @@ from pythonping import ping
 # get status
 def ipStatus(ip):
     try:
-        response = ping(ip, count=1)
+        response = ping(ip, count=1, timeout=0.1)
         if response.success():
             r = 1
             print(r)
