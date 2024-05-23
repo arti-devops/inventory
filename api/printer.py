@@ -10,7 +10,7 @@ from canon import getInkLevels3
 # get printer status
 def getStatus(url):
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=0.1)
         if response.status_code == 200:
             return 1
         else:
@@ -30,7 +30,7 @@ def clean_text(text):
 # la fonction pour avoir le niveau des encres niveau 1
 def getInkLevels1(url):
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=0.1)
         response.raise_for_status()
 
         soup = BeautifulSoup(response.text, 'html.parser')
