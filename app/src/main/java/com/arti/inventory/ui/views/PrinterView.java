@@ -40,7 +40,7 @@ public class PrinterView extends VerticalLayout {
 
         // Crud form
         crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","label","ip","connexionMode","direction","assignedTo","ink1","ink2","ink3","ink4","detailsPage","category");
-        crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Nom commercial","Addresse IP","Mode de connexion","Direction","Bénéficiaire","Cartouche 1","Cartouche 2","Cartouche 3","Cartouche 4","Page de détails","Catégorie");
+        crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Nom commercial","Addresse IP","Mode de connexion","Direction","Bénéficiaire","Cartouche Noire","Cartouche Cyan","Cartouche Magenta","Cartouche Jaune","Page de détails","Catégorie");
 
         // Add Context Menu
         GridContextMenu<Printer> contextMenu = new GridContextMenu<>(crud.getGrid());
