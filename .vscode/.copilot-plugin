@@ -1,6 +1,6 @@
 # Vaadin Copilot Integration Runtime Properties
-# Tue, 21 May 2024 15:11:55 GMT
+# Thu, 23 May 2024 09:38:51 GMT
 ide = vscode
-port = 43273
+port = 40229
 version = 1.0.1
 supportedActions = write,showInIde,refresh

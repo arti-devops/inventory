@@ -14,6 +14,8 @@ import lombok.Setter;
 @Setter
 public class Printer extends Device {
 
+    private String label;
+    
     private String ink1;
     private String ink2;
     private String ink3;

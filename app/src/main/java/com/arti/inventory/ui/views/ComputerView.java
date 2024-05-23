@@ -39,8 +39,8 @@ public class ComputerView extends VerticalLayout{
         crud.setCrudListener(computerService);
         
         // Crud form
-        crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","ip","connexionMode","direction","assignedTo");
-        crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Addresse IP","Mode de connexion","Direction","Bénéficiaire");
+        crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","label","ip","connexionMode","direction","assignedTo");
+        crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Nom commercial","Addresse IP","Mode de connexion","Direction","Bénéficiaire");
         
         setSizeFull();
         add(crud);

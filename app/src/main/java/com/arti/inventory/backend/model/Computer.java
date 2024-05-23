@@ -13,6 +13,8 @@ import lombok.Setter;
 @Setter
 public class Computer extends Device {
 
+    private String label;
+    
     private String category;
 
 }
