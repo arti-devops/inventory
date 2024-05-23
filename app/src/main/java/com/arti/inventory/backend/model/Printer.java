@@ -21,6 +21,8 @@ public class Printer extends Device {
     private String ink3;
     private String ink4;
 
+    private PrinterCategory category;
+
     @Column(name = "details_page")
     private String detailsPage;
 
