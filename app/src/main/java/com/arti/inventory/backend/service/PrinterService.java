@@ -28,7 +28,7 @@ public class PrinterService implements CrudListener<Printer> {
 
     @Override
     public Collection<Printer> findAll() {
-        List<Printer> printers = repository.findAll().subList(1, 12);
+        List<Printer> printers = repository.findAll();
         return printers;
     }
 
