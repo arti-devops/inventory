@@ -60,10 +60,10 @@ public class PrinterDetailPage extends VerticalLayout implements HasUrlParameter
         leftGrid.add(new DetailPane("Bénéficiaire", printer.getAssignedTo()));
         leftGrid.add(new DetailPane("Direction", printer.getDirection()));
 
-        rightGrid.add(new DetailPane("Cartouche 1", printer.getInk1()));
-        rightGrid.add(new DetailPane("Cartouche 2", printer.getInk2()));
-        rightGrid.add(new DetailPane("Cartouche 3", printer.getInk3()));
-        rightGrid.add(new DetailPane("Cartouche 4", printer.getInk4()));
+        rightGrid.add(new DetailPane("Cartouche Noire", printer.getInk1()));
+        rightGrid.add(new DetailPane("Cartouche Cyan", printer.getInk2()));
+        rightGrid.add(new DetailPane("Cartouche Magenta", printer.getInk3()));
+        rightGrid.add(new DetailPane("Cartouche Jaune", printer.getInk4()));
         rightGrid.add(new DetailPane("Plus d'info", printer.getDetailsPage()));
 
         detailsGrid.add(new DetailPane("En ligne", printer.getDetails().status().toString()));

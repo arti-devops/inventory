@@ -54,6 +54,7 @@ public class PhoneService implements CrudListener<Phone>, DeviceService {
             return null;
         }
         RestTemplate restTemplate = new RestTemplateBuilder().build();
+        //TODO Fix the url
         DeviceOnlineStatus status = restTemplate.getForObject("http://api:3000/devices/status?ip=" + phone.getIp(), DeviceOnlineStatus.class);
         phone.setOnline(status.status());
         return phone;
