@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PhoneService implements CrudListener<Phone> {
+public class PhoneService implements CrudListener<Phone>, DeviceService {
 
     @Autowired
     private PhoneRepository repository;
@@ -36,6 +36,11 @@ public class PhoneService implements CrudListener<Phone> {
     @Override
     public void delete(Phone phone) {
         repository.delete(phone);
+    }
+
+    @Override
+    public Integer getDeviceCount() {
+        return repository.findAll().size();
     }
 
 }

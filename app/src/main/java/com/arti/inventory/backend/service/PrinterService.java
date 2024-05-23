@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class PrinterService implements CrudListener<Printer> {
+public class PrinterService implements CrudListener<Printer>, DeviceService {
 
     @Autowired
     private PrinterRepository repository;
@@ -62,5 +62,10 @@ public class PrinterService implements CrudListener<Printer> {
         printer.setOnline(details.status());
         printer.setDetails(details);
         return printer;
+    }
+
+    @Override
+    public Integer getDeviceCount() {
+        return repository.findAll().size();
     }
 }

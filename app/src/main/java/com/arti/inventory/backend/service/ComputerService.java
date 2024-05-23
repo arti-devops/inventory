@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ComputerService implements CrudListener<Computer>{
+public class ComputerService implements CrudListener<Computer>, DeviceService {
 
     @Autowired
     private ComputerRepository repository;
@@ -36,5 +36,10 @@ public class ComputerService implements CrudListener<Computer>{
     @Override
     public Computer update(Computer computer) {
         return repository.save(computer);
+    }
+
+    @Override
+    public Integer getDeviceCount() {
+        return repository.findAll().size();
     }
 }

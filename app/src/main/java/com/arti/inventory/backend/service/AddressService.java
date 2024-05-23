@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AddressService implements CrudListener<Address> {
+public class AddressService implements CrudListener<Address>, DeviceService {
 
     @Autowired
     private AddressRepository addressRepository;
@@ -36,6 +36,11 @@ public class AddressService implements CrudListener<Address> {
     @Override
     public void delete(Address domainObjectToDelete) {
         addressRepository.delete(domainObjectToDelete);
+    }
+
+    @Override
+    public Integer getDeviceCount() {
+        return addressRepository.findAll().size();
     }
 
 }
