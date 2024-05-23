@@ -33,7 +33,7 @@ public class PhoneView extends VerticalLayout {
 
         // Additional columns
         //crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");
-        crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
+        crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut").setSortable(true);
         
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(phoneService);
