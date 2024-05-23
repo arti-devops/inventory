@@ -34,14 +34,18 @@ public class Dashboard extends VerticalLayout{
         Card card = new Card("Ordinateurs", computerService.getDeviceCount().toString(), "computers");
         Card card2 = new Card("Imprimantes", printerService.getDeviceCount().toString(), "printers");
         Card card3 = new Card("Téléphones IP", phoneService.getDeviceCount().toString(), "phones");
+
+        String totalDevices = String.valueOf(computerService.getDeviceCount() + printerService.getDeviceCount() + phoneService.getDeviceCount());
+        Card card4 = new Card("Adresses IP", totalDevices, "ip");
         
-        cardContainer.add(card, card2, card3);
+        cardContainer.add(card, card2, card3, card4);
         //cardContainer.add(card2);
         //cardContainer.add(card3);
-        cardContainer.setFlexGrow(1, card, card2, card3);
+        cardContainer.setFlexGrow(1, card, card2, card3, card4);
         //cardContainer.setFlexGrow(1, card2);
         //cardContainer.setFlexGrow(1, card3);
         //add(card);
+        cardContainer.getStyle().set("width", "100%");
         cardContainer.addClassName(LumoUtility.FlexWrap.WRAP);
         add(cardContainer);
     }
@@ -69,8 +73,8 @@ public class Dashboard extends VerticalLayout{
             
             getStyle().set("box-shadow", "0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19)");
             getStyle().set("border-radius", "2px");
-            getStyle().set("width", "25%");
             getStyle().set("min-width", "300px");
+            getStyle().set("width", "25%");
             
             add(cardContent);
         }
