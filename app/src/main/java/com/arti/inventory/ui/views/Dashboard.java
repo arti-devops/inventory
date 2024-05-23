@@ -1,6 +1,7 @@
 package com.arti.inventory.ui.views;
 
 import com.arti.inventory.backend.service.ComputerService;
+import com.arti.inventory.backend.service.PhoneService;
 import com.arti.inventory.backend.service.PrinterService;
 import com.arti.inventory.ui.MainAppLayout;
 import com.vaadin.flow.component.html.Anchor;
@@ -23,7 +24,7 @@ public class Dashboard extends VerticalLayout{
 
     public Dashboard(ComputerService computerService, 
                         PrinterService printerService, 
-                        PrinterService phoneService){
+                        PhoneService phoneService){
 
         title = new H2("Dashboard");
         add(title);
