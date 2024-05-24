@@ -59,37 +59,58 @@ public class PrinterDetailPage extends VerticalLayout implements HasUrlParameter
         leftGrid.add(new DetailPane("Numéro de série", printer.getSerie()));
         leftGrid.add(new DetailPane("Bénéficiaire", printer.getAssignedTo()));
         leftGrid.add(new DetailPane("Direction", printer.getDirection()));
+        leftGrid.add(new DetailPane("Date d'achat", printer.getPurchaseDate().toString()));
 
         rightGrid.add(new DetailPane("Cartouche Noire", printer.getInk1()));
         rightGrid.add(new DetailPane("Cartouche Cyan", printer.getInk2()));
         rightGrid.add(new DetailPane("Cartouche Magenta", printer.getInk3()));
         rightGrid.add(new DetailPane("Cartouche Jaune", printer.getInk4()));
         rightGrid.add(new DetailPane("Plus d'info", printer.getDetailsPage()));
+        rightGrid.add(new DetailPane("Catégorie", printer.getCategory().toString()));
 
-        detailsGrid.add(new DetailPane("En ligne", printer.getDetails().status().toString()));
-        detailsGrid.add(new DetailPane("Ancre Noire", printer.getDetails().color().black().toString()));
-        detailsGrid.add(new DetailPane("Ancre Cyan", printer.getDetails().color().cyan().toString()));
-        detailsGrid.add(new DetailPane("Ancre Magenta", printer.getDetails().color().red().toString()));
-        detailsGrid.add(new DetailPane("Ancre Jaune", printer.getDetails().color().yellow().toString()));
+        if (printer.getDetails().status() == false) {
+            detailsGrid.add(new DetailPane("Statut", "Hors ligne", "error"));
+        } else if (printer.getDetails().status() == true) {
+            detailsGrid.add(new DetailPane("Statut", "En ligne", "success"));
+        }
+        detailsGrid.add(new DetailPane("Ancre Noire", printer.getDetails().color().black().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Cyan", printer.getDetails().color().cyan().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Magenta", printer.getDetails().color().red().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Jaune", printer.getDetails().color().yellow().toString()+"%"));
 
         add(grid);
 
     }
 
     private class DetailPane extends VerticalLayout {
+        
         Span labelSpan;
         Paragraph valueParagraph;
+        
         public DetailPane(String label, String value){
-            this.getThemeList().remove("spacing");
             // Setting the values
             labelSpan = new Span(label);
             valueParagraph = new Paragraph(value);
+            setCustomStyle();
+            add(labelSpan, valueParagraph);
+        }
+
+        public DetailPane(String label, String value, String badge){
+            // Setting the values
+            labelSpan = new Span(label);
+            valueParagraph = new Paragraph(value.toString());
+            valueParagraph.getElement().getThemeList().add("badge " + badge);
+            setCustomStyle();
+            add(labelSpan, valueParagraph);
+        }
+
+        private void setCustomStyle(){
             // Setting the styles
+            this.getThemeList().remove("spacing");
             valueParagraph.getStyle().set("margin", "0px");
             labelSpan.getStyle().set("font-weight", "bold");
             labelSpan.getStyle().set("font-size", "12px");
             labelSpan.setClassName(LumoUtility.TextColor.PRIMARY);
-            add(labelSpan, valueParagraph);
         }
         
     }
