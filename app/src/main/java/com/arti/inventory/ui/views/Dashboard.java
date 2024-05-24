@@ -1,5 +1,6 @@
 package com.arti.inventory.ui.views;
 
+import com.arti.inventory.backend.model.DeviceStats;
 import com.arti.inventory.backend.service.ComputerService;
 import com.arti.inventory.backend.service.PhoneService;
 import com.arti.inventory.backend.service.PrinterService;
@@ -31,10 +32,13 @@ public class Dashboard extends VerticalLayout{
         add(new Paragraph("Vue d'ensembe des équipements techniques et réseaux de l'ARTI"));
 
         HorizontalLayout cardContainer = new HorizontalLayout();
+        
+        DeviceStats printerStats = printerService.countOnlinePrinters();
+        DeviceStats phoneStats = phoneService.getStats();
 
         Card card = new Card("Ordinateurs", computerService.getDeviceCount().toString(), "computers");
-        Card card2 = new Card("Imprimantes", printerService.countOnlinePrinters().getTotalDevices().toString(), printerService.countOnlinePrinters().getOnlineCounts().toString(), printerService.countOnlinePrinters().getOfflineCounts().toString(), "printers");
-        Card card3 = new Card("Téléphones IP", phoneService.getDeviceCount().toString(), "phones");
+        Card card2 = new Card("Imprimantes", printerStats.getTotalDevices().toString(), printerStats.getOnlineCounts().toString(), printerStats.getOfflineCounts().toString(), "printers");
+        Card card3 = new Card("Téléphones IP", phoneStats.getTotalDevices().toString(), phoneStats.getOnlineCounts().toString(), phoneStats.getOfflineCounts().toString(), "phones");
 
         String totalDevices = String.valueOf(computerService.getDeviceCount() + printerService.getDeviceCount() + phoneService.getDeviceCount());
         Card card4 = new Card("Adresses IP utilisées", totalDevices, "ip");

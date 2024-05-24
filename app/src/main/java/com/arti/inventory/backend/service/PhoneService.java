@@ -1,6 +1,7 @@
 package com.arti.inventory.backend.service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -9,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.vaadin.crudui.crud.CrudListener;
 
 import com.arti.inventory.backend.model.DeviceOnlineStatus;
+import com.arti.inventory.backend.model.DeviceStats;
 import com.arti.inventory.backend.model.Phone;
 import com.arti.inventory.backend.repository.PhoneRepository;
 
@@ -58,6 +60,15 @@ public class PhoneService implements CrudListener<Phone>, DeviceService {
         DeviceOnlineStatus status = restTemplate.getForObject("http://api:3000/devices/status?ip=" + phone.getIp(), DeviceOnlineStatus.class);
         phone.setOnline(status.status());
         return phone;
+    }
+
+    public DeviceStats getStats() {
+        Collection<Phone> phones = repository.findAll();
+        phones.forEach(phone -> setDetails(phone));
+        Collection<Phone> onlinePhones = phones.stream().map(this::setDetails)
+                                                .filter(phone -> phone.getOnline())
+                                                .collect(Collectors.toList());
+        return new DeviceStats(phones.size(), onlinePhones.size(), phones.size() - onlinePhones.size());
     }
 
 }
