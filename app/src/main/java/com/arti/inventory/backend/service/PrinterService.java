@@ -2,6 +2,7 @@ package com.arti.inventory.backend.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.vaadin.crudui.crud.CrudListener;
 
+import com.arti.inventory.backend.model.DeviceStats;
 import com.arti.inventory.backend.model.Printer;
 import com.arti.inventory.backend.model.PrinterDetail;
 import com.arti.inventory.backend.repository.PrinterRepository;
@@ -70,5 +72,16 @@ public class PrinterService implements CrudListener<Printer>, DeviceService {
     @Override
     public Integer getDeviceCount() {
         return repository.findAll().size();
+    }
+
+    public DeviceStats countOnlinePrinters() {
+        List<Printer> printers = repository.findAll();
+        printers.forEach(this::setDetails);
+        List<Printer> onlinePrinters = printers.stream()
+                        .map(this::setDetails)
+                        .filter(printer -> printer.getDetails().status())
+                        .collect(Collectors.toList());
+        DeviceStats stats = new DeviceStats(printers.size(), onlinePrinters.size(), printers.size() - onlinePrinters.size());
+        return stats;
     }
 }

@@ -31,8 +31,9 @@ public class Dashboard extends VerticalLayout{
         add(new Paragraph("Vue d'ensembe des équipements techniques et réseaux de l'ARTI"));
 
         HorizontalLayout cardContainer = new HorizontalLayout();
+
         Card card = new Card("Ordinateurs", computerService.getDeviceCount().toString(), "computers");
-        Card card2 = new Card("Imprimantes", printerService.getDeviceCount().toString(), "printers");
+        Card card2 = new Card("Imprimantes", printerService.countOnlinePrinters().getTotalDevices().toString(), printerService.countOnlinePrinters().getOnlineCounts().toString(), printerService.countOnlinePrinters().getOfflineCounts().toString(), "printers");
         Card card3 = new Card("Téléphones IP", phoneService.getDeviceCount().toString(), "phones");
 
         String totalDevices = String.valueOf(computerService.getDeviceCount() + printerService.getDeviceCount() + phoneService.getDeviceCount());
@@ -51,19 +52,56 @@ public class Dashboard extends VerticalLayout{
     }
 
     public class Card extends VerticalLayout {
+
+        Div cardContent = new Div();
+        HorizontalLayout statLayout = new HorizontalLayout();
+        H1 statNumber;
+        H1 statNumber2;
+        H1 statNumber3;
+        Anchor tableLink;
+        String label;
     
         public Card(String label, String stat, String link){
-            // CARD
-            Div cardContent = new Div();
-            H1 statNumber = new H1(stat);
-            Anchor tableLink = new Anchor(link, "Voir le tableau");
+            this.label = label;
+            statNumber = new H1(stat);
+            tableLink = new Anchor(link, "Voir le tableau");
             
+            cardStructure();
+            setCustomStyle();
+            add(cardContent);
+        }
+
+        public Card(String label, String stat, String online, String link){
+            this(label, stat, link);
+            statNumber2 = new H1(online);
+            statNumber2.getElement().getThemeList().add("badge success");
+            statNumber2.getStyle().set("font-size", "30px");
+            statLayout.add(statNumber2);
+        }
+
+        public Card(String label, String stat, String online, String offline, String link){
+            this(label, stat, online, link);
+            statNumber3 = new H1(offline);
+            statLayout.add(statNumber3);
+            statNumber3.getElement().getThemeList().add("badge error");
+            statNumber3.getStyle().set("font-size", "30px");
+        }
+
+        private void cardStructure(){
             // Card Strucutre
             cardContent.add(new Paragraph(label));
             cardContent.add(new Hr());
-            cardContent.add(statNumber);
+            cardContent.add(statLayout);
+            statLayout.add(statNumber);
             cardContent.add(new Hr());
             cardContent.add(tableLink);
+        }
+
+        private void setCustomStyle(){
+
+            statLayout.setWidthFull();
+            statLayout.setAlignItems(Alignment.CENTER);
+            statLayout.setJustifyContentMode(JustifyContentMode.CENTER);
             
             // Card Style
             statNumber.getStyle().set("font-size", "80px");
@@ -75,8 +113,6 @@ public class Dashboard extends VerticalLayout{
             getStyle().set("border-radius", "2px");
             getStyle().set("min-width", "300px");
             getStyle().set("width", "25%");
-            
-            add(cardContent);
         }
     
     }
