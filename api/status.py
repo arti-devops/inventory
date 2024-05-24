@@ -1,23 +1,20 @@
-from pythonping import ping
+import requests
 
 
 # get status
 def ipStatus(ip):
+    
     try:
-        response = ping(ip, count=1, timeout=0.1)
-        if response.success():
-            r = 1
-            print(r)
-            return r
+        response = requests.get(f'http://{ip}', timeout= 0.1)
+        
+        if response.status_code == 200:
+            return 1
         else:
-            r = 0
-            print(r)
-            return r
-    except Exception as e:
+            return 0
+    except requests.RequestException as e:
         print('erreur:', e)
-        r = 0
-        print(r)
-        return r
+        
+        return 0
     
 def getStatus(ip):
     status = ipStatus(ip)
