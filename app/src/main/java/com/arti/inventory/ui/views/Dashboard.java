@@ -28,7 +28,7 @@ public class Dashboard extends VerticalLayout{
 
         title = new H2("Dashboard");
         add(title);
-        add(new Paragraph("Le tableau de board n'est pas encore implementé."));
+        add(new Paragraph("Vue d'ensembe des équipements techniques et réseaux de l'ARTI"));
 
         HorizontalLayout cardContainer = new HorizontalLayout();
         Card card = new Card("Ordinateurs", computerService.getDeviceCount().toString(), "computers");
@@ -36,7 +36,7 @@ public class Dashboard extends VerticalLayout{
         Card card3 = new Card("Téléphones IP", phoneService.getDeviceCount().toString(), "phones");
 
         String totalDevices = String.valueOf(computerService.getDeviceCount() + printerService.getDeviceCount() + phoneService.getDeviceCount());
-        Card card4 = new Card("Adresses IP", totalDevices, "ip");
+        Card card4 = new Card("Adresses IP utilisées", totalDevices, "ip");
         
         cardContainer.add(card, card2, card3, card4);
         //cardContainer.add(card2);
