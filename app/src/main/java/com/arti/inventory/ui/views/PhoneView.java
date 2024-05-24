@@ -28,7 +28,7 @@ public class PhoneView extends VerticalLayout {
 
         // CRUD
         GridCrud<Phone> crud = new GridCrud<>(Phone.class);
-        crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo");
+        crud.getGrid().setColumns("assignedTo","name","brand","serie","ip","connexionMode","direction");
         renameComputerDeviceTableHeader(crud);
 
         // Additional columns
@@ -47,7 +47,7 @@ public class PhoneView extends VerticalLayout {
     }
 
     private void renameComputerDeviceTableHeader(GridCrud<Phone> crud){
-        crud.getGrid().getColumnByKey("name").setHeader("Nom du téléphone");
+        crud.getGrid().getColumnByKey("name").setHeader("Numéro");
         crud.getGrid().getColumnByKey("ip").setHeader("Adresse IP");
         crud.getGrid().getColumnByKey("brand").setHeader("Marque");
         crud.getGrid().getColumnByKey("connexionMode").setHeader("Connexion");
