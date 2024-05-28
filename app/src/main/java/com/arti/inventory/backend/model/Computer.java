@@ -17,4 +17,6 @@ public class Computer extends Device {
     
     private String category;
 
+    private transient Integer ipToInteger;
+
 }

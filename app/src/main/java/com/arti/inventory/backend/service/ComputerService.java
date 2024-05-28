@@ -30,7 +30,12 @@ public class ComputerService implements CrudListener<Computer>, DeviceService {
 
     @Override
     public Collection<Computer> findAll() {
-        return repository.findAll();
+        Collection<Computer> computers = repository.findAll();
+        computers.forEach(computer -> {
+            Integer ipToInt = AddressService.IpToInteger(computer.getIp());
+            computer.setIpToInteger(ipToInt);
+        });
+        return computers;
     }
 
     @Override

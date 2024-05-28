@@ -43,4 +43,10 @@ public class AddressService implements CrudListener<Address>, DeviceService {
         return addressRepository.findAll().size();
     }
 
+    public static Integer IpToInteger(String ip) {
+        String[] ipArray = ip.split("\\.");
+        return Integer.parseInt(ipArray[0]) * 256 * 256 * 256 + Integer.parseInt(ipArray[1]) * 256 * 256
+                + Integer.parseInt(ipArray[2]) * 256 + Integer.parseInt(ipArray[3]);
+    }
+
 }

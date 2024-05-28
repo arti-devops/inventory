@@ -34,6 +34,7 @@ public class ComputerView extends VerticalLayout{
         // Additional columns
         //crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Achat");
         //crud.getGrid().addColumn(deviceStatusRenderer.createDeviceStatusComponentRenderer()).setHeader("Statut");
+        crud.getGrid().getColumnByKey("ip").setComparator(Computer::getIpToInteger);
         
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(computerService);
