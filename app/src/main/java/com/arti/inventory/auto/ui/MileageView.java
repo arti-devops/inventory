@@ -24,6 +24,7 @@ public class MileageView extends VerticalLayout {
 
         GridCrud<MileageHistory> crud = new GridCrud<>(MileageHistory.class);
         crud.getGrid().setColumns("mileage", "statementDate", "vehicule");
+        crud.getGrid().addColumn(mileage -> mileage.getVehicule().getDriverName()).setHeader("Véhicule de");
         crud.getGrid().getColumnByKey("mileage").setRenderer(new ComponentRenderer<>(mileage -> {
             return new Paragraph(mileage.getMileage() + " km");
         })).setHeader("Kilométrage");
@@ -35,7 +36,7 @@ public class MileageView extends VerticalLayout {
         crud.getCrudFormFactory().setFieldProvider("vehicule", new ComboBoxProvider<>("Véhicule", vehiculeService.findAll(), new TextRenderer<>(Vehicule::getPlate), Vehicule::getPlate));
         crud.setCrudListener(service);
 
-        crud.setWidth("30%");
+        crud.setWidth("50%");
         crud.setMinWidth("360px");
         crud.setHeight("100%");
 
