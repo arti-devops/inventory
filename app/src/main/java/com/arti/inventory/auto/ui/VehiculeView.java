@@ -22,7 +22,10 @@ public class VehiculeView extends VerticalLayout {
         add(new H2("Véhicules ARTI"),
                 new Paragraph("Relevé de kilométrage et de consommation des véhicules de l'ARTI"));
 
-                VerticalLayout mileageLayout = new VerticalLayout();
+        H3 selectedVehiculeName = new H3();
+        selectedVehiculeName.getStyle().set("color", "var(--lumo-primary-text-color)");
+
+        VerticalLayout mileageLayout = new VerticalLayout();
         H3 title = new H3("Relevé de kilométrage");
         title.getStyle().set("color", "var(--lumo-secondary-text-color)");
         GridCrud<MileageHistory> mileageCrud = new GridCrud<>(MileageHistory.class);
@@ -31,14 +34,14 @@ public class VehiculeView extends VerticalLayout {
             Paragraph paragraph = new Paragraph();
             paragraph.setText(mileage.getMileage() + " km");
             return paragraph;
-        
+
         })).setHeader("Kilométrage");
         mileageCrud.getGrid().getColumnByKey("statementDate").setHeader("Date de relevé");
         mileageCrud.setAddOperationVisible(false);
         mileageCrud.setDeleteOperationVisible(false);
         mileageCrud.setUpdateOperationVisible(false);
         mileageCrud.setFindAllOperationVisible(false);
-        mileageLayout.add(title, mileageCrud);
+        mileageLayout.add(title, selectedVehiculeName, mileageCrud);
 
         GridCrud<Vehicule> crud = new GridCrud<>(Vehicule.class);
         crud.setCrudListener(service);
@@ -55,12 +58,14 @@ public class VehiculeView extends VerticalLayout {
             paragraph.setText(vehicule.getCurrentMileage() + " km");
             paragraph.getElement().getThemeList().add(theme);
             return paragraph;
-        })).setHeader("Kilométrage actuel");
-        crud.getGrid().getColumnByKey("driverName").setHeader("Nom du conducteur");
-        
+        })).setHeader("Kilométrage");
+        crud.getGrid().getColumnByKey("driverName").setHeader("Conducteur");
+
+        crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         // Add a value change listener to the grid to display the mileage history of the selected vehicule
         crud.getGrid().asSingleSelect().addValueChangeListener(event -> {
             if (event.getValue() != null) {
+                selectedVehiculeName.setText(event.getValue().getPlate());
                 mileageCrud.getGrid().setItems(mileageService.getVehiculeMileages(event.getValue().getId()));
             }
         });
