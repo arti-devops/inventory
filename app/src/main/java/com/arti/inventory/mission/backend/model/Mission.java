@@ -27,7 +27,7 @@ public class Mission {
     private MissionType type;
     private String location;
     @Column(name = "departure_date")
-    private Date dateOfdeparture;
+    private Date dateOfDeparture;
     @Column(name = "return_date")
     private Date dateOfReturn;
     private Long numberOfDays;
