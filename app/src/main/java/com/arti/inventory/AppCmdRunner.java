@@ -17,16 +17,16 @@ import com.arti.inventory.device.backend.model.PrinterDetail;
 import com.arti.inventory.device.backend.repository.ComputerRepository;
 import com.arti.inventory.device.backend.repository.PhoneRepository;
 import com.arti.inventory.device.backend.repository.PrinterRepository;
-import com.arti.inventory.mission.model.Employee;
-import com.arti.inventory.mission.model.Member;
-import com.arti.inventory.mission.model.Mission;
-import com.arti.inventory.mission.model.MissionType;
-import com.arti.inventory.mission.model.Mobility;
-import com.arti.inventory.mission.model.Status;
-import com.arti.inventory.mission.model.Transportation;
-import com.arti.inventory.mission.repository.EmployeeRepository;
-import com.arti.inventory.mission.repository.MemberRepository;
-import com.arti.inventory.mission.repository.MissionRepository;
+import com.arti.inventory.mission.backend.model.Employee;
+import com.arti.inventory.mission.backend.model.Member;
+import com.arti.inventory.mission.backend.model.Mission;
+import com.arti.inventory.mission.backend.model.MissionType;
+import com.arti.inventory.mission.backend.model.Mobility;
+import com.arti.inventory.mission.backend.model.Status;
+import com.arti.inventory.mission.backend.model.Transportation;
+import com.arti.inventory.mission.backend.repository.EmployeeRepository;
+import com.arti.inventory.mission.backend.repository.MemberRepository;
+import com.arti.inventory.mission.backend.repository.MissionRepository;
 import com.github.javafaker.Faker;
 
 @Component

@@ -1,4 +1,4 @@
-package com.arti.inventory.mission.model;
+package com.arti.inventory.mission.backend.model;
 
 public enum MissionType {
     INLAND, ABROAD, AFRICA;
