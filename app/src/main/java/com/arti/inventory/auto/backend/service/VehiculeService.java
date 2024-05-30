@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
+import com.arti.inventory.auto.backend.model.MileageHistory;
 import com.arti.inventory.auto.backend.model.Vehicule;
 import com.arti.inventory.auto.backend.repository.VehiculeRepository;
 
@@ -14,6 +15,9 @@ public class VehiculeService implements CrudListener<Vehicule>{
 
     @Autowired
     private VehiculeRepository repository;
+
+    @Autowired
+    private MileageHistoryService mileageService;
 
     @Override
     public Vehicule add(Vehicule arg0) {
@@ -27,7 +31,14 @@ public class VehiculeService implements CrudListener<Vehicule>{
 
     @Override
     public Collection<Vehicule> findAll() {
-        return repository.findAll();
+        Collection<Vehicule> vehicules = repository.findAll();
+        vehicules.forEach(vehicule -> {
+            Collection<MileageHistory> mileages = mileageService.getVehiculeMileages(vehicule.getId());
+            Long totalMileage = mileages.stream().mapToLong(MileageHistory::getMileage).sum();
+            vehicule.setCurrentMileage(totalMileage);
+            repository.save(vehicule);
+        });
+        return vehicules;
     }
 
     @Override
