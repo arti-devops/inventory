@@ -17,6 +17,17 @@ import com.arti.inventory.device.backend.model.PrinterDetail;
 import com.arti.inventory.device.backend.repository.ComputerRepository;
 import com.arti.inventory.device.backend.repository.PhoneRepository;
 import com.arti.inventory.device.backend.repository.PrinterRepository;
+import com.arti.inventory.mission.model.Employee;
+import com.arti.inventory.mission.model.Member;
+import com.arti.inventory.mission.model.Mission;
+import com.arti.inventory.mission.model.MissionType;
+import com.arti.inventory.mission.model.Mobility;
+import com.arti.inventory.mission.model.Status;
+import com.arti.inventory.mission.model.Transportation;
+import com.arti.inventory.mission.repository.EmployeeRepository;
+import com.arti.inventory.mission.repository.MemberRepository;
+import com.arti.inventory.mission.repository.MissionRepository;
+import com.github.javafaker.Faker;
 
 @Component
 @Profile("dev")
@@ -42,6 +53,7 @@ public class AppCmdRunner implements CommandLineRunner{
         System.out.println(phone);
 
         testApiCall();
+        addMissionDataToDB();
     }
 
     private void testApiCall(){
@@ -56,6 +68,57 @@ public class AppCmdRunner implements CommandLineRunner{
             printer.setDetails(detail);
             logger.warn("Printer: {} details {}", printer, printer.getDetails());
         });
+    }
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+    @Autowired
+    MissionRepository missionRepository;
+    @Autowired
+    MemberRepository memberRepository;
+    
+    private void addMissionDataToDB(){
+        Faker faker = new Faker();
+        // Add 10 employees
+        for(int i = 0; i < 10; i++){
+            Employee employee = new Employee();
+            employee.setFirstName(faker.name().firstName());
+            employee.setLastName(faker.name().lastName());
+            employee.setDepartment(faker.company().profession());
+            employee.setPosition(faker.company().profession());
+            employee.setEmail(faker.internet().emailAddress());
+            employee.setPhotoUrl(faker.internet().avatar());
+            employeeRepository.save(employee);
+        }
+        // Add 25 missions
+        for(int i = 0; i < 25; i++){
+            Mission mission = new Mission();
+            mission.setSubject(faker.company().profession());
+            mission.setType(MissionType.values()[faker.number().numberBetween(0, MissionType.values().length)]);
+            mission.setLocation(faker.address().city());
+            mission.setDateOfdeparture(faker.date().birthday());
+            mission.setDateOfReturn(faker.date().birthday());
+            mission.setNumberOfDays(faker.number().numberBetween(1, 30) * 1L);
+            mission.setStatus(Status.values()[faker.number().numberBetween(0, Status.values().length)]);
+            mission.setTotalBudget(0L);
+            missionRepository.save(mission);
+        }
+        // Add 200 members
+        for(int i = 0; i < 200; i++){
+            Member member = new Member();
+            member.setEmployee(employeeRepository.findAll().get(faker.number().numberBetween(0, 10)));
+            member.setHotelFees(faker.number().numberBetween(10000, 200000) * 1L);
+            member.setRessortExpenses(faker.number().numberBetween(10000, 200000) * 1L);
+            member.setDateOfDeparture(faker.date().birthday());
+            member.setDateOfReturn(faker.date().birthday());
+            member.setNumberOfDays(faker.number().numberBetween(1, 30) * 1L);
+            member.setTransportation(faker.options().option(Transportation.values()));
+            member.setMobility(faker.options().option(Mobility.values()));
+            member.setMobilityGasFees(faker.number().numberBetween(10000, 150000) * 1L);
+            member.setTotalBudget(member.getHotelFees() + member.getRessortExpenses() + member.getMobilityGasFees() + 0L);
+            memberRepository.save(member);
+        }
+
     }
 
 }
