@@ -21,10 +21,20 @@ public class AppNavigation extends Div{
         SideNav adminNav = new SideNav();
         adminNav.setLabel("Administrateur");
         adminNav.setCollapsible(true);
+        adminNav.setExpanded(false);
         adminNav.addItem(
             new SideNavItem("Adresses IP", "/ip", VaadinIcon.RECORDS.create()));
 
-        VerticalLayout navWrapper = new VerticalLayout(deviceNav, adminNav);
+        SideNav vehiculeNav = new SideNav();
+        vehiculeNav.setLabel("Véhicules ARTI");
+        vehiculeNav.addItem(
+            new SideNavItem("Véhicules", "/vehicules", VaadinIcon.RECORDS.create()),
+            new SideNavItem("Marques", "/marques", VaadinIcon.RECORDS.create()),
+            new SideNavItem("Modèles", "/modeles", VaadinIcon.RECORDS.create()),
+            new SideNavItem("Carburants", "/carburants", VaadinIcon.RECORDS.create()),
+            new SideNavItem("Types", "/types", VaadinIcon.RECORDS.create()));
+
+        VerticalLayout navWrapper = new VerticalLayout(deviceNav, adminNav, vehiculeNav);
         navWrapper.setSpacing(true);
         navWrapper.setSizeUndefined();
         deviceNav.setWidthFull();

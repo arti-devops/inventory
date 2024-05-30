@@ -59,18 +59,18 @@ insert into printer (name, ip, connexion_mode, brand, serie, direction, assigned
 insert into printer (name, ip, connexion_mode, brand, serie, direction, assigned_to, purchase_date, online, ink1, ink2, ink3, ink4, details_page, category) values ('Cherilyn Leitch', '79.220.165.173', 'CABLE', 'Allview', 'Allview Soul X5 Mini', 'DCSTI', 'Claire Lanfere', '2024-05-10', 0, 'Tecno F2', 'Huawei G7010', 'Gionee F205', 'Kyocera E3500', '242.159.91.33/printer/?q=detailspage', 0);
 insert into printer (name, ip, connexion_mode, brand, serie, direction, assigned_to, purchase_date, online, ink1, ink2, ink3, ink4, details_page, category) values ('Eve Penhaleurack', '176.46.55.238', 'CABLE', 'Allview', 'Allview X3 Soul Style', 'DCSTI', 'Shandra Hensmans', '2024-04-24', 1, 'Allview Impera S', 'alcatel 2000', 'Celkon C340', 'verykool R800', '28.0.121.73/printer/?q=detailspage', 0);
 
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (1, '8623 NA 01', 'Pontiac', 'Firefly', 'Orange', 1985, 'Cale Threadgall', 34987);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (2, '8707 AS 01', 'Ford', 'Thunderbird', 'Maroon', 1983, 'Saunderson Pala', 44019);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (3, '9025 EU 01', 'Chevrolet', 'Express 2500', 'Puce', 2010, 'Sadye Aslen', 8374);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (4, '3382 AS 01', 'Audi', 'A5', 'Maroon', 2008, 'York Goricke', 21174);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (5, '944 EU 01', 'Ford', 'F350', 'Fuscia', 2005, 'Graehme Farden', 46739);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (6, '9978 NA 01', 'Buick', 'Regal', 'Indigo', 2011, 'Bethena Nealy', 48870);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (7, '8670 AS 01', 'Lincoln', 'MKS', 'Teal', 2012, 'Bertrand Meeking', 47188);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (8, '3065 EU 01', 'Ford', 'Thunderbird', 'Maroon', 2002, 'Clem Sinncock', 13069);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (9, '7602 NA 01', 'Pontiac', 'Bonneville', 'Teal', 1987, 'Katya Kennicott', 11730);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (10, '8482 SA 01', 'Chevrolet', 'Astro', 'Maroon', 1998, 'Sharla Martinon', 44373);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (11, '3996 AS 01', 'Chrysler', 'Sebring', 'Fuscia', 1996, 'Stefano Michie', 3387);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (12, '5879 SA 01', 'Mercedes-Benz', 'C-Class', 'Fuscia', 2008, 'Wolf Richichi', 10475);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (13, '9229 AF 01', 'Volkswagen', 'Fox', 'Puce', 1990, 'Herby Bernlin', 29995);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (14, '3262 AS 01', 'Volvo', '960', 'Maroon', 1997, 'Bartlet Mirando', 27167);
-insert into vehicule (id, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (15, '9421 AF 01', 'Subaru', 'Leone', 'Aquamarine', 1989, 'Kathleen Detheridge', 49716); --15
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (1, 'VOITURE', '968 OC 01', 'Lincoln', 'Mark VIII', 'Maroon', 1995, 'Florentia Gianninotti', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (2, 'AUTRE', '1141 OC 01', 'Pontiac', 'Firebird Formula', 'Mauv', 1992, 'Gerhard Durtnal', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (3, 'AUTRE', '3737 NA 01', 'Lexus', 'IS', 'Violet', 2011, 'Dame Pitone', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (4, 'VOITURE', '9439 NA 01', 'Volkswagen', 'Cabriolet', 'Fuscia', 1996, 'Giana Ovey', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (5, 'BUS', '7352 NA 01', 'Land Rover', 'Defender 90', 'Yellow', 1995, 'Kirstin Clay', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (6, 'VOITURE', '494 NA 01', 'Honda', 'Civic', 'Teal', 1993, 'Dasi Erskin', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (7, 'MOTO', '160 OC 01', 'Pontiac', 'G6', 'Yellow', 2007, 'Fanni Scrowston', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (8, 'BUS', '3612 EU 01', 'Porsche', '944', 'Purple', 1985, 'Rania Kliemke', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (9, 'AUTRE', '6064 NA 01', 'Audi', 'Cabriolet', 'Fuscia', 1998, 'Dolf Kobsch', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (10, 'AUTRE', '2600 SA 01', 'GMC', 'Sierra 1500', 'Red', 2010, 'Shaylynn Constance', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (11, 'VOITURE', '6163 EU 01', 'Hyundai', 'Santa Fe', 'Crimson', 2012, 'Kylila Billingsly', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (12, 'AUTRE', '8154 NA 01', 'Ford', 'E350', 'Red', 2009, 'Ludovika Lote', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (13, 'BUS', '2484 OC 01', 'Ford', 'Probe', 'Turquoise', 1994, 'Sonya Strickler', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (14, 'VOITURE', '9642 NA 01', 'GMC', 'Sierra 1500', 'Teal', 2007, 'Maressa McLese', 0);
+insert into vehicule (id, type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values (15, 'MOTO', '8705 SA 01', 'GMC', 'Sonoma', 'Aquamarine', 2003, 'Sigfrid Dockreay', 0); --15
