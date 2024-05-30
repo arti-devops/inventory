@@ -93,10 +93,10 @@ public class AppCmdRunner implements CommandLineRunner{
         // Add 25 missions
         for(int i = 0; i < 25; i++){
             Mission mission = new Mission();
-            mission.setSubject(faker.company().profession());
+            mission.setSubject(faker.lorem().sentence(6));
             mission.setType(MissionType.values()[faker.number().numberBetween(0, MissionType.values().length)]);
             mission.setLocation(faker.address().city());
-            mission.setDateOfdeparture(faker.date().birthday());
+            mission.setDateOfDeparture(faker.date().birthday());
             mission.setDateOfReturn(faker.date().birthday());
             mission.setNumberOfDays(faker.number().numberBetween(1, 30) * 1L);
             mission.setStatus(Status.values()[faker.number().numberBetween(0, Status.values().length)]);
