@@ -27,9 +27,10 @@ public class AppNavigation extends Div{
 
         SideNav vehiculeNav = new SideNav();
         vehiculeNav.setLabel("Véhicules ARTI");
+        vehiculeNav.setSizeFull();
         vehiculeNav.addItem(
-            new SideNavItem("Véhicules", "/vehicules", VaadinIcon.RECORDS.create()),
-            new SideNavItem("Marques", "/marques", VaadinIcon.RECORDS.create()),
+            new SideNavItem("Véhicules", "/vehicules", VaadinIcon.CAR.create()),
+            new SideNavItem("Kilométrages", "/mileages", VaadinIcon.ROAD.create()),
             new SideNavItem("Modèles", "/modeles", VaadinIcon.RECORDS.create()),
             new SideNavItem("Carburants", "/carburants", VaadinIcon.RECORDS.create()),
             new SideNavItem("Types", "/types", VaadinIcon.RECORDS.create()));
