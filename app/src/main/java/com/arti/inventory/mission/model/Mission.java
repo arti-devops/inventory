@@ -1,6 +1,9 @@
 package com.arti.inventory.mission.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +14,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Mission {
@@ -23,10 +27,10 @@ public class Mission {
     private MissionType type;
     private String location;
     @Column(name = "departure_date")
-    private String dateOfdeparture;
+    private Date dateOfdeparture;
     @Column(name = "return_date")
-    private String dateOfReturn;
-    private String numberOfDays;
+    private Date dateOfReturn;
+    private Long numberOfDays;
     @Enumerated(EnumType.STRING)
     private Status status;
     private Long totalBudget;
