@@ -3,6 +3,7 @@ package com.arti.inventory.auto.backend.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
@@ -17,7 +18,7 @@ public class MileageHistoryService implements CrudListener<MileageHistory> {
 
     @Override
     public Collection<MileageHistory> findAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by(Sort.Direction.DESC, "statementDate"));
     }
 
     @Override
