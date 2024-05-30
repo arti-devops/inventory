@@ -2,24 +2,47 @@ package com.arti.inventory.auto.ui;
 
 import org.vaadin.crudui.crud.impl.GridCrud;
 
+import com.arti.inventory.auto.backend.model.MileageHistory;
 import com.arti.inventory.auto.backend.model.Vehicule;
+import com.arti.inventory.auto.backend.service.MileageHistoryService;
 import com.arti.inventory.auto.backend.service.VehiculeService;
 import com.arti.inventory.device.ui.MainAppLayout;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "vehicules", layout = MainAppLayout.class)
 public class VehiculeView extends VerticalLayout {
 
-    public VehiculeView(VehiculeService service) {
+    public VehiculeView(VehiculeService service, MileageHistoryService mileageService) {
         add(new H2("Véhicules ARTI"),
                 new Paragraph("Relevé de kilométrage et de consommation des véhicules de l'ARTI"));
 
+                VerticalLayout mileageLayout = new VerticalLayout();
+        H3 title = new H3("Relevé de kilométrage");
+        title.getStyle().set("color", "var(--lumo-secondary-text-color)");
+        GridCrud<MileageHistory> mileageCrud = new GridCrud<>(MileageHistory.class);
+        mileageCrud.getGrid().setColumns("mileage", "statementDate");
+        mileageCrud.getGrid().getColumnByKey("mileage").setRenderer(new ComponentRenderer<>(mileage -> {
+            Paragraph paragraph = new Paragraph();
+            paragraph.setText(mileage.getMileage() + " km");
+            return paragraph;
+        
+        })).setHeader("Kilométrage");
+        mileageCrud.getGrid().getColumnByKey("statementDate").setHeader("Date de relevé");
+        mileageCrud.setAddOperationVisible(false);
+        mileageCrud.setDeleteOperationVisible(false);
+        mileageCrud.setUpdateOperationVisible(false);
+        mileageCrud.setFindAllOperationVisible(false);
+        mileageLayout.add(title, mileageCrud);
+
         GridCrud<Vehicule> crud = new GridCrud<>(Vehicule.class);
         crud.setCrudListener(service);
+        crud.setDeleteOperationVisible(false);
         crud.getGrid().setColumns("plate", "type", "brand", "model", "color", "currentMileage", "driverName");
         crud.getGrid().getColumnByKey("plate").setHeader("Immatriculation");
         crud.getGrid().getColumnByKey("type").setHeader("Type");
@@ -34,9 +57,22 @@ public class VehiculeView extends VerticalLayout {
             return paragraph;
         })).setHeader("Kilométrage actuel");
         crud.getGrid().getColumnByKey("driverName").setHeader("Nom du conducteur");
+        
+        // Add a value change listener to the grid to display the mileage history of the selected vehicule
+        crud.getGrid().asSingleSelect().addValueChangeListener(event -> {
+            if (event.getValue() != null) {
+                mileageCrud.getGrid().setItems(mileageService.getVehiculeMileages(event.getValue().getId()));
+            }
+        });
+
+        SplitLayout splitLayout = new SplitLayout();
+        splitLayout.setSizeFull();
+        splitLayout.addToPrimary(crud);
+        splitLayout.addToSecondary(mileageLayout);
+        splitLayout.setSplitterPosition(80);
 
         setSizeFull();
-        add(crud);
+        add(splitLayout);
     }
 
     public String getColorForNumber(Long number) {
