@@ -1,5 +1,6 @@
 package com.arti.inventory.mission.backend.model;
 
+import java.util.Collection;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -34,4 +35,5 @@ public class Mission {
     @Enumerated(EnumType.STRING)
     private Status status;
     private Long totalBudget;
+    private transient Collection<Member> members;
 }

@@ -107,6 +107,7 @@ public class AppCmdRunner implements CommandLineRunner{
         for(int i = 0; i < 200; i++){
             Member member = new Member();
             member.setEmployee(employeeRepository.findAll().get(faker.number().numberBetween(0, 10)));
+            member.setMission(missionRepository.findAll().get(faker.number().numberBetween(0, 25)));
             member.setHotelFees(faker.number().numberBetween(10000, 200000) * 1L);
             member.setRessortExpenses(faker.number().numberBetween(10000, 200000) * 1L);
             member.setDateOfDeparture(faker.date().birthday());

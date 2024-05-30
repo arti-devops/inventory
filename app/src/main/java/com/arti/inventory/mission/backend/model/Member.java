@@ -26,6 +26,9 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "mission_id")
+    private Mission mission;
     private Long hotelFees;
     private Long ressortExpenses;
     @Column(name = "departure_date")
