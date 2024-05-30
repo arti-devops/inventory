@@ -10,13 +10,13 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.arti.inventory.backend.model.Computer;
-import com.arti.inventory.backend.model.Phone;
-import com.arti.inventory.backend.model.Printer;
-import com.arti.inventory.backend.model.PrinterDetail;
-import com.arti.inventory.backend.repository.ComputerRepository;
-import com.arti.inventory.backend.repository.PhoneRepository;
-import com.arti.inventory.backend.repository.PrinterRepository;
+import com.arti.inventory.device.backend.model.Computer;
+import com.arti.inventory.device.backend.model.Phone;
+import com.arti.inventory.device.backend.model.Printer;
+import com.arti.inventory.device.backend.model.PrinterDetail;
+import com.arti.inventory.device.backend.repository.ComputerRepository;
+import com.arti.inventory.device.backend.repository.PhoneRepository;
+import com.arti.inventory.device.backend.repository.PrinterRepository;
 
 @Component
 @Profile("dev")
