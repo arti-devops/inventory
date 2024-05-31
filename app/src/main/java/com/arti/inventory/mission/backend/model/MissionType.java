@@ -1,5 +1,19 @@
 package com.arti.inventory.mission.backend.model;
 
+
 public enum MissionType {
-    INLAND, ABROAD, AFRICA;
+    INLAND("Côte d'Ivoire"),
+    AFRICA("Afrique"),
+    ABROAD("Hors Afrique");
+
+    private final String customValue;
+
+    MissionType(String customValue) {
+        this.customValue = customValue;
+    }
+
+    @Override
+    public String toString() {
+        return customValue;
+    }
 }
