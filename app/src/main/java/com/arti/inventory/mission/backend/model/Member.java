@@ -29,17 +29,17 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "mission_id")
     private Mission mission;
-    private Long hotelFees;
-    private Long ressortExpenses;
+    private Long hotelFees = 0L;
+    private Long ressortExpenses = 0L;
     @Column(name = "departure_date")
     private Date dateOfDeparture;
     @Column(name = "return_date")
     private Date dateOfReturn;
-    private Long numberOfDays;
+    private Long numberOfDays = 0L;
     @Enumerated(EnumType.STRING)
-    private Transportation transportation;
+    private Transportation transportation = Transportation.CAR;
     @Enumerated(EnumType.STRING)
-    private Mobility mobility;
-    private Long mobilityGasFees;
-    private Long totalBudget;
+    private Mobility mobility = Mobility.PERSONAL_CAR;
+    private Long mobilityGasFees = 0L;
+    private Long totalBudget = 0L;
 }
