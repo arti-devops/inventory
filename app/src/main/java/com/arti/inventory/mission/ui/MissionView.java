@@ -100,10 +100,11 @@ public class MissionView extends VerticalLayout {
             edit.setText("Voir");
             edit.setSuffixComponent(VaadinIcon.EDIT.create());
             edit.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-            edit.addClickListener(e -> {});
+            edit.addClickListener(e -> {
+                getUI().ifPresent(ui -> ui.navigate(MissionDetailsView.class, mission.getId()));
+            });
             layout.add(edit);
             return layout;
-        
         }));//.setHeader("Action");
         
         setSizeFull();

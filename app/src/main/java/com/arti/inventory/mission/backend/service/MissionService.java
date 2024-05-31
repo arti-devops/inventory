@@ -44,4 +44,8 @@ public class MissionService implements CrudListener<Mission> {
     public void delete(Mission domainObjectToDelete) {
         service.delete(domainObjectToDelete);
     }
+
+    public Mission findOne(Long missionId) {
+        return service.findById(missionId).orElse(null);
+    }
 }
