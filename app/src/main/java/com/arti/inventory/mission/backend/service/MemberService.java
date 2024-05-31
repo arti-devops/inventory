@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
 import com.arti.inventory.mission.backend.model.Member;
+import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.repository.MemberRepository;
 
 @Service
@@ -29,8 +30,16 @@ public class MemberService implements CrudListener<Member> {
         return repository.save(domainObjectToAdd);
     }
 
+    public Member add(Member domainObjectToAdd, Mission mission) {
+        domainObjectToAdd.setMission(mission);
+        domainObjectToAdd.setNumberOfDays(MissionService.computeNumberOfDays(domainObjectToAdd.getDateOfDeparture(), domainObjectToAdd.getDateOfReturn()));
+        //TODO compute all dynamic fields
+        return repository.save(domainObjectToAdd);
+    }
+
     @Override
     public Member update(Member domainObjectToUpdate) {
+        domainObjectToUpdate.setNumberOfDays(MissionService.computeNumberOfDays(domainObjectToUpdate.getDateOfDeparture(), domainObjectToUpdate.getDateOfReturn()));
         return repository.save(domainObjectToUpdate);
     }
 

@@ -7,10 +7,12 @@ import com.arti.inventory.device.ui.MainAppLayout;
 import com.arti.inventory.mission.backend.model.Employee;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
+import com.arti.inventory.mission.backend.service.EmployeeService;
 import com.arti.inventory.mission.backend.service.MemberService;
 import com.arti.inventory.mission.backend.service.MissionService;
 import com.arti.inventory.mission.ui.component.RenderMoney;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -33,10 +35,18 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    EmployeeService employeeService;
+
     @Override
     public void setParameter(BeforeEvent event, Long missionId) {
-        this.mission = missionService.findOne(missionId);
-        if (mission == null) {
+        try {
+            this.mission = missionService.findOne(missionId);
+            if (mission == null) {
+                event.rerouteTo("missions");
+                return;
+            }
+        } catch (Exception e) {
             event.rerouteTo("missions");
             return;
         }
@@ -126,7 +136,18 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         })).setHeader("Télécharger");
 
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
-        
+
+        // Form configuration
+        crud.setAddOperation(member -> memberService.add(member, mission));
+        crud.getCrudFormFactory().setVisibleProperties("employee", "dateOfDeparture", "dateOfReturn", "transportation", "mobility");
+        crud.getCrudFormFactory().setFieldProvider("employee", member -> {
+            ComboBox<Employee> employeeComboBox = new ComboBox<>("Participant");
+            employeeComboBox.setItems(employeeService.findAll());
+            employeeComboBox.setItemLabelGenerator(employee -> employee.getFirstName() + " " + employee.getLastName());
+            return employeeComboBox;
+        });
+        crud.getCrudFormFactory().setFieldCaptions("Participant", "Départ", "Retour", "Transport", "Mobilité");
+
         setSizeFull();
         add(badgeLayout, detailsLayout, new Span("Liste de membres"), crud);
     }

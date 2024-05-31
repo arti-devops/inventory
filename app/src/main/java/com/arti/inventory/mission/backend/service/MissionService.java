@@ -43,7 +43,7 @@ public class MissionService implements CrudListener<Mission> {
         return service.save(domainObjectToAdd);
     }
 
-    private Long computeNumberOfDays(Date startDate, Date endDate) {
+    public static Long computeNumberOfDays(Date startDate, Date endDate) {
         long diff = endDate.getTime() - startDate.getTime();
         long numberOfDays = diff / (24 * 60 * 60 * 1000);
         return numberOfDays;
