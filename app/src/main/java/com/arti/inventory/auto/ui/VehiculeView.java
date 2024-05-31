@@ -45,7 +45,7 @@ public class VehiculeView extends VerticalLayout {
 
         GridCrud<Vehicule> crud = new GridCrud<>(Vehicule.class);
         crud.setCrudListener(service);
-        crud.setDeleteOperationVisible(false);
+        // crud.setDeleteOperationVisible(false);
         crud.getGrid().setColumns("plate", "type", "brand", "model", "color", "currentMileage", "driverName");
         crud.getGrid().getColumnByKey("plate").setHeader("Immatriculation");
         crud.getGrid().getColumnByKey("type").setHeader("Type");
@@ -57,6 +57,7 @@ public class VehiculeView extends VerticalLayout {
             Paragraph paragraph = new Paragraph();
             paragraph.setText(vehicule.getCurrentMileage() + " km");
             paragraph.getElement().getThemeList().add(theme);
+            paragraph.setWidthFull();
             return paragraph;
         })).setHeader("Kilométrage");
         crud.getGrid().getColumnByKey("driverName").setHeader("Conducteur");
@@ -69,6 +70,10 @@ public class VehiculeView extends VerticalLayout {
                 mileageCrud.getGrid().setItems(mileageService.getVehiculeMileages(event.getValue().getId()));
             }
         });
+
+        crud.getCrudFormFactory().setVisibleProperties("type","plate","brand", "model", "color","fuelType","driverName");
+        crud.getCrudFormFactory().setFieldCaptions("Type","Immatriculation","Marque", "Modèle", "Couleur","Type de carburant","Conducteur");
+        crud.getCrudFormFactory().setUseBeanValidation(true);
 
         SplitLayout splitLayout = new SplitLayout();
         splitLayout.setSizeFull();

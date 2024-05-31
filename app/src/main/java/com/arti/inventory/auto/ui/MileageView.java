@@ -33,6 +33,7 @@ public class MileageView extends VerticalLayout {
             return new Paragraph(mileage.getVehicule().getPlate());
         })).setHeader("Véhicule");
         crud.getCrudFormFactory().setVisibleProperties("mileage", "vehicule");
+        crud.getCrudFormFactory().setFieldCaptions("Kilométrage", "Véhicule");
         crud.getCrudFormFactory().setFieldProvider("vehicule", new ComboBoxProvider<>("Véhicule", vehiculeService.findAll(), new TextRenderer<>(Vehicule::getPlate), Vehicule::getPlate));
         crud.setCrudListener(service);
 
