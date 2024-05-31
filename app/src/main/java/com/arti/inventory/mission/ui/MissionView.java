@@ -9,6 +9,7 @@ import com.arti.inventory.mission.backend.model.Status;
 import com.arti.inventory.mission.backend.service.MissionService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -30,6 +31,7 @@ public class MissionView extends VerticalLayout {
         crud.getGrid().setColumns("type", "subject", "dateOfDeparture", "dateOfReturn","location","members","totalBudget","status");
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         crud.setCrudListener(service);
+        crud.setShowNotifications(false);
 
         crud.getGrid().getColumnByKey("type").setRenderer(new ComponentRenderer<>(mission -> {
             HorizontalLayout layout = new HorizontalLayout();
@@ -90,7 +92,6 @@ public class MissionView extends VerticalLayout {
             value.getElement().setAttribute("theme", theme);
             value.setWidthFull();
             layout.add(value);
-            // layout.setWidthFull();
             return layout;
         })).setHeader("Statut");
 
@@ -105,7 +106,19 @@ public class MissionView extends VerticalLayout {
             });
             layout.add(edit);
             return layout;
-        }));//.setHeader("Action");
+        }));
+
+        // Form configuration
+        crud.getCrudFormFactory().setUseBeanValidation(true);
+        crud.getCrudFormFactory().setVisibleProperties("type", "subject", "dateOfDeparture", "dateOfReturn", "location");
+        crud.getCrudFormFactory().setFieldCaptions("Type de mission", "Mission", "Départ", "Retour", "Lieu");
+        crud.getCrudFormFactory().setFieldCaptions("Type de mission", "Intitulé de la mission", "Départ", "Retour", "Lieu");
+        crud.getCrudFormFactory().setFieldProvider("type", mission -> {
+            ComboBox<MissionType> typeComboBox = new ComboBox<>("Type");
+            typeComboBox.setItems(MissionType.values());
+            typeComboBox.setItemLabelGenerator(Enum::toString);
+            return typeComboBox;
+        });
         
         setSizeFull();
         add(crud);
