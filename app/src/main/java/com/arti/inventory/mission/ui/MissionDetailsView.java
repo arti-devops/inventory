@@ -10,6 +10,7 @@ import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.service.MemberService;
 import com.arti.inventory.mission.backend.service.MissionService;
 import com.arti.inventory.mission.ui.component.RenderMoney;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -113,6 +114,16 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         crud.getGrid().getColumnByKey("totalBudget").setRenderer(new ComponentRenderer<RenderMoney, Member>(member -> {
             return new RenderMoney(member.getTotalBudget());
         })).setHeader("Budget");
+
+        crud.getGrid().addColumn(new ComponentRenderer<>(mission -> {
+            HorizontalLayout layout = new HorizontalLayout();
+            Button download1 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
+            download1.setTooltipText("Ordre de mission");
+            Button download2 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
+            download2.setTooltipText("Fiche de mission");
+            layout.add(download1, download2);
+            return layout;
+        })).setHeader("Télécharger");
 
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
         
