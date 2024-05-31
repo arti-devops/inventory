@@ -1,6 +1,7 @@
 package com.arti.inventory.mission.backend.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -36,7 +37,16 @@ public class MissionService implements CrudListener<Mission> {
 
     @Override
     public Mission add(Mission domainObjectToAdd) {
+        domainObjectToAdd.setNumberOfDays(computeNumberOfDays(domainObjectToAdd.getDateOfDeparture(), 
+                                            domainObjectToAdd.getDateOfReturn()));
+        domainObjectToAdd.setTotalBudget(0L);
         return service.save(domainObjectToAdd);
+    }
+
+    private Long computeNumberOfDays(Date startDate, Date endDate) {
+        long diff = endDate.getTime() - startDate.getTime();
+        long numberOfDays = diff / (24 * 60 * 60 * 1000);
+        return numberOfDays;
     }
 
     @Override
