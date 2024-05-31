@@ -8,6 +8,7 @@ import org.vaadin.crudui.crud.CrudListener;
 
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
+import com.arti.inventory.mission.backend.model.MissionType;
 import com.arti.inventory.mission.backend.repository.MissionRepository;
 
 @Service
@@ -23,9 +24,7 @@ public class MissionService implements CrudListener<Mission> {
     public Collection<Mission> findAll() {
         Collection<Mission> missions = service.findAll();
         missions.forEach(mission -> {
-            Collection<Member> members = memberService.findMissionMembers(mission.getId());
-            mission.setTotalBudget(members.stream().mapToLong(Member::getTotalBudget).sum());
-            mission.setMembers(members);
+            setMissionMembersAndTotalBudget(mission);
         });
         return missions;
     }
@@ -46,6 +45,29 @@ public class MissionService implements CrudListener<Mission> {
     }
 
     public Mission findOne(Long missionId) {
-        return service.findById(missionId).orElse(null);
+        Mission mission = service.findById(missionId).orElse(null);
+        if (mission != null) {
+            setMissionMembersAndTotalBudget(mission);
+            return mission;
+        }else {
+            throw new IllegalArgumentException("Mission not found");
+        }
+    }
+
+    public static String getMissionType(MissionType type) {
+        if (type.equals(MissionType.INLAND)) {
+            return String.valueOf("Côte d'Ivoire");
+        } else if (type.equals(MissionType.ABROAD)) {
+            return String.valueOf("Hors Afrique");
+        } else if (type.equals(MissionType.AFRICA)) {
+            return String.valueOf("Afrique");
+        }
+        return String.valueOf("Inconnu");
+    }
+
+    private void setMissionMembersAndTotalBudget(Mission mission) {
+        Collection<Member> members = memberService.findMissionMembers(mission.getId());
+        mission.setTotalBudget(members.stream().mapToLong(Member::getTotalBudget).sum());
+        mission.setMembers(members);
     }
 }
