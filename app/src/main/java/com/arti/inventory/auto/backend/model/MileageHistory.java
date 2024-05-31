@@ -24,7 +24,7 @@ public class MileageHistory {
 
     private Long mileage;
 
-    private Date statementDate;
+    private Date statementDate = new Date(System.currentTimeMillis());
 
     @ManyToOne
     @JoinColumn(name = "vehicule_id")
