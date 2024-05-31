@@ -3,6 +3,7 @@ package com.arti.inventory.mission.backend.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
@@ -13,6 +14,7 @@ import com.arti.inventory.mission.backend.model.Mobility;
 import com.arti.inventory.mission.backend.model.Status;
 import com.arti.inventory.mission.backend.model.Transportation;
 import com.arti.inventory.mission.backend.repository.MissionRepository;
+import com.vaadin.flow.component.notification.Notification;
 
 @Service
 public class MissionService implements CrudListener<Mission> {
@@ -25,7 +27,7 @@ public class MissionService implements CrudListener<Mission> {
 
     @Override
     public Collection<Mission> findAll() {
-        Collection<Mission> missions = service.findAll();
+        Collection<Mission> missions = service.findAll(Sort.by(Sort.Direction.DESC, "dateOfDeparture"));
         missions.forEach(mission -> {
             setMissionMembersAndTotalBudget(mission);
         });
@@ -44,7 +46,12 @@ public class MissionService implements CrudListener<Mission> {
 
     @Override
     public void delete(Mission domainObjectToDelete) {
-        service.delete(domainObjectToDelete);
+        try {
+            service.delete(domainObjectToDelete);
+        } catch (RuntimeException e) {
+            Notification error = Notification.show("Impossible de supprimer cette mission", 3000, Notification.Position.TOP_STRETCH);
+            error.addThemeName("error");
+        }
     }
 
     public Mission findOne(Long missionId) {
