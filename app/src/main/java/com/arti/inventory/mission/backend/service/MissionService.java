@@ -98,11 +98,11 @@ public class MissionService implements CrudListener<Mission> {
 
     public static String getMobility(Mobility mobility) {
         if (mobility.equals(Mobility.PERSONAL_CAR)) {
-            return String.valueOf("Voiture personnelle");
+            return String.valueOf("Personnelle");
         } else if (mobility.equals(Mobility.COMPANY_CAR)) {
-            return String.valueOf("Voiture de service");
+            return String.valueOf("Service");
         } else if (mobility.equals(Mobility.PUBLIC_TRANSPORT)) {
-            return String.valueOf("Transport en commun");
+            return String.valueOf("Co-voiturage");
         } else if (mobility.equals(Mobility.OTHER)) {
             return String.valueOf("Autre");
         }
