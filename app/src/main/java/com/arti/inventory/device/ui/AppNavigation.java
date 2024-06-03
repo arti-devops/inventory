@@ -37,9 +37,10 @@ public class AppNavigation extends Div{
         missionNav.setSizeFull();
         missionNav.setCollapsible(true);
         missionNav.addItem(
-            new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create()),
-            new SideNavItem("Déplacements", "/mobilities", VaadinIcon.ROAD.create()),
-            new SideNavItem("Transports", "/transports", VaadinIcon.BUG.create()));
+            new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create())
+            // new SideNavItem("Déplacements", "/mobilities", VaadinIcon.ROAD.create()),
+            // new SideNavItem("Transports", "/transports", VaadinIcon.BUG.create())
+            );
 
         VerticalLayout navWrapper = new VerticalLayout(deviceNav, missionNav, vehiculeNav, adminNav);
         navWrapper.setSpacing(true);
