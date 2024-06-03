@@ -18,6 +18,7 @@ import com.arti.inventory.device.backend.repository.ComputerRepository;
 import com.arti.inventory.device.backend.repository.PhoneRepository;
 import com.arti.inventory.device.backend.repository.PrinterRepository;
 import com.arti.inventory.mission.backend.model.Employee;
+import com.arti.inventory.mission.backend.model.EmployeeCategory;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.model.MissionType;
@@ -88,10 +89,11 @@ public class AppCmdRunner implements CommandLineRunner{
             employee.setPosition(faker.company().profession());
             employee.setEmail(faker.internet().emailAddress());
             employee.setPhotoUrl(faker.internet().avatar());
+            employee.setCategory(EmployeeCategory.values()[faker.number().numberBetween(0, EmployeeCategory.values().length)]);
             employeeRepository.save(employee);
         }
         // Add 25 missions
-        for(int i = 0; i < 25; i++){
+        for(int i = 0; i < 30; i++){
             Mission mission = new Mission();
             mission.setSubject(faker.lorem().sentence(6));
             mission.setType(MissionType.values()[faker.number().numberBetween(0, MissionType.values().length)]);

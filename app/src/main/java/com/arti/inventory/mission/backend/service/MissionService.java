@@ -77,7 +77,7 @@ public class MissionService implements CrudListener<Mission> {
     public static String getMissionType(MissionType type) {
         if (type.equals(MissionType.INLAND)) {
             return String.valueOf("Côte d'Ivoire");
-        } else if (type.equals(MissionType.ABROAD)) {
+        } else if (type.equals(MissionType.ABOARD)) {
             return String.valueOf("Hors Afrique");
         } else if (type.equals(MissionType.AFRICA)) {
             return String.valueOf("Afrique");

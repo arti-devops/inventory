@@ -138,7 +138,6 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
 
         // Form configuration
-        crud.setAddOperation(member -> memberService.add(member, mission));
         crud.getCrudFormFactory().setVisibleProperties("employee", "dateOfDeparture", "dateOfReturn", "transportation", "mobility");
         crud.getCrudFormFactory().setFieldProvider("employee", member -> {
             ComboBox<Employee> employeeComboBox = new ComboBox<>("Participant");
@@ -147,6 +146,32 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             return employeeComboBox;
         });
         crud.getCrudFormFactory().setFieldCaptions("Participant", "Départ", "Retour", "Transport", "Mobilité");
+
+        // FORM CRUD OPERATIONS
+        crud.setAddOperation(member -> {
+            Member m = memberService.add(member, mission);
+            mission.setTotalBudget(mission.getTotalBudget() + m.getTotalBudget());
+            mission.getMembers().add(m);
+            totalBudget.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
+            members.setValue(String.valueOf(mission.getMembers().size()), "personne(s)");
+            return m;
+        });
+
+        crud.setDeleteOperation(member -> {
+            mission.setTotalBudget(mission.getTotalBudget() - member.getTotalBudget());
+            mission.getMembers().remove(member);
+            totalBudget.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
+            members.setValue(String.valueOf(mission.getMembers().size()), "personne(s)");
+            memberService.delete(member);
+        });
+
+        crud.setUpdateOperation(member -> {
+            Member m = memberService.add(member, mission);
+            mission.setTotalBudget(mission.getTotalBudget() + m.getTotalBudget());
+            mission.getMembers().add(m);
+            totalBudget.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
+            return m;
+        });
 
         setSizeFull();
         add(badgeLayout, detailsLayout, new Span("Liste de membres"), crud);
@@ -160,6 +185,10 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             layout.add(icon.create(), p);
             p.getStyle().set("font-weight", "bold");
             add(layout, new Paragraph(value + " " + suffix));
+        }
+
+        public void setValue(String value, String suffix) {
+            ((Paragraph)getComponentAt(1)).setText(value + " " + suffix);
         }
     }
 }

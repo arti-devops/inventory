@@ -38,7 +38,7 @@ public class MissionView extends VerticalLayout {
             Span value = new Span();
             String theme = String.valueOf("");
             if (mission.getType().equals(MissionType.INLAND)) {theme = "badge contrast primary"; value.setText("Côte d'Ivoire");}
-            else if (mission.getType().equals(MissionType.ABROAD)) {theme = "badge contrast primary"; value.setText("Hors Afrique");}
+            else if (mission.getType().equals(MissionType.ABOARD)) {theme = "badge contrast primary"; value.setText("Hors Afrique");}
             else if (mission.getType().equals(MissionType.AFRICA)) {theme = "badge contrast primary"; value.setText("Afrique");}
             value.getElement().setAttribute("theme", theme);
             value.setWidthFull();

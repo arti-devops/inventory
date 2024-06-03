@@ -74,3 +74,28 @@ insert into vehicule (type, plate, brand, model, color, vehicule_year, driver_na
 insert into vehicule (type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values ('BUS', '2484 OC 01', 'Ford', 'Probe', 'Turquoise', 1994, 'Sonya Strickler', 0);
 insert into vehicule (type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values ('VOITURE', '9642 NA 01', 'GMC', 'Sierra 1500', 'Teal', 2007, 'Maressa McLese', 0);
 insert into vehicule (type, plate, brand, model, color, vehicule_year, driver_name, current_mileage) values ('MOTO', '8705 SA 01', 'GMC', 'Sonoma', 'Aquamarine', 2003, 'Sigfrid Dockreay', 0); --15
+
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-A', 'AFRICA', 'A', 0, 200000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-B', 'AFRICA', 'B', 0, 400000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-C', 'AFRICA', 'C', 100000, 100000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-D', 'AFRICA', 'D', 75000, 50000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-E', 'AFRICA', 'E', 70000, 30000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-F', 'AFRICA', 'F', 50000, 30000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-G', 'AFRICA', 'G', 50000, 20000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('AFRICA-H', 'AFRICA', 'H', 40000, 20000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-A', 'ABOARD', 'A', 0, 400000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-B', 'ABOARD', 'B', 0, 600000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-C', 'ABOARD', 'C', 150000, 150000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-D', 'ABOARD', 'D', 100000, 100000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-E', 'ABOARD', 'E', 85000, 85000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-F', 'ABOARD', 'F', 70000, 50000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-G', 'ABOARD', 'G', 50000, 50000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('ABOARD-H', 'ABOARD', 'H', 50000, 30000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-A', 'INLAND', 'A', 0, 125000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-B', 'INLAND', 'B', 0, 150000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-C', 'INLAND', 'C', 50000, 50000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-D', 'INLAND', 'D', 50000, 25000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-E', 'INLAND', 'E', 30000, 20000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-F', 'INLAND', 'F', 30000, 20000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-G', 'INLAND', 'G', 20000, 15000);
+INSERT INTO perdiem (code, mission_type, employee_category, hotel_fees, ressort_expenses) VALUES ('INLAND-H', 'INLAND', 'H', 15000, 10000);

@@ -12,18 +12,23 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
+@AllArgsConstructor
+public class Perdiem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String department;
-    private String position;
-    private String email;
-    private String photoUrl;
+
+    private String code;
+
     @Enumerated(EnumType.STRING)
-    private EmployeeCategory category = EmployeeCategory.H;
+    private MissionType missionType;
+
+    @Enumerated(EnumType.STRING)
+    private EmployeeCategory employeeCategory;
+
+    private Long hotelFees;
+
+    private Long ressortExpenses;
 }
