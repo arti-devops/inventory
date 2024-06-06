@@ -30,9 +30,6 @@ public class MainAppLayout extends AppLayout  implements AppShellConfigurator {
     @Override
     public void configurePage(AppShellSettings settings) {
         AppShellConfigurator.super.configurePage(settings);
-        settings.addFavIcon("Favicon", "icons/favicon.png", "192x192");
+        settings.addFavIcon("icon", "icons/favicon.png", "192x192");
     }
-
-    
-
 }
