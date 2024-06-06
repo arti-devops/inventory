@@ -13,16 +13,14 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 @Route(value = "", layout = MainAppLayout.class)
-@Theme(value = "arti")
+
 @PageTitle("SGI ARTI | Portail")
-public class PortalView extends VerticalLayout implements AppShellConfigurator {
+public class PortalView extends VerticalLayout {
 
     HorizontalLayout itemContainer;
     HorizontalLayout externalAppsContainer;
