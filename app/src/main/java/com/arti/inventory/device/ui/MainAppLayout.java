@@ -14,7 +14,7 @@ public class MainAppLayout extends AppLayout {
 
     public MainAppLayout(){
         toggle = new DrawerToggle();
-        title = new H1("Inventaire ARTI");
+        title = new H1("SGI ARTI");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)").set("margin", "0");
 
         scroller = new Scroller(new AppNavigation());

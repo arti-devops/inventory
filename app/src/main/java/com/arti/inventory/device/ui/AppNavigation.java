@@ -10,10 +10,16 @@ public class AppNavigation extends Div{
     
     public AppNavigation(){
 
+        SideNav portal = new SideNav();
+        portal.setLabel("Portail");
+        portal.setWidthFull();
+        portal.addItem(
+            new SideNavItem("Accueil", "", VaadinIcon.HOME.create()));
+
         SideNav deviceNav = new SideNav();
         deviceNav.setLabel("Equipements");
         deviceNav.addItem(
-            new SideNavItem("Dashboard", "", VaadinIcon.DASHBOARD.create()),
+            new SideNavItem("Dashboard", "/dashboard", VaadinIcon.DASHBOARD.create()),
             new SideNavItem("Ordinateurs", "/computers", VaadinIcon.RECORDS.create()),
             new SideNavItem("Imprimantes", "/printers", VaadinIcon.RECORDS.create()),
             new SideNavItem("Téléphones IP", "/phones", VaadinIcon.RECORDS.create()));
@@ -42,7 +48,7 @@ public class AppNavigation extends Div{
             // new SideNavItem("Transports", "/transports", VaadinIcon.BUG.create())
             );
 
-        VerticalLayout navWrapper = new VerticalLayout(deviceNav, missionNav, vehiculeNav, adminNav);
+        VerticalLayout navWrapper = new VerticalLayout(portal, deviceNav, missionNav, vehiculeNav, adminNav);
         navWrapper.setSpacing(true);
         navWrapper.setSizeUndefined();
         deviceNav.setWidthFull();

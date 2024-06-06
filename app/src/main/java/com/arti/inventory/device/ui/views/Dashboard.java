@@ -17,7 +17,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-@Route(value = "", layout = MainAppLayout.class)
+@Route(value = "dashboard", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Dasboard")
 public class Dashboard extends VerticalLayout{
 
