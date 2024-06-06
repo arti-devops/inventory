@@ -14,8 +14,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 @Route(value = "printers", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Imprimantes")
+@PermitAll
 public class PrinterView extends VerticalLayout {
 
     H2 title = new H2("Imprimantes");

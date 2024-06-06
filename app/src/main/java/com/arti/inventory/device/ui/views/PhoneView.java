@@ -13,8 +13,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 @Route(value = "phones", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Téléphones")
+@PermitAll
 public class PhoneView extends VerticalLayout {
 
     H2 title = new H2("Téléphones");

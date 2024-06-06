@@ -24,7 +24,10 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 @Route(value = "missions", layout = MainAppLayout.class)
+@PermitAll
 public class MissionDetailsView extends VerticalLayout implements HasUrlParameter<Long> {
 
     private Mission mission;

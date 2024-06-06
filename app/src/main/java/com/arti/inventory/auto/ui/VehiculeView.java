@@ -15,7 +15,10 @@ import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 @Route(value = "vehicules", layout = MainAppLayout.class)
+@PermitAll
 public class VehiculeView extends VerticalLayout {
 
     public VehiculeView(VehiculeService service, MileageHistoryService mileageService) {

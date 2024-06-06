@@ -15,7 +15,10 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 @Route(value = "mileages", layout = MainAppLayout.class)
+@PermitAll
 public class MileageView extends VerticalLayout {
 
     public MileageView(MileageHistoryService service, VehiculeService vehiculeService) {
