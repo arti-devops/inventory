@@ -20,7 +20,10 @@ import com.vaadin.flow.component.shared.Tooltip;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 
+import jakarta.annotation.security.PermitAll;
+
 @Route(value = "missions", layout = MainAppLayout.class)
+@PermitAll
 public class MissionView extends VerticalLayout {
 
     public MissionView(MissionService service) {
