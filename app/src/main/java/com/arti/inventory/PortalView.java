@@ -37,11 +37,11 @@ public class PortalView extends VerticalLayout {
         externalAppsContainer = getInitializedContainer();
         Collection<PortalItemList> externalApps = new ArrayList<>();
         externalApps.add(new PortalItemList("SGI ARTI", "http://localhost:8080/dashboard", VaadinIcon.DASHBOARD.create()));
-        externalApps.add(new PortalItemList("SYGFP", "http://finances.arti.ci", VaadinIcon.MONEY.create()));
-        externalApps.add(new PortalItemList("Emeraude", "http://courrier.arti.ci", VaadinIcon.ENVELOPES.create()));
-        externalApps.add(new PortalItemList("Congés", "https://tinyurl.com/powerapp-arti", VaadinIcon.COMPILE.create()));
-        externalApps.add(new PortalItemList("Réservation", "https://tinyurl.com/powerapp-arti", VaadinIcon.CAR.create()));
-        externalApps.add(new PortalItemList("Portail MCI", "http://isanet.mcicareci.com:8036/", VaadinIcon.HEALTH_CARD.create()));
+        externalApps.add(new PortalItemList("SYGFP", "http://finances.arti.ci", VaadinIcon.MONEY.create(), "_blank"));
+        externalApps.add(new PortalItemList("Emeraude", "http://courrier.arti.ci", VaadinIcon.ENVELOPES.create(), "_blank"));
+        externalApps.add(new PortalItemList("Congés", "https://tinyurl.com/powerapp-arti", VaadinIcon.COMPILE.create(), "_blank"));
+        externalApps.add(new PortalItemList("Réservation", "https://tinyurl.com/powerapp-arti", VaadinIcon.CAR.create(), "_blank"));
+        externalApps.add(new PortalItemList("Portail MCI", "http://isanet.mcicareci.com:8036/", VaadinIcon.HEALTH_CARD.create(), "_blank"));
         externalApps.forEach(item -> addToExternalAppsContainer(item));
         
         itemContainer = getInitializedContainer();
@@ -124,6 +124,19 @@ public class PortalView extends VerticalLayout {
         String link;
         
         public PortalItemList(String label, String link, Icon icon){
+            this.icon = icon;
+            this.link = link;
+            this.label = new Span(label);
+            var item = configureItem();
+            add(item);
+        }
+
+        public PortalItemList(String label, String link, Icon icon, String target){
+            this(label, link, icon);
+            setTarget(target);
+        }
+
+        private HorizontalLayout configureItem() {
             getStyle().set("border-radius", "5px");
             setWidth("150px");
             setMinWidth("150px");
@@ -131,20 +144,16 @@ public class PortalView extends VerticalLayout {
             setClassName("portal-item");
             
             HorizontalLayout container = new HorizontalLayout();
-            //<theme-editor-local-classname>
             container.addClassName("portal-view-vertical-layout-1");
             container.setAlignItems(Alignment.CENTER);
             container.setMargin(true);
             
-            this.icon = icon;
             icon.setSize("40px");
             this.label = new Span(label);
-            this.link = link;
             container.add(this.icon, this.label);
 
-            setHref(this.link);
-            setTarget("_blank");
-            add(container);
+            setHref(link);
+            return container;
         }  
     }
 }
