@@ -2,7 +2,7 @@ package com.arti.inventory.mission.ui;
 
 import org.vaadin.crudui.crud.impl.GridCrud;
 
-import com.arti.inventory.device.ui.MainAppLayout;
+import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.model.MissionType;
 import com.arti.inventory.mission.backend.model.Status;

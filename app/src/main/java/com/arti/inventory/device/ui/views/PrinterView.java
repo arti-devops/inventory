@@ -2,9 +2,9 @@ package com.arti.inventory.device.ui.views;
 
 import org.vaadin.crudui.crud.impl.GridCrud;
 
+import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.device.backend.model.Printer;
 import com.arti.inventory.device.backend.service.PrinterService;
-import com.arti.inventory.device.ui.MainAppLayout;
 import com.arti.inventory.device.ui.component.DeviceStatusRenderer;
 import com.arti.inventory.device.ui.render.SqlDateTimeRenderer;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;

@@ -3,11 +3,11 @@ package com.arti.inventory.auto.ui;
 import org.vaadin.crudui.crud.impl.GridCrud;
 import org.vaadin.crudui.form.impl.field.provider.ComboBoxProvider;
 
+import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.auto.backend.model.MileageHistory;
 import com.arti.inventory.auto.backend.model.Vehicule;
 import com.arti.inventory.auto.backend.service.MileageHistoryService;
 import com.arti.inventory.auto.backend.service.VehiculeService;
-import com.arti.inventory.device.ui.MainAppLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

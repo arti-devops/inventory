@@ -2,9 +2,9 @@ package com.arti.inventory.device.ui.views;
 
 import org.vaadin.crudui.crud.impl.GridCrud;
 
+import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.device.backend.model.Address;
 import com.arti.inventory.device.backend.service.AddressService;
-import com.arti.inventory.device.ui.MainAppLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;

@@ -1,4 +1,4 @@
-package com.arti.inventory.device.ui;
+package com.arti.inventory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

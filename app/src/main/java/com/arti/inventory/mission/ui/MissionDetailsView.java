@@ -3,7 +3,7 @@ package com.arti.inventory.mission.ui;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.impl.GridCrud;
 
-import com.arti.inventory.device.ui.MainAppLayout;
+import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.mission.backend.model.Employee;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;

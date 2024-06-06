@@ -2,9 +2,9 @@ package com.arti.inventory.device.ui.views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.device.backend.model.Printer;
 import com.arti.inventory.device.backend.service.PrinterService;
-import com.arti.inventory.device.ui.MainAppLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H5;
 import com.vaadin.flow.component.html.Paragraph;

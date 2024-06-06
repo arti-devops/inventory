@@ -1,10 +1,10 @@
 package com.arti.inventory.device.ui.views;
 
+import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.device.backend.model.DeviceStats;
 import com.arti.inventory.device.backend.service.ComputerService;
 import com.arti.inventory.device.backend.service.PhoneService;
 import com.arti.inventory.device.backend.service.PrinterService;
-import com.arti.inventory.device.ui.MainAppLayout;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;

@@ -1,4 +1,4 @@
-package com.arti.inventory.device.ui;
+package com.arti.inventory;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
