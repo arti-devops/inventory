@@ -4,7 +4,7 @@ ENV SPRING_ACTIVE_PROFILE=prod
 WORKDIR /build
 COPY pom.xml .
 COPY src ./src
-RUN mvn clean install -P production
+RUN mvn clean package -Pproduction
 
 # Deploy stage
 FROM eclipse-temurin:21-jre
