@@ -23,8 +23,8 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 @AnonymousAllowed
 public class PortalView extends VerticalLayout {
 
-    HorizontalLayout itemContainer;
-    HorizontalLayout externalAppsContainer;
+    VerticalLayout itemContainer;
+    VerticalLayout externalAppsContainer;
 
     public PortalView() {
         addClassName("portal-view");
@@ -36,12 +36,15 @@ public class PortalView extends VerticalLayout {
 
         externalAppsContainer = getInitializedContainer();
         Collection<PortalItemList> externalApps = new ArrayList<>();
-        externalApps.add(new PortalItemList("SGI ARTI", "http://localhost:8080/dashboard", VaadinIcon.DASHBOARD.create()));
+        // externalApps.add(new PortalItemList("SGI ARTI", "http://localhost:8080/dashboard", VaadinIcon.DASHBOARD.create()));
         externalApps.add(new PortalItemList("SYGFP", "http://finances.arti.ci", VaadinIcon.MONEY.create(), "_blank"));
         externalApps.add(new PortalItemList("Emeraude", "http://courrier.arti.ci", VaadinIcon.ENVELOPES.create(), "_blank"));
-        externalApps.add(new PortalItemList("Congés", "https://tinyurl.com/powerapp-arti", VaadinIcon.COMPILE.create(), "_blank"));
-        externalApps.add(new PortalItemList("Réservation", "https://tinyurl.com/powerapp-arti", VaadinIcon.CAR.create(), "_blank"));
-        externalApps.add(new PortalItemList("Portail MCI", "http://isanet.mcicareci.com:8036/", VaadinIcon.HEALTH_CARD.create(), "_blank"));
+        externalApps.add(new PortalItemList("Gestion des Congés et Absences", "https://tinyurl.com/powerapp-arti", VaadinIcon.COMPILE.create(), "_blank"));
+        externalApps.add(new PortalItemList("Gestion des Equipements", "/dashboard", VaadinIcon.RECORDS.create()));
+        externalApps.add(new PortalItemList("Gestion des Véhicules", "https://tinyurl.com/powerapp-arti", VaadinIcon.CAR.create(), "_blank"));
+        externalApps.add(new PortalItemList("Gestion des Missions", "/missions", VaadinIcon.AIRPLANE.create()));
+        externalApps.add(new PortalItemList("Gestion des Immobilisations", "http://srv-immo.arti.local/arti/public/", VaadinIcon.BUILDING.create(), "_blank"));
+        externalApps.add(new PortalItemList("Logiciel de Santé MCI", "http://isanet.mcicareci.com:8036/", VaadinIcon.HEALTH_CARD.create(), "_blank"));
         externalApps.forEach(item -> addToExternalAppsContainer(item));
         
         itemContainer = getInitializedContainer();
@@ -60,7 +63,7 @@ public class PortalView extends VerticalLayout {
         DetailsContent detailsContent = new DetailsContent();
         detailsContent.add(logoLayout, externalAppsContainer);
         SplitLayout splitLayout = new SplitLayout(masterContent, detailsContent);
-        splitLayout.setSplitterPosition(75);
+        splitLayout.setSplitterPosition(70);
         splitLayout.setHeightFull();
 
         setSizeFull();
@@ -68,12 +71,12 @@ public class PortalView extends VerticalLayout {
         add(splitLayout);
     }
 
-    private HorizontalLayout getInitializedContainer() {
-        HorizontalLayout container = new HorizontalLayout();
+    private VerticalLayout getInitializedContainer() {
+        VerticalLayout container = new VerticalLayout();
         container.setSpacing(true);
         container.setPadding(true);
         container.getStyle().set("border-radius", "5px");
-        container.setClassName(LumoUtility.FlexWrap.WRAP);
+        // container.setClassName(LumoUtility.FlexWrap.WRAP);
         return container;
     }
 
@@ -89,10 +92,12 @@ public class PortalView extends VerticalLayout {
 
     private class MasterContent extends VerticalLayout{
         public MasterContent(){
-            H1 title = new H1("SGI ARTI");
+            H1 title = new H1("PORTAIL ARTI");
             title.getStyle().set("color", "white");
-            title.getStyle().set("font-size", "60px");
-            Span subtitle1 = createTexte("Bienvenue sur le portail de la Société Générale d'Informatique ARTI. Vous pouvez accéder à nos applications en cliquant sur les liens ci-dessous.");
+            title.getStyle().setFont("bold 50px oswald");
+            Span subtitle1 = createTexte("Bienvenue sur le portail de l'Autorité de Régulation du Transport Intérieur.");
+            subtitle1.getStyle().setFont("bold 40px Arial, sans-serif");
+            subtitle1.setWidth("80%");
             addClassName(LumoUtility.JustifyContent.CENTER);
             addClassName(LumoUtility.AlignItems.CENTER);
             add(title, subtitle1);
@@ -137,22 +142,28 @@ public class PortalView extends VerticalLayout {
         }
 
         private HorizontalLayout configureItem() {
+            icon.setSize("20px");
+            this.label = new Span(label);
+
             getStyle().set("border-radius", "5px");
-            setWidth("150px");
-            setMinWidth("150px");
-            setMaxHeight("75px");
             setClassName("portal-item");
             
+            VerticalLayout containerLeft = new VerticalLayout();
+            containerLeft.add(icon);
+            containerLeft.setWidth("35px");
+            VerticalLayout containerRight = new VerticalLayout();
+            containerRight.add(label);
+            containerRight.addClassName("portal-item-label");
+
             HorizontalLayout container = new HorizontalLayout();
-            container.addClassName("portal-view-vertical-layout-1");
+            container.setMargin(false);
             container.setAlignItems(Alignment.CENTER);
-            container.setMargin(true);
             
-            icon.setSize("40px");
-            this.label = new Span(label);
-            container.add(this.icon, this.label);
+            container.add(containerLeft, containerRight);
+            container.setFlexGrow(1, containerRight);
 
             setHref(link);
+            setSizeFull();
             return container;
         }  
     }

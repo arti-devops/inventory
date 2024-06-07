@@ -4,7 +4,7 @@
  */
 
 .portal-view {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.5)), url('images/bg.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('images/bg.png');
     background-color: rgba(19, 5, 120, 0);
     background-size: cover;
     background-repeat: no-repeat;
@@ -28,4 +28,10 @@
     text-decoration: none;
     box-shadow: 0 3px 18px -2px hsla(214, 53%, 23%, 0.16), 0 12px 48px -6px hsla(214, 47%, 21%, 0.38);
     transition: box-shadow 0.3s ease;
+}
+
+.portal-item-label {
+    color: white;
+    background-color: var(--lumo-primary-text-color);
+    border-radius: 0px 5px 5px 0px;
 }
