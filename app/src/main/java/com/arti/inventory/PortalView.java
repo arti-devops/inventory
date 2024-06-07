@@ -39,9 +39,9 @@ public class PortalView extends VerticalLayout {
         // externalApps.add(new PortalItemList("SGI ARTI", "http://localhost:8080/dashboard", VaadinIcon.DASHBOARD.create()));
         externalApps.add(new PortalItemList("SYGFP", "http://finances.arti.ci", VaadinIcon.MONEY.create(), "_blank"));
         externalApps.add(new PortalItemList("Emeraude", "http://courrier.arti.ci", VaadinIcon.ENVELOPES.create(), "_blank"));
-        externalApps.add(new PortalItemList("Gestion des Congés et Absences", "https://tinyurl.com/powerapp-arti", VaadinIcon.COMPILE.create(), "_blank"));
+        externalApps.add(new PortalItemList("Gestion des Congés et Absences", "https://tinyurl.com/arti-conges", VaadinIcon.COMPILE.create(), "_blank"));
         externalApps.add(new PortalItemList("Gestion des Equipements", "/dashboard", VaadinIcon.RECORDS.create()));
-        externalApps.add(new PortalItemList("Gestion des Véhicules", "https://tinyurl.com/powerapp-arti", VaadinIcon.CAR.create(), "_blank"));
+        externalApps.add(new PortalItemList("Gestion des Véhicules", "https://tinyurl.com/arti-vehicules", VaadinIcon.CAR.create(), "_blank"));
         externalApps.add(new PortalItemList("Gestion des Missions", "/missions", VaadinIcon.AIRPLANE.create()));
         externalApps.add(new PortalItemList("Gestion des Immobilisations", "http://srv-immo.arti.local/arti/public/", VaadinIcon.BUILDING.create(), "_blank"));
         externalApps.add(new PortalItemList("Logiciel de Santé MCI", "http://isanet.mcicareci.com:8036/", VaadinIcon.HEALTH_CARD.create(), "_blank"));
