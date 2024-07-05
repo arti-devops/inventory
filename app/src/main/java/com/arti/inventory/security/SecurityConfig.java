@@ -25,10 +25,26 @@ public class SecurityConfig extends VaadinWebSecurity {
 
     @Bean
     UserDetailsManager userDetailsManager() {
-        var userDetails = User.withUsername("user")
+        var admin = User.withUsername("admin")
+                .password("{noop}password")
+                .roles("ADMIN")
+                .build();
+        var dg = User.withUsername("dg")
+                .password("{noop}password")
+                .roles("DG")
+                .build();
+        var rh = User.withUsername("rh")
+                .password("{noop}password")
+                .roles("RH")
+                .build();
+        var staff = User.withUsername("agent")
+                .password("{noop}password")
+                .roles("STAFF")
+                .build();
+        var user = User.withUsername("user")
                 .password("{noop}password")
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(userDetails);
+        return new InMemoryUserDetailsManager(admin, dg, rh, staff, user);
     }
 }
