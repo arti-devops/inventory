@@ -12,6 +12,7 @@ import com.arti.inventory.mission.backend.service.MemberService;
 import com.arti.inventory.mission.backend.service.MissionService;
 import com.arti.inventory.mission.ui.component.RenderMoney;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
@@ -23,6 +24,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import jakarta.annotation.security.PermitAll;
 
@@ -63,11 +65,17 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         );
 
         HorizontalLayout badgeLayout = new HorizontalLayout();
+        badgeLayout.setWidthFull();
+        badgeLayout.addClassName(LumoUtility.JustifyContent.BETWEEN);
         Paragraph missionType = new Paragraph(MissionService.getMissionType(mission.getType()));
         missionType.getElement().setAttribute("theme", "badge contrast primary");
         Paragraph missionStatus = new Paragraph(MissionService.getMissionStatus(mission.getStatus()));
         missionStatus.getElement().setAttribute("theme",MissionService.getMissionStatusTheme(mission.getStatus()));
-        badgeLayout.add(missionType, missionStatus);
+        Button validationBtn = new Button("Valider la mission");
+        validationBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        HorizontalLayout badgeSection = new HorizontalLayout();
+        badgeSection.add(missionType, missionStatus);
+        badgeLayout.add(badgeSection, validationBtn);
 
         HorizontalLayout detailsLayout = new HorizontalLayout();
         detailsLayout.setWidth("100%");
