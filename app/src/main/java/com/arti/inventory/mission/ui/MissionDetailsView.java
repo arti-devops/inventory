@@ -11,6 +11,7 @@ import com.arti.inventory.mission.backend.service.EmployeeService;
 import com.arti.inventory.mission.backend.service.MemberService;
 import com.arti.inventory.mission.backend.service.MissionService;
 import com.arti.inventory.mission.ui.component.RenderMoney;
+import com.arti.inventory.security.AuthService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -24,6 +25,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.security.AuthenticationContext;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import jakarta.annotation.security.PermitAll;
@@ -43,6 +45,11 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     @Autowired
     EmployeeService employeeService;
 
+    AuthService auth;
+
+    @Autowired
+    AuthenticationContext authenticationContext;
+
     @Override
     public void setParameter(BeforeEvent event, Long missionId) {
         try {
@@ -55,6 +62,8 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             event.rerouteTo("missions");
             return;
         }
+
+        auth = new AuthService(authenticationContext);
 
         Paragraph missionSubject = new Paragraph();
         missionSubject.setText(mission.getSubject());
@@ -75,7 +84,11 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         validationBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         HorizontalLayout badgeSection = new HorizontalLayout();
         badgeSection.add(missionType, missionStatus);
-        badgeLayout.add(badgeSection, validationBtn);
+        if (auth.isAdmin()) {
+            badgeLayout.add(badgeSection, validationBtn);
+        }else{
+            badgeLayout.add(badgeSection);
+        }
 
         HorizontalLayout detailsLayout = new HorizontalLayout();
         detailsLayout.setWidth("100%");
