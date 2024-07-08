@@ -36,20 +36,18 @@ import jakarta.annotation.security.RolesAllowed;
 public class MissionDetailsView extends VerticalLayout implements HasUrlParameter<Long> {
 
     private Mission mission;
-
+    
     @Autowired
     private MissionService missionService;
-
     @Autowired
     private MemberService memberService;
-
     @Autowired
     EmployeeService employeeService;
-
-    AuthService auth;
-
     @Autowired
     AuthenticationContext authenticationContext;
+    
+    AuthService auth;
+    Long deleteCount = 0L;
 
     HorizontalLayout badgeLayout = new HorizontalLayout();
     HorizontalLayout badgeSection = new HorizontalLayout();
@@ -227,9 +225,10 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         });
 
         crud.setDeleteOperation(member -> {
+            deleteCount += 1;
             mission.setTotalBudget(mission.getTotalBudget() - member.getTotalBudget());
             totalBudgetItem.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
-            membersItem.setValue(String.valueOf(mission.getMembers().size()-1), "personne(s)");
+            membersItem.setValue(String.valueOf(mission.getMembers().size()-deleteCount), "personne(s)");
             memberService.delete(member);
         });
 
