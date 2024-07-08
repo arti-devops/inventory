@@ -19,12 +19,13 @@ public class AuthService {
     }
 
     public boolean isAdmin() {
+        System.out.println(user);
         return user.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> "ADMIN".equals(grantedAuthority.getAuthority()));
+                .anyMatch(grantedAuthority -> "ROLE_ADMIN".equals(grantedAuthority.getAuthority()));
     }
 
     public boolean is(String role) {
         return user.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> role.equals(grantedAuthority.getAuthority()));
+                .anyMatch(grantedAuthority -> String.valueOf("ROLE_" + role).equals(grantedAuthority.getAuthority()));
     }
 }
