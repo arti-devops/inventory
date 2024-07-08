@@ -39,6 +39,8 @@ public class Mission {
     private Long numberOfDays;
     @Enumerated(EnumType.STRING)
     private Status status = Status.PENDING;
+    private Status validationRH = Status.PENDING;
+    private Status validationDG = Status.PENDING;
     private Long totalBudget;
     private transient Collection<Member> members;
 }

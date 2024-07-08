@@ -7,6 +7,7 @@ import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.mission.backend.model.Employee;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
+import com.arti.inventory.mission.backend.model.Status;
 import com.arti.inventory.mission.backend.service.EmployeeService;
 import com.arti.inventory.mission.backend.service.MemberService;
 import com.arti.inventory.mission.backend.service.MissionService;
@@ -28,10 +29,10 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "missions", layout = MainAppLayout.class)
-@PermitAll
+@RolesAllowed({"ADMIN","RH","DG"})
 public class MissionDetailsView extends VerticalLayout implements HasUrlParameter<Long> {
 
     private Mission mission;
@@ -49,6 +50,23 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
 
     @Autowired
     AuthenticationContext authenticationContext;
+
+    HorizontalLayout badgeLayout = new HorizontalLayout();
+    HorizontalLayout badgeSection = new HorizontalLayout();
+    HorizontalLayout buttonSection = new HorizontalLayout();
+
+    Button rejectBtn = new Button("Rejeter");        
+    Button validationBtn = new Button("Approuver la mission");
+
+    MissionDetailsItem membersItem;
+    MissionDetailsItem totalBudgetItem;
+
+    Paragraph missionType;
+    Paragraph missionStatus;
+    Paragraph missionValidationRH;
+    Paragraph missionValidationDG;
+
+    GridCrud<Member> crud;
 
     @Override
     public void setParameter(BeforeEvent event, Long missionId) {
@@ -72,41 +90,61 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             new H2("Page de détails"), 
             new HorizontalLayout(new Paragraph("Page de détails de la mission:"), missionSubject)
         );
-
-        HorizontalLayout badgeLayout = new HorizontalLayout();
+        
+        // Configure badge Layout
         badgeLayout.setWidthFull();
         badgeLayout.addClassName(LumoUtility.JustifyContent.BETWEEN);
-        Paragraph missionType = new Paragraph(MissionService.getMissionType(mission.getType()));
-        missionType.getElement().setAttribute("theme", "badge contrast primary");
-        Paragraph missionStatus = new Paragraph(MissionService.getMissionStatus(mission.getStatus()));
-        missionStatus.getElement().setAttribute("theme",MissionService.getMissionStatusTheme(mission.getStatus()));
-        Button validationBtn = new Button("Valider la mission");
-        validationBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        HorizontalLayout badgeSection = new HorizontalLayout();
-        badgeSection.add(missionType, missionStatus);
+        configureBadgeSection();
+        
         if (auth.isAdmin()) {
-            badgeLayout.add(badgeSection, validationBtn);
-        }else{
+            configureButtonSectionDG();
+            badgeLayout.add(badgeSection, buttonSection);
+        }else if(auth.is("RH")){
+            configureButtonSectionRH();
+            badgeLayout.add(badgeSection, buttonSection);
+        }
+        else{
             badgeLayout.add(badgeSection);
         }
 
         HorizontalLayout detailsLayout = new HorizontalLayout();
         detailsLayout.setWidth("100%");
-        MissionDetailsItem location = new MissionDetailsItem("Lieu", mission.getLocation(), "", VaadinIcon.LOCATION_ARROW_CIRCLE_O);
-        MissionDetailsItem numberOfDays = new MissionDetailsItem("Durée", String.valueOf(mission.getNumberOfDays()), "jours", VaadinIcon.CALENDAR_CLOCK);
-        MissionDetailsItem dateOfDeparture = new MissionDetailsItem("Départ", mission.getDateOfDeparture().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
-        MissionDetailsItem dateOfReturn = new MissionDetailsItem("Retour", mission.getDateOfReturn().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
-        MissionDetailsItem members = new MissionDetailsItem("Participants", String.valueOf(mission.getMembers().size()), "personne(s)", VaadinIcon.USERS);
-        MissionDetailsItem totalBudget = new MissionDetailsItem("Budget", String.format("%,d", mission.getTotalBudget()), "FCFA", VaadinIcon.MONEY);
-        detailsLayout.add(location, numberOfDays, dateOfDeparture, dateOfReturn, members, totalBudget);
+        MissionDetailsItem locationItem = new MissionDetailsItem("Lieu", mission.getLocation(), "", VaadinIcon.LOCATION_ARROW_CIRCLE_O);
+        MissionDetailsItem numberOfDaysItem = new MissionDetailsItem("Durée", String.valueOf(mission.getNumberOfDays()), "jours", VaadinIcon.CALENDAR_CLOCK);
+        MissionDetailsItem dateOfDepartureItem = new MissionDetailsItem("Départ", mission.getDateOfDeparture().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
+        MissionDetailsItem dateOfReturnItem = new MissionDetailsItem("Retour", mission.getDateOfReturn().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
+        membersItem = new MissionDetailsItem("Participants", String.valueOf(mission.getMembers().size()), "personne(s)", VaadinIcon.USERS);
+        totalBudgetItem = new MissionDetailsItem("Budget", String.format("%,d", mission.getTotalBudget()), "FCFA", VaadinIcon.MONEY);
+        detailsLayout.add(locationItem, numberOfDaysItem, dateOfDepartureItem, dateOfReturnItem, membersItem, totalBudgetItem);
         
         // Mission members
-        GridCrud<Member> crud = new GridCrud<>(Member.class);
-        crud.setCrudListener(memberService);
-        crud.setRowCountCaption("%d membre(s) trouvé(s)");
-        crud.setFindAllOperation(() -> memberService.findMissionMembers(missionId));
-        crud.getGrid().setColumns("employee", "dateOfDeparture", "dateOfReturn", "numberOfDays", "transportation", "mobility", "hotelFees", "ressortExpenses", "mobilityGasFees", "totalBudget");
+        configureMissionMembersGrid(missionId);
+        configureMissionMemberGridColumns();
+        configureValidationButtonsAccess();
 
+        // Form configuration
+        configureMissionMemberCrudForm();
+
+        // FORM CRUD OPERATIONS
+        configureCrudOperations();
+        configureCrudOpVisibility();
+
+        setSizeFull();
+        add(badgeLayout, detailsLayout, new Span("Liste de participants à la mission"), crud);
+    }
+
+    private void configureMissionMemberCrudForm() {
+        crud.getCrudFormFactory().setVisibleProperties("employee", "dateOfDeparture", "dateOfReturn", "transportation", "mobility");
+        crud.getCrudFormFactory().setFieldProvider("employee", member -> {
+            ComboBox<Employee> employeeComboBox = new ComboBox<>("Participant");
+            employeeComboBox.setItems(employeeService.findAll());
+            employeeComboBox.setItemLabelGenerator(employee -> employee.getFirstName() + " " + employee.getLastName());
+            return employeeComboBox;
+        });
+        crud.getCrudFormFactory().setFieldCaptions("Participant", "Départ", "Retour", "Transport", "Mobilité");
+    }
+
+    private void configureMissionMemberGridColumns() {
         crud.getGrid().getColumnByKey("employee").setRenderer(new ComponentRenderer<>(member -> {
             Employee employee = member.getEmployee();
             return new Span(employee.getFirstName() + " " + employee.getLastName());
@@ -158,34 +196,40 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             layout.add(download1, download2);
             return layout;
         })).setHeader("Télécharger");
+    }
 
+    private void configureMissionMembersGrid(Long missionId) {
+        crud = new GridCrud<>(Member.class);
+        crud.setCrudListener(memberService);
+        crud.setRowCountCaption("%d membre(s) trouvé(s)");
+        crud.setFindAllOperation(() -> memberService.findMissionMembers(missionId));
+        crud.getGrid().setColumns("employee", "dateOfDeparture", "dateOfReturn", "numberOfDays", "transportation", "mobility", "hotelFees", "ressortExpenses", "mobilityGasFees", "totalBudget");
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
+    }
 
-        // Form configuration
-        crud.getCrudFormFactory().setVisibleProperties("employee", "dateOfDeparture", "dateOfReturn", "transportation", "mobility");
-        crud.getCrudFormFactory().setFieldProvider("employee", member -> {
-            ComboBox<Employee> employeeComboBox = new ComboBox<>("Participant");
-            employeeComboBox.setItems(employeeService.findAll());
-            employeeComboBox.setItemLabelGenerator(employee -> employee.getFirstName() + " " + employee.getLastName());
-            return employeeComboBox;
-        });
-        crud.getCrudFormFactory().setFieldCaptions("Participant", "Départ", "Retour", "Transport", "Mobilité");
+    private void configureCrudOpVisibility() {
+        if (/*mission.getValidationRH()==Status.APPROVED || */mission.getStatus()==Status.APPROVED || mission.getStatus()==Status.REJECTED) {
+            crud.setAddOperationVisible(false);
+            crud.setDeleteOperationVisible(false);
+            crud.setUpdateOperationVisible(false);
+            crud.setFindAllOperationVisible(false);
+        }
+    }
 
-        // FORM CRUD OPERATIONS
+    private void configureCrudOperations() {
         crud.setAddOperation(member -> {
             Member m = memberService.add(member, mission);
             mission.setTotalBudget(mission.getTotalBudget() + m.getTotalBudget());
             mission.getMembers().add(m);
-            totalBudget.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
-            members.setValue(String.valueOf(mission.getMembers().size()), "personne(s)");
+            totalBudgetItem.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
+            membersItem.setValue(String.valueOf(mission.getMembers().size()), "personne(s)");
             return m;
         });
 
         crud.setDeleteOperation(member -> {
             mission.setTotalBudget(mission.getTotalBudget() - member.getTotalBudget());
-            mission.getMembers().remove(member);
-            totalBudget.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
-            members.setValue(String.valueOf(mission.getMembers().size()), "personne(s)");
+            totalBudgetItem.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
+            membersItem.setValue(String.valueOf(mission.getMembers().size()-1), "personne(s)");
             memberService.delete(member);
         });
 
@@ -193,12 +237,92 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             Member m = memberService.add(member, mission);
             mission.setTotalBudget(mission.getTotalBudget() + m.getTotalBudget());
             mission.getMembers().add(m);
-            totalBudget.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
+            totalBudgetItem.setValue(String.format("%,d", mission.getTotalBudget()), "FCFA");
             return m;
         });
+    }
 
-        setSizeFull();
-        add(badgeLayout, detailsLayout, new Span("Liste de membres"), crud);
+    private void configureButtonSectionRH() {
+        validationBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        validationBtn.addClickListener(validateMission -> {
+            // Validate mission
+            // Save new mission status
+            // Reload badge status
+            mission.setValidationRH(Status.APPROVED);
+            // mission.setStatus(Status.APPROVED);
+            configureBadgeSection();
+            configureCrudOpVisibility();
+            missionService.update(mission);
+            configureValidationButtonsAccess();
+        });
+        buttonSection.add(validationBtn);
+    }
+
+    private void configureButtonSectionDG() {
+        validationBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        validationBtn.addClickListener(validateMission -> {
+            // Validate mission
+            // Save new mission status
+            // Reload badge status
+            mission.setValidationDG(Status.APPROVED);
+            configureBadgeSection();
+            configureCrudOpVisibility();
+            missionService.update(mission);
+            configureValidationButtonsAccess();
+        });
+        rejectBtn.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        rejectBtn.addClickListener(rejectMission -> {
+            // Reject mission
+            // Save new mission status
+            // Reload badge status
+            mission.setValidationDG(Status.REJECTED);
+            mission.setStatus(Status.REJECTED);
+            configureBadgeSection();
+            configureCrudOpVisibility();
+            missionService.update(mission);
+            configureValidationButtonsAccess();
+        });
+        buttonSection.add(rejectBtn, validationBtn);
+    }
+
+    private void configureValidationButtonsAccess(){
+        if (mission.getStatus()==Status.APPROVED || mission.getStatus()==Status.REJECTED) {
+            validationBtn.setEnabled(false);
+            rejectBtn.setEnabled(false);
+        }
+
+        if (auth.isAdmin()) {
+            if (mission.getValidationRH()==Status.PENDING || mission.getValidationRH()==Status.REJECTED) {
+                validationBtn.setEnabled(false);
+                rejectBtn.setEnabled(false);
+            }
+        }
+
+        if (auth.is("RH")) {
+            if (mission.getValidationRH()==Status.APPROVED) {
+                validationBtn.setEnabled(false);
+            }
+        }
+    }
+
+    private void configureBadgeSection() {
+        badgeSection.removeAll();
+        missionType = new Paragraph(MissionService.getMissionType(mission.getType()));
+        missionType.getElement().setAttribute("theme", "badge contrast primary");
+        missionStatus = new Paragraph(MissionService.getMissionStatus(mission.getStatus()));
+        missionStatus.getElement().setAttribute("theme",MissionService.getMissionStatusTheme(mission.getStatus()));
+        missionValidationRH = new Paragraph("RH: "+MissionService.getMissionStatus(mission.getValidationRH()));
+        missionValidationRH.getElement().setAttribute("theme",MissionService.getMissionStatusTheme(mission.getValidationRH()));
+        missionValidationDG = new Paragraph("DG: "+MissionService.getMissionStatus(mission.getValidationDG()));
+        missionValidationDG.getElement().setAttribute("theme",MissionService.getMissionStatusTheme(mission.getValidationDG()));
+        
+        badgeSection.add(missionType);
+
+        if (mission.getStatus()==Status.APPROVED || mission.getStatus()==Status.REJECTED) {
+            badgeSection.add(missionStatus);
+        }else{
+            badgeSection.add(missionValidationRH, missionValidationDG);
+        }
     }
 
     private class MissionDetailsItem extends VerticalLayout{
