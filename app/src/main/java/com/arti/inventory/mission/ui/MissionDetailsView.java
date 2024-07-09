@@ -196,9 +196,12 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             Button download1 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
             download1.setTooltipText("Fiche de mission");
             download1a.add(download1);
+            Anchor download2a = new Anchor();
+            download2a.setHref(printPdfService.printMissionOrderFile(this.mission, member));
             Button download2 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
             download2.setTooltipText("Ordre de mission");
-            layout.add(download1a, download2);
+            download2a.add(download2);
+            layout.add(download1a, download2a);
             return layout;
         })).setHeader("Télécharger");
     }

@@ -23,9 +23,9 @@ public class PdfService {
     @Autowired
     QRCodeService qrCodeService;
 
-    public byte[] fillPdfForm(Map<String, String> fieldValues) throws IOException {
+    public byte[] fillPdfForm(Map<String, String> fieldValues, String template) throws IOException {
         // Load the existing PDF document
-        PdfReader reader = new PdfReader("pdf/fiche-de-mission.pdf");
+        PdfReader reader = new PdfReader("pdf/"+template+".pdf");
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfWriter writer = new PdfWriter(outputStream);
 
