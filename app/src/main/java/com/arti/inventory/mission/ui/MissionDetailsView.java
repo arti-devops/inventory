@@ -202,6 +202,10 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             download2.setTooltipText("Ordre de mission");
             download2a.add(download2);
             layout.add(download1a, download2a);
+            if(mission.getStatus()==Status.REJECTED || mission.getStatus()==Status.PENDING){
+                download1a.setEnabled(false);
+                download2a.setEnabled(false);
+            }
             return layout;
         })).setHeader("Télécharger");
     }
