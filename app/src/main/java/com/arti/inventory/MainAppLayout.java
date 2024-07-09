@@ -2,6 +2,7 @@ package com.arti.inventory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.arti.inventory.security.AuthService;
 import com.arti.inventory.security.SecurityService;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -14,6 +15,7 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.dom.Style.AlignSelf;
 import com.vaadin.flow.server.AppShellSettings;
+import com.vaadin.flow.spring.security.AuthenticationContext;
 import com.vaadin.flow.theme.Theme;
 
 @Theme(value = "arti")
@@ -30,12 +32,21 @@ public class MainAppLayout extends AppLayout  implements AppShellConfigurator {
     @Autowired
     SecurityService securityService;
 
-    public MainAppLayout(){
+    AuthService auth;
+
+    public MainAppLayout(AuthenticationContext authenticationContext){
+        
+        if (authenticationContext.isAuthenticated()) {
+            auth = new AuthService(authenticationContext);
+            logout = createLogoutButton();
+        }else{
+            logout = new Button("Not loggedIn");
+        }
+        
         toggle = new DrawerToggle();
         title = createAppTitle();
 
         scroller = new Scroller(new AppNavigation());
-        logout = createLogoutButton();
 
         navLayout = createNavLayout();
         navLayoutLeftContainer = createNavLayoutLeftContainer();
@@ -46,7 +57,7 @@ public class MainAppLayout extends AppLayout  implements AppShellConfigurator {
     }
 
     private Button createLogoutButton() {
-        logout = new Button("Déconnexion");
+        logout = new Button(auth.getUsername().toUpperCase()+": Déconnexion");
         logout.getStyle().setAlignSelf(AlignSelf.END);
         logout.getStyle().setMarginRight("1em");
         logout.addClickListener(e -> {
