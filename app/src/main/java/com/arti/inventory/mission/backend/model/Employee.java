@@ -24,6 +24,9 @@ public class Employee {
     private String position;
     private String email;
     private String photoUrl;
+    private String matricule;
     @Enumerated(EnumType.STRING)
     private EmployeeCategory category = EmployeeCategory.H;
+    @Enumerated(EnumType.STRING)
+    private EmployeeGender gender = EmployeeGender.M;
 }

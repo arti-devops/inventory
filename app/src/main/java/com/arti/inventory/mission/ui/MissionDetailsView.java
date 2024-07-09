@@ -11,11 +11,13 @@ import com.arti.inventory.mission.backend.model.Status;
 import com.arti.inventory.mission.backend.service.EmployeeService;
 import com.arti.inventory.mission.backend.service.MemberService;
 import com.arti.inventory.mission.backend.service.MissionService;
+import com.arti.inventory.mission.backend.service.PrintPdfService;
 import com.arti.inventory.mission.ui.component.RenderMoney;
 import com.arti.inventory.security.AuthService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -42,9 +44,11 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     @Autowired
     private MemberService memberService;
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
     @Autowired
-    AuthenticationContext authenticationContext;
+    private AuthenticationContext authenticationContext;
+    @Autowired
+    private PrintPdfService printPdfService;
     
     AuthService auth;
     Long deleteCount = 0L;
@@ -185,13 +189,16 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             return new RenderMoney(member.getTotalBudget());
         })).setHeader("Budget");
 
-        crud.getGrid().addColumn(new ComponentRenderer<>(mission -> {
+        crud.getGrid().addColumn(new ComponentRenderer<>(member -> {
             HorizontalLayout layout = new HorizontalLayout();
+            Anchor download1a = new Anchor();
+            download1a.setHref(printPdfService.printMissionDetailsFile(this.mission, member));
             Button download1 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
-            download1.setTooltipText("Ordre de mission");
+            download1.setTooltipText("Fiche de mission");
+            download1a.add(download1);
             Button download2 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
-            download2.setTooltipText("Fiche de mission");
-            layout.add(download1, download2);
+            download2.setTooltipText("Ordre de mission");
+            layout.add(download1a, download2);
             return layout;
         })).setHeader("Télécharger");
     }

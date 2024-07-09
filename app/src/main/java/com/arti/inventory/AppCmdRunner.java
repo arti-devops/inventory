@@ -19,6 +19,7 @@ import com.arti.inventory.device.backend.repository.PhoneRepository;
 import com.arti.inventory.device.backend.repository.PrinterRepository;
 import com.arti.inventory.mission.backend.model.Employee;
 import com.arti.inventory.mission.backend.model.EmployeeCategory;
+import com.arti.inventory.mission.backend.model.EmployeeGender;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.model.MissionType;
@@ -89,7 +90,9 @@ public class AppCmdRunner implements CommandLineRunner{
             employee.setPosition(faker.company().profession());
             employee.setEmail(faker.internet().emailAddress());
             employee.setPhotoUrl(faker.internet().avatar());
+            employee.setMatricule(faker.code().ean8());
             employee.setCategory(EmployeeCategory.values()[faker.number().numberBetween(0, EmployeeCategory.values().length)]);
+            employee.setGender(EmployeeGender.values()[faker.number().numberBetween(0, EmployeeGender.values().length)]);
             employeeRepository.save(employee);
         }
         // Add 25 missions
@@ -131,7 +134,7 @@ public class AppCmdRunner implements CommandLineRunner{
             member.setTransportation(faker.options().option(Transportation.values()));
             member.setMobility(faker.options().option(Mobility.values()));
             member.setMobilityGasFees(faker.number().numberBetween(10000, 150000) * 1L);
-            member.setTotalBudget(member.getHotelFees() + member.getRessortExpenses() + member.getMobilityGasFees() + 0L);
+            member.setTotalBudget(member.getHotelFees()*member.getNumberOfDays() + member.getRessortExpenses()*member.getNumberOfDays() + member.getMobilityGasFees() + 0L);
             memberRepository.save(member);
         }
 
