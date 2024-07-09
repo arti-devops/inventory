@@ -50,8 +50,8 @@ public class MissionService implements CrudListener<Mission> {
     }
 
     @Override
-    public Mission update(Mission domainObjectToUpdate) {
-        return service.save(domainObjectToUpdate);
+    public Mission update(Mission mission) {
+        return service.save(updateMissionStatus(mission));
     }
 
     @Override
@@ -140,5 +140,17 @@ public class MissionService implements CrudListener<Mission> {
         }
         return String.valueOf("Inconnu");
 
+    }
+
+    public Mission updateMissionStatus(Mission mission){
+        if (mission.getValidationRH()==Status.APPROVED && mission.getValidationDG()==Status.APPROVED) {
+            mission.setStatus(Status.APPROVED);
+        } else if (mission.getValidationRH()==Status.APPROVED && mission.getValidationDG()==Status.REJECTED) {
+            mission.setStatus(Status.REJECTED);
+        } else if (mission.getValidationRH()==Status.PENDING) {
+            mission.setStatus(Status.PENDING);
+            mission.setValidationDG(Status.PENDING);
+        }
+        return mission;
     }
 }

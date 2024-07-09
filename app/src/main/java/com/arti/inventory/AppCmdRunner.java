@@ -101,7 +101,20 @@ public class AppCmdRunner implements CommandLineRunner{
             mission.setDateOfDeparture(faker.date().birthday());
             mission.setDateOfReturn(faker.date().birthday());
             mission.setNumberOfDays(faker.number().numberBetween(1, 30) * 1L);
-            mission.setStatus(Status.values()[faker.number().numberBetween(0, Status.values().length)]);
+            //mission.setStatus(Status.values()[faker.number().numberBetween(0, Status.values().length)]);
+            mission.setValidationRH(Status.values()[faker.number().numberBetween(0, Status.values().length)]);
+            if (mission.getValidationRH()==Status.APPROVED) {
+                mission.setValidationDG(Status.values()[faker.number().numberBetween(0, Status.values().length)]);
+            }else{
+                mission.setValidationDG(Status.PENDING);
+            }
+            if (mission.getValidationRH()==Status.APPROVED && mission.getValidationDG()==Status.APPROVED) {
+                mission.setStatus(Status.APPROVED);
+            }else if (mission.getValidationDG()==Status.REJECTED || mission.getValidationRH()==Status.REJECTED) {
+                mission.setStatus(Status.REJECTED);
+            }else {
+                mission.setStatus(Status.PENDING);
+            }
             mission.setTotalBudget(0L);
             missionRepository.save(mission);
         }
