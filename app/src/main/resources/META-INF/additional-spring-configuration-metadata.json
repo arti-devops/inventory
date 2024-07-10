@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "security.type",
+  "type": "java.lang.String",
+  "description": "This property is used to swithc between security handle profiles: inMemory and LDAP"
+}]}
