@@ -18,10 +18,10 @@ import com.vaadin.flow.component.shared.Tooltip;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.security.AuthenticationContext;
-import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "missions", layout = MainAppLayout.class)
-@PermitAll
+@RolesAllowed({"ROLE_APP_USER","ROLE_USER"})
 public class MissionView extends VerticalLayout {
 
     public MissionView(AuthenticationContext auth, MissionService service) {

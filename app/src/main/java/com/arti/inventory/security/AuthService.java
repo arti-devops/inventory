@@ -29,6 +29,7 @@ public class AuthService {
     }
 
     public String getUsername(){
+        System.out.println(user.getAuthorities());
         return user.getUsername();
     }
 }

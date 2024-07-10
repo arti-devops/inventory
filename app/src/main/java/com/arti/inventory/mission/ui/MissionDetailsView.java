@@ -37,7 +37,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "missions", layout = MainAppLayout.class)
-@RolesAllowed({"ADMIN","RH","DG"})
+@RolesAllowed({"ROLE_APP_ADMIN","ROLE_APP_DRH","ROLE_APP_DG","ADMIN","RH","DG"})
 public class MissionDetailsView extends VerticalLayout implements HasUrlParameter<Long> {
 
     private Mission mission;
