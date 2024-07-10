@@ -41,7 +41,8 @@ public class PrintPdfService {
 
         try {
             byte[] pdfBytes = pdfService.fillPdfForm(fieldValues, "ordre-de-mission");
-            StreamResource resource = new StreamResource(String.valueOf("OD-CISSE.pdf"), () -> new ByteArrayInputStream(pdfBytes));
+            String fullname = member.getEmployee().getLastName()+member.getEmployee().getFirstName();
+            StreamResource resource = new StreamResource(String.format("OD-%s.pdf", fullname), () -> new ByteArrayInputStream(pdfBytes));
             resource.setContentType("application/pdf");
             return resource;
         } catch (Exception e) {

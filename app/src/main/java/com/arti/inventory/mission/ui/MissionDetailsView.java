@@ -1,9 +1,12 @@
 package com.arti.inventory.mission.ui;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.arti.inventory.MainAppLayout;
+import com.arti.inventory.middleware.GeneralUtils;
 import com.arti.inventory.mission.backend.model.Employee;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
@@ -60,6 +63,8 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     Button rejectBtn = new Button("Rejeter");        
     Button validationBtn = new Button("Approuver la mission");
 
+    ArrayList<Anchor> downloadButtons = new ArrayList<Anchor>();
+    
     MissionDetailsItem membersItem;
     MissionDetailsItem totalBudgetItem;
 
@@ -113,8 +118,8 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         detailsLayout.setWidth("100%");
         MissionDetailsItem locationItem = new MissionDetailsItem("Lieu", mission.getLocation(), "", VaadinIcon.LOCATION_ARROW_CIRCLE_O);
         MissionDetailsItem numberOfDaysItem = new MissionDetailsItem("Durée", String.valueOf(mission.getNumberOfDays()), "jours", VaadinIcon.CALENDAR_CLOCK);
-        MissionDetailsItem dateOfDepartureItem = new MissionDetailsItem("Départ", mission.getDateOfDeparture().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
-        MissionDetailsItem dateOfReturnItem = new MissionDetailsItem("Retour", mission.getDateOfReturn().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
+        MissionDetailsItem dateOfDepartureItem = new MissionDetailsItem("Départ", GeneralUtils.formatDateFull(mission.getDateOfDeparture().toString()), "", VaadinIcon.CALENDAR_CLOCK);
+        MissionDetailsItem dateOfReturnItem = new MissionDetailsItem("Retour", GeneralUtils.formatDateFull(mission.getDateOfReturn().toString()), "", VaadinIcon.CALENDAR_CLOCK);
         membersItem = new MissionDetailsItem("Participants", String.valueOf(mission.getMembers().size()), "personne(s)", VaadinIcon.USERS);
         totalBudgetItem = new MissionDetailsItem("Budget", String.format("%,d", mission.getTotalBudget()), "FCFA", VaadinIcon.MONEY);
         detailsLayout.add(locationItem, numberOfDaysItem, dateOfDepartureItem, dateOfReturnItem, membersItem, totalBudgetItem);
@@ -201,6 +206,8 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             Button download2 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
             download2.setTooltipText("Ordre de mission");
             download2a.add(download2);
+            downloadButtons.add(download1a);
+            downloadButtons.add(download2a);
             layout.add(download1a, download2a);
             if(mission.getStatus()==Status.REJECTED || mission.getStatus()==Status.PENDING){
                 download1a.setEnabled(false);
@@ -281,6 +288,7 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             configureBadgeSection();
             configureCrudOpVisibility();
             missionService.update(mission);
+            downloadButtons.forEach(btn -> btn.setEnabled(true));
             configureValidationButtonsAccess();
         });
         rejectBtn.addThemeVariants(ButtonVariant.LUMO_ERROR);

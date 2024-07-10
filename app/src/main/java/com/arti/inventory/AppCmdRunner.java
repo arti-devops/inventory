@@ -2,7 +2,7 @@ package com.arti.inventory;
 
 import java.util.List;
 
-import org.slf4j.Logger;
+//import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.arti.inventory.device.backend.model.Computer;
-import com.arti.inventory.device.backend.model.Phone;
 import com.arti.inventory.device.backend.model.Printer;
 import com.arti.inventory.device.backend.model.PrinterDetail;
 import com.arti.inventory.device.backend.repository.ComputerRepository;
@@ -35,7 +33,7 @@ import com.github.javafaker.Faker;
 @Profile("dev")
 public class AppCmdRunner implements CommandLineRunner{
 
-    private Logger logger = org.slf4j.LoggerFactory.getLogger(AppCmdRunner.class);
+    //private Logger logger = org.slf4j.LoggerFactory.getLogger(AppCmdRunner.class);
 
     @Autowired
     ComputerRepository repository;
@@ -48,12 +46,6 @@ public class AppCmdRunner implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception {
-        Computer computer = repository.findAll().get(1);
-        System.out.println(computer);
-
-        Phone phone = phoneRepository.findAll().get(1);
-        System.out.println(phone);
-
         testApiCall();
         addMissionDataToDB();
     }
@@ -68,7 +60,7 @@ public class AppCmdRunner implements CommandLineRunner{
         printers.forEach(printer -> {
             PrinterDetail detail = restTemplate.getForObject(url+printer.getId(), PrinterDetail.class);
             printer.setDetails(detail);
-            logger.warn("Printer: {} details {}", printer, printer.getDetails());
+            //logger.warn("Printer: {} details {}", printer, printer.getDetails());
         });
     }
 
