@@ -43,4 +43,5 @@ public class Mission {
     private Status validationDG = Status.PENDING;
     private Long totalBudget;
     private transient Collection<Member> members;
+    private String creatorInitials;
 }

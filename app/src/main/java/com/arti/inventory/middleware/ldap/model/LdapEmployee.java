@@ -11,4 +11,5 @@ public class LdapEmployee {
     private String email; // AD email
     private String category; // AD employeeType
     private String position; // AD title
+    private String initials; // AD initials
 }

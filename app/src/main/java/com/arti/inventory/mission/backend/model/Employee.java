@@ -27,6 +27,7 @@ public class Employee {
     private String email;
     private String photoUrl;
     private String matricule;
+    private String initials;
     @Enumerated(EnumType.STRING)
     private EmployeeCategory category = EmployeeCategory.H;
     @Enumerated(EnumType.STRING)

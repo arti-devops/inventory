@@ -15,6 +15,7 @@ public class EmployeeConverter {
         employee.setEmail(ldapEmployee.getEmail());
         employee.setCategory(EmployeeCategoryMapper.mapCategory(ldapEmployee.getCategory()));
         employee.setGender(EmployeeGenderMapper.mapGender(ldapEmployee.getGender()));
+        employee.setInitials(ldapEmployee.getInitials());
         // Set other fields as necessary
         return employee;
     }

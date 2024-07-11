@@ -61,6 +61,7 @@ public class LdapEmployeeRepository {
         ldapemployee.setCategory(getCustomAttr("employeeType", attrs));
         ldapemployee.setPosition(getCustomAttr("title", attrs));
         ldapemployee.setEmail(getCustomAttr("mail", attrs));
+        ldapemployee.setInitials(getCustomAttr("initials", attrs));
         return ldapemployee;
     }
 
