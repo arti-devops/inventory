@@ -37,7 +37,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "missions", layout = MainAppLayout.class)
-@RolesAllowed({"ROLE_APP_ADMIN","ROLE_APP_DRH","ROLE_APP_DG","ADMIN","RH","DG"})
+@RolesAllowed({"ROLE_APP_MISSION_STAFF","ROLE_APP_MISSION_MANAGER","ROLE_ADMIN"})
 public class MissionDetailsView extends VerticalLayout implements HasUrlParameter<Long> {
 
     private Mission mission;
@@ -103,10 +103,10 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         badgeLayout.addClassName(LumoUtility.JustifyContent.BETWEEN);
         configureBadgeSection();
         
-        if (auth.isAdmin()) {
+        if (auth.isDG()) {
             configureButtonSectionDG();
             badgeLayout.add(badgeSection, buttonSection);
-        }else if(auth.is("RH")){
+        }else if(auth.isDRH()){
             configureButtonSectionRH();
             badgeLayout.add(badgeSection, buttonSection);
         }
@@ -227,7 +227,12 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     }
 
     private void configureCrudOpVisibility() {
-        if (/*mission.getValidationRH()==Status.APPROVED || */mission.getStatus()==Status.APPROVED || mission.getStatus()==Status.REJECTED) {
+        if (mission.getValidationRH()==Status.APPROVED || mission.getStatus()==Status.APPROVED || mission.getStatus()==Status.REJECTED) {
+            crud.setAddOperationVisible(false);
+            crud.setDeleteOperationVisible(false);
+            crud.setUpdateOperationVisible(false);
+            crud.setFindAllOperationVisible(false);
+        }else if (!auth.isMissionAppStaff()) {
             crud.setAddOperationVisible(false);
             crud.setDeleteOperationVisible(false);
             crud.setUpdateOperationVisible(false);
@@ -312,14 +317,14 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             rejectBtn.setEnabled(false);
         }
 
-        if (auth.isAdmin()) {
+        if (auth.isDG()) {
             if (mission.getValidationRH()==Status.PENDING || mission.getValidationRH()==Status.REJECTED) {
                 validationBtn.setEnabled(false);
                 rejectBtn.setEnabled(false);
             }
         }
 
-        if (auth.is("RH")) {
+        if (auth.isDRH()) {
             if (mission.getValidationRH()==Status.APPROVED) {
                 validationBtn.setEnabled(false);
             }

@@ -4,6 +4,7 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.model.MissionType;
+import com.arti.inventory.mission.backend.model.Status;
 import com.arti.inventory.mission.backend.service.MissionService;
 import com.arti.inventory.mission.ui.component.RenderMoney;
 import com.arti.inventory.security.AuthService;
@@ -23,27 +24,39 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "missions", layout = MainAppLayout.class)
-@RolesAllowed({ "ROLE_APP_MISSION_USER" })
-@PageTitle(value = "SGI ARTI | Missions")
-public class MissionView extends VerticalLayout {
+@Route(value = "missions/pending", layout = MainAppLayout.class)
+@RolesAllowed({"ROLE_DG","ROLE_DRH"})
+@PageTitle(value = "SGI ARTI | Missions à valider")
+public class MissionPendingView extends VerticalLayout {
 
     private AuthService auth;
 
-    public MissionView(MissionService service, AuthenticationContext ac) {
+    public MissionPendingView(MissionService service, AuthenticationContext ac) {
 
         auth = new AuthService(ac);
 
         // Add header and description
-        add(new H2("Missions ARTI"),
-                new Paragraph("Liste des missions en cours et à venir pour l'année en cours."));
+        Paragraph p = new Paragraph("Missions en attente de ");
+        Span votre = new Span("VOTRE");
+        votre.getElement().getThemeList().add("badge");
+        p.add(votre, new Span(" validaion"));
+        add(new H2("Missions ARTI"), p);
 
         // Create and configure the CRUD grid
         GridCrud<Mission> crud = new GridCrud<>(Mission.class);
+        crud.setShowNotifications(false);
+
         crud.getGrid().setColumns("type", "subject", "dateOfDeparture", "dateOfReturn", "location", "members", "totalBudget", "status");
         crud.getGrid().getColumns().forEach(column -> column.setAutoWidth(true));
-        crud.setCrudListener(service);
-        crud.setShowNotifications(false);
+        crud.setFindAllOperation(() -> {
+            var pending = service.getAllMissionByStatus(Status.PENDING);
+            if (auth.isDG()) {
+                pending.removeIf(m -> m.getValidationRH()==Status.PENDING);
+            }else if (auth.isDRH()) {
+                pending.removeIf(m -> m.getValidationRH()==Status.APPROVED);
+            }
+            return pending;
+        });
 
         configureCrudOpVisibility(crud);
 
@@ -182,7 +195,7 @@ public class MissionView extends VerticalLayout {
     }
 
     private void configureCrudOpVisibility(GridCrud<Mission> crud) {
-        if (!auth.is("APP_MISSION_STAFF")) {
+        if (!auth.isAdmin()) {
             crud.setAddOperationVisible(false);
             crud.setDeleteOperationVisible(false);
             crud.setUpdateOperationVisible(false);
