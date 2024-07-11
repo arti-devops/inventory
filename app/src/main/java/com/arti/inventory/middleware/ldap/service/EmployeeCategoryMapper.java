@@ -4,6 +4,9 @@ import com.arti.inventory.mission.backend.model.EmployeeCategory;
 
 public class EmployeeCategoryMapper {
     public static EmployeeCategory mapCategory(String ldapCategory) {
+        if (ldapCategory==null) {
+            return EmployeeCategory.H;
+        }
         switch (ldapCategory) {
             case "PR-CR":
                 return EmployeeCategory.A;

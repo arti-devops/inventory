@@ -5,7 +5,7 @@ import com.arti.inventory.mission.backend.model.EmployeeGender;
 public class EmployeeGenderMapper {
     public static EmployeeGender mapGender(String ldapGender) {
         if (ldapGender == null) {
-            throw new IllegalArgumentException("LDAP gender cannot be null");
+            return EmployeeGender.M;
         }
 
         switch (ldapGender.toUpperCase()) {
