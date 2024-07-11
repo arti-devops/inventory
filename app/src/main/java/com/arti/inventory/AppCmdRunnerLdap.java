@@ -17,10 +17,8 @@ import com.arti.inventory.device.backend.model.PrinterDetail;
 import com.arti.inventory.device.backend.repository.ComputerRepository;
 import com.arti.inventory.device.backend.repository.PhoneRepository;
 import com.arti.inventory.device.backend.repository.PrinterRepository;
+import com.arti.inventory.middleware.ldap.model.LdapEmployee;
 import com.arti.inventory.middleware.ldap.repository.LdapEmployeeRepository;
-import com.arti.inventory.mission.backend.model.Employee;
-import com.arti.inventory.mission.backend.model.EmployeeCategory;
-import com.arti.inventory.mission.backend.model.EmployeeGender;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.model.MissionType;
@@ -37,8 +35,8 @@ import com.github.javafaker.Faker;
 
 @Component
 @Profile("dev")
-@ConditionalOnProperty(name = "data.env", havingValue = "cmd")
-public class AppCmdRunner implements CommandLineRunner{
+@ConditionalOnProperty(name = "data.env", havingValue = "ldap")
+public class AppCmdRunnerLdap implements CommandLineRunner{
 
     //private Logger logger = org.slf4j.LoggerFactory.getLogger(AppCmdRunner.class);
 
@@ -86,21 +84,11 @@ public class AppCmdRunner implements CommandLineRunner{
     
     private void addMissionDataToDB(){
         Faker faker = new Faker();
-        // Add 10 employees
-        for(int i = 0; i < 10; i++){
-            Employee employee = new Employee();
-            employee.setFirstName(faker.name().firstName());
-            employee.setLastName(faker.name().lastName());
-            employee.setDepartment(faker.company().profession());
-            employee.setPosition(faker.company().profession());
-            employee.setEmail(faker.internet().emailAddress());
-            employee.setPhotoUrl(faker.internet().avatar());
-            employee.setMatricule(faker.code().ean8());
-            employee.setCategory(EmployeeCategory.values()[faker.number().numberBetween(0, EmployeeCategory.values().length)]);
-            employee.setGender(EmployeeGender.values()[faker.number().numberBetween(0, EmployeeGender.values().length)]);
-            employeeRepository.save(employee);
-        }
-
+        // All all AD employees
+        List<LdapEmployee> ldapEmployees = ldapEmployeeRepository.getAllLdapEmployees();
+        ldapEmployees.forEach(employee -> {
+            employeeService.addOrUpdatEmployee(employee);
+        });
         // Add 25 missions
         for(int i = 0; i < 30; i++){
             Mission mission = new Mission();
