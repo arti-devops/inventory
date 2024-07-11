@@ -32,13 +32,9 @@ public class EmployeeService implements CrudListener<Employee> {
         Employee employeeToSave = EmployeeConverter.convert(ldapEmployee);
         Optional<Employee> employeeInDb = repository.findByUsername(employeeToSave.getUsername());
         if (employeeInDb.isPresent()) {
-            System.out.println("Updating employee {}");
-            System.out.println(employeeInDb.get());
             employeeToSave.setId(employeeInDb.get().getId());
             return repository.save(employeeToSave);
         }
-        System.out.println("Saving employee");
-        System.out.println(employeeToSave);
         return repository.save(employeeToSave);
     }
 

@@ -5,6 +5,7 @@ import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.mission.backend.model.Mission;
 import com.arti.inventory.mission.backend.model.MissionType;
 import com.arti.inventory.mission.backend.service.MissionService;
+import com.arti.inventory.mission.ui.component.RenderMoney;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -84,17 +85,18 @@ public class MissionView extends VerticalLayout {
     private void configureDateColumn(GridCrud<Mission> crud, String field, String header) {
         crud.getGrid().getColumnByKey(field).setRenderer(new ComponentRenderer<>(mission -> {
             Paragraph p = new Paragraph();
-            p.setText(mission.getDateOfDeparture().toString().substring(0, 10));
+            if(field=="dateOfDeparture"){
+                p.setText(mission.getDateOfDeparture().toString().substring(0, 10));
+            }else{
+                p.setText(mission.getDateOfReturn().toString().substring(0, 10)+" ("+mission.getNumberOfDays()+")");
+            }
             return p;
         })).setHeader(header);
     }
 
     private void configureBudgetColumn(GridCrud<Mission> crud) {
-        crud.getGrid().getColumnByKey("totalBudget").setRenderer(new ComponentRenderer<>(mission -> {
-            HorizontalLayout layout = new HorizontalLayout();
-            Span value = new Span(mission.getTotalBudget().toString());
-            layout.add(VaadinIcon.MONEY.create(), value);
-            return layout;
+        crud.getGrid().getColumnByKey("totalBudget").setRenderer(new ComponentRenderer<RenderMoney, Mission>(mission -> {
+            return new RenderMoney(mission.getTotalBudget());
         })).setHeader("Budget");
     }
 
