@@ -2,7 +2,6 @@ package com.arti.inventory.mission.backend.service;
 
 import java.util.Collection;
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -35,10 +34,18 @@ public class MissionService implements CrudListener<Mission> {
         return missions;
     }
 
+    public Collection<Mission> getAllMissionByStatus(Status status) {
+        var missions = service.findAllByStatus(status, Sort.by(Sort.Direction.DESC, "dateOfDeparture"));
+        missions.forEach(mission -> {
+            setMissionMembersAndTotalBudget(mission);
+        });
+        return missions;
+    }
+
     @Override
     public Mission add(Mission domainObjectToAdd) {
-        domainObjectToAdd.setNumberOfDays(computeNumberOfDays(domainObjectToAdd.getDateOfDeparture(), 
-                                            domainObjectToAdd.getDateOfReturn()));
+        domainObjectToAdd.setNumberOfDays(computeNumberOfDays(domainObjectToAdd.getDateOfDeparture(),
+                domainObjectToAdd.getDateOfReturn()));
         domainObjectToAdd.setTotalBudget(0L);
         return service.save(domainObjectToAdd);
     }
@@ -59,7 +66,8 @@ public class MissionService implements CrudListener<Mission> {
         try {
             service.delete(domainObjectToDelete);
         } catch (RuntimeException e) {
-            Notification error = Notification.show("Impossible de supprimer cette mission", 3000, Notification.Position.TOP_STRETCH);
+            Notification error = Notification.show("Impossible de supprimer cette mission", 3000,
+                    Notification.Position.TOP_STRETCH);
             error.addThemeName("error");
         }
     }
@@ -69,7 +77,7 @@ public class MissionService implements CrudListener<Mission> {
         if (mission != null) {
             setMissionMembersAndTotalBudget(mission);
             return mission;
-        }else {
+        } else {
             throw new IllegalArgumentException("Mission not found");
         }
     }
@@ -142,12 +150,12 @@ public class MissionService implements CrudListener<Mission> {
 
     }
 
-    public Mission updateMissionStatus(Mission mission){
-        if (mission.getValidationRH()==Status.APPROVED && mission.getValidationDG()==Status.APPROVED) {
+    public Mission updateMissionStatus(Mission mission) {
+        if (mission.getValidationRH() == Status.APPROVED && mission.getValidationDG() == Status.APPROVED) {
             mission.setStatus(Status.APPROVED);
-        } else if (mission.getValidationRH()==Status.APPROVED && mission.getValidationDG()==Status.REJECTED) {
+        } else if (mission.getValidationRH() == Status.APPROVED && mission.getValidationDG() == Status.REJECTED) {
             mission.setStatus(Status.REJECTED);
-        } else if (mission.getValidationRH()==Status.PENDING) {
+        } else if (mission.getValidationRH() == Status.PENDING) {
             mission.setStatus(Status.PENDING);
             mission.setValidationDG(Status.PENDING);
         }

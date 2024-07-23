@@ -1,9 +1,12 @@
 package com.arti.inventory.mission.ui;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.arti.inventory.MainAppLayout;
+import com.arti.inventory.middleware.GeneralUtils;
 import com.arti.inventory.mission.backend.model.Employee;
 import com.arti.inventory.mission.backend.model.Member;
 import com.arti.inventory.mission.backend.model.Mission;
@@ -11,11 +14,13 @@ import com.arti.inventory.mission.backend.model.Status;
 import com.arti.inventory.mission.backend.service.EmployeeService;
 import com.arti.inventory.mission.backend.service.MemberService;
 import com.arti.inventory.mission.backend.service.MissionService;
+import com.arti.inventory.mission.backend.service.PrintPdfService;
 import com.arti.inventory.mission.ui.component.RenderMoney;
 import com.arti.inventory.security.AuthService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
@@ -32,7 +37,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "missions", layout = MainAppLayout.class)
-@RolesAllowed({"ADMIN","RH","DG"})
+@RolesAllowed({"ROLE_APP_MISSION_STAFF","ROLE_APP_MISSION_MANAGER","ROLE_ADMIN"})
 public class MissionDetailsView extends VerticalLayout implements HasUrlParameter<Long> {
 
     private Mission mission;
@@ -42,9 +47,11 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     @Autowired
     private MemberService memberService;
     @Autowired
-    EmployeeService employeeService;
+    private EmployeeService employeeService;
     @Autowired
-    AuthenticationContext authenticationContext;
+    private AuthenticationContext authenticationContext;
+    @Autowired
+    private PrintPdfService printPdfService;
     
     AuthService auth;
     Long deleteCount = 0L;
@@ -56,6 +63,8 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     Button rejectBtn = new Button("Rejeter");        
     Button validationBtn = new Button("Approuver la mission");
 
+    ArrayList<Anchor> downloadButtons = new ArrayList<Anchor>();
+    
     MissionDetailsItem membersItem;
     MissionDetailsItem totalBudgetItem;
 
@@ -94,10 +103,10 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         badgeLayout.addClassName(LumoUtility.JustifyContent.BETWEEN);
         configureBadgeSection();
         
-        if (auth.isAdmin()) {
+        if (auth.isDG()) {
             configureButtonSectionDG();
             badgeLayout.add(badgeSection, buttonSection);
-        }else if(auth.is("RH")){
+        }else if(auth.isDRH()){
             configureButtonSectionRH();
             badgeLayout.add(badgeSection, buttonSection);
         }
@@ -109,8 +118,8 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
         detailsLayout.setWidth("100%");
         MissionDetailsItem locationItem = new MissionDetailsItem("Lieu", mission.getLocation(), "", VaadinIcon.LOCATION_ARROW_CIRCLE_O);
         MissionDetailsItem numberOfDaysItem = new MissionDetailsItem("Durée", String.valueOf(mission.getNumberOfDays()), "jours", VaadinIcon.CALENDAR_CLOCK);
-        MissionDetailsItem dateOfDepartureItem = new MissionDetailsItem("Départ", mission.getDateOfDeparture().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
-        MissionDetailsItem dateOfReturnItem = new MissionDetailsItem("Retour", mission.getDateOfReturn().toString().split(" ")[0], "", VaadinIcon.CALENDAR_CLOCK);
+        MissionDetailsItem dateOfDepartureItem = new MissionDetailsItem("Départ", GeneralUtils.formatDateFull(mission.getDateOfDeparture().toString()), "", VaadinIcon.CALENDAR_CLOCK);
+        MissionDetailsItem dateOfReturnItem = new MissionDetailsItem("Retour", GeneralUtils.formatDateFull(mission.getDateOfReturn().toString()), "", VaadinIcon.CALENDAR_CLOCK);
         membersItem = new MissionDetailsItem("Participants", String.valueOf(mission.getMembers().size()), "personne(s)", VaadinIcon.USERS);
         totalBudgetItem = new MissionDetailsItem("Budget", String.format("%,d", mission.getTotalBudget()), "FCFA", VaadinIcon.MONEY);
         detailsLayout.add(locationItem, numberOfDaysItem, dateOfDepartureItem, dateOfReturnItem, membersItem, totalBudgetItem);
@@ -185,13 +194,25 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             return new RenderMoney(member.getTotalBudget());
         })).setHeader("Budget");
 
-        crud.getGrid().addColumn(new ComponentRenderer<>(mission -> {
+        crud.getGrid().addColumn(new ComponentRenderer<>(member -> {
             HorizontalLayout layout = new HorizontalLayout();
+            Anchor download1a = new Anchor();
+            download1a.setHref(printPdfService.printMissionDetailsFile(this.mission, member));
             Button download1 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
-            download1.setTooltipText("Ordre de mission");
+            download1.setTooltipText("Fiche de mission");
+            download1a.add(download1);
+            Anchor download2a = new Anchor();
+            download2a.setHref(printPdfService.printMissionOrderFile(this.mission, member));
             Button download2 = new Button(VaadinIcon.DOWNLOAD_ALT.create());
-            download2.setTooltipText("Fiche de mission");
-            layout.add(download1, download2);
+            download2.setTooltipText("Ordre de mission");
+            download2a.add(download2);
+            downloadButtons.add(download1a);
+            downloadButtons.add(download2a);
+            layout.add(download1a, download2a);
+            if(mission.getStatus()==Status.REJECTED || mission.getStatus()==Status.PENDING){
+                download1a.setEnabled(false);
+                download2a.setEnabled(false);
+            }
             return layout;
         })).setHeader("Télécharger");
     }
@@ -206,7 +227,12 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
     }
 
     private void configureCrudOpVisibility() {
-        if (/*mission.getValidationRH()==Status.APPROVED || */mission.getStatus()==Status.APPROVED || mission.getStatus()==Status.REJECTED) {
+        if (mission.getValidationRH()==Status.APPROVED || mission.getStatus()==Status.APPROVED || mission.getStatus()==Status.REJECTED) {
+            crud.setAddOperationVisible(false);
+            crud.setDeleteOperationVisible(false);
+            crud.setUpdateOperationVisible(false);
+            crud.setFindAllOperationVisible(false);
+        }else if (!auth.isMissionAppStaff()) {
             crud.setAddOperationVisible(false);
             crud.setDeleteOperationVisible(false);
             crud.setUpdateOperationVisible(false);
@@ -267,6 +293,7 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             configureBadgeSection();
             configureCrudOpVisibility();
             missionService.update(mission);
+            downloadButtons.forEach(btn -> btn.setEnabled(true));
             configureValidationButtonsAccess();
         });
         rejectBtn.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -290,14 +317,14 @@ public class MissionDetailsView extends VerticalLayout implements HasUrlParamete
             rejectBtn.setEnabled(false);
         }
 
-        if (auth.isAdmin()) {
+        if (auth.isDG()) {
             if (mission.getValidationRH()==Status.PENDING || mission.getValidationRH()==Status.REJECTED) {
                 validationBtn.setEnabled(false);
                 rejectBtn.setEnabled(false);
             }
         }
 
-        if (auth.is("RH")) {
+        if (auth.isDRH()) {
             if (mission.getValidationRH()==Status.APPROVED) {
                 validationBtn.setEnabled(false);
             }

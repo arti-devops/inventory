@@ -43,6 +43,7 @@ public class AppNavigation extends Div{
         missionNav.setSizeFull();
         missionNav.setCollapsible(true);
         missionNav.addItem(
+            new SideNavItem("A valider", "/missions/pending", VaadinIcon.CHECK_CIRCLE_O.create()),
             new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create())
             // new SideNavItem("Déplacements", "/mobilities", VaadinIcon.ROAD.create()),
             // new SideNavItem("Transports", "/transports", VaadinIcon.BUG.create())

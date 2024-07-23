@@ -5,27 +5,35 @@ import com.vaadin.flow.spring.security.AuthenticationContext;
 
 public class AuthService {
 
-    private AuthenticationContext auth;
-
     private UserDetails user;
 
     public AuthService(AuthenticationContext auth) {
-        this.auth = auth;
-        initUser();
-    }
-
-    private void initUser() {
         this.user = auth.getAuthenticatedUser(UserDetails.class).get();
     }
 
     public boolean isAdmin() {
-        System.out.println(user);
-        return user.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> "ROLE_ADMIN".equals(grantedAuthority.getAuthority()));
+        return this.is("ADMIN");
+    }
+
+    public boolean isDG(){
+        return this.is("DG");
+    }
+
+    public boolean isDRH(){
+        return this.is("DRH");
+    }
+
+    public boolean isMissionAppStaff(){
+        return this.is("APP_MISSION_STAFF");
+    }
+
+    public String getUsername(){
+        System.out.println(user.getAuthorities());
+        return user.getUsername();
     }
 
     public boolean is(String role) {
         return user.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> String.valueOf("ROLE_" + role).equals(grantedAuthority.getAuthority()));
+        .anyMatch(grantedAuthority -> String.valueOf("ROLE_" + role).equals(grantedAuthority.getAuthority()));
     }
 }
