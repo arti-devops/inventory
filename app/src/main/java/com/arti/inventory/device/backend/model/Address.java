@@ -24,6 +24,8 @@ public class Address {
 
     private String ipv4;
 
+    private transient Integer ipv4ToIngeter;
+
     private String hostname;
 
     @Column(name = "device_type")

@@ -49,7 +49,7 @@ public class AddressView extends VerticalLayout {
         Boolean isOnline = device.getOnline();
         String theme = String.format("badge %s", isOnline ? "success" : "error");
         span.getElement().setAttribute("theme", theme);
-        span.setText(isOnline ? "En service" : "Désalloué");
+        span.setText(isOnline ? "En service" : "Hors service");
     };
 
     private static ComponentRenderer<Span, Address> createDeviceStatusComponentRenderer() {
