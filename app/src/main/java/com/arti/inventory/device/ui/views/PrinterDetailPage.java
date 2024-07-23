@@ -78,7 +78,7 @@ public class PrinterDetailPage extends VerticalLayout implements HasUrlParameter
         }
         detailsGrid.add(new DetailPane("Ancre Noire", printer.getDetails().color().black().toString()+"%"));
         detailsGrid.add(new DetailPane("Ancre Cyan", printer.getDetails().color().cyan().toString()+"%"));
-        detailsGrid.add(new DetailPane("Ancre Magenta", printer.getDetails().color().red().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Magenta", printer.getDetails().color().magenta().toString()+"%"));
         detailsGrid.add(new DetailPane("Ancre Jaune", printer.getDetails().color().yellow().toString()+"%"));
 
         add(grid);
