@@ -1,7 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
 
-# from status import getStatus
+from status import getStatus
 from printer import getAll
 from ipp import getPrinterDetails
 
@@ -14,7 +14,7 @@ def printerUse(cat : int, url:str):
     result = getAll(cat, url)
     return result
 
-@app.get("/printers")
+@app.get("/ipp")
 async def printerDetails(ip: str):
     return await getPrinterDetails(ip)
 
