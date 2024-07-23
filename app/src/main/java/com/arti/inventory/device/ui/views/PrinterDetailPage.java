@@ -68,18 +68,16 @@ public class PrinterDetailPage extends VerticalLayout implements HasUrlParameter
         rightGrid.add(new DetailPane("Cartouche Cyan", printer.getInk2()));
         rightGrid.add(new DetailPane("Cartouche Magenta", printer.getInk3()));
         rightGrid.add(new DetailPane("Cartouche Jaune", printer.getInk4()));
-        rightGrid.add(new DetailPane("Plus d'info", printer.getDetailsPage()));
-        rightGrid.add(new DetailPane("Catégorie", printer.getCategory().toString()));
 
-        if (printer.getDetails().status() == false) {
+        if (printer.getOnline() == false) {
             detailsGrid.add(new DetailPane("Statut", "Hors ligne", "error"));
-        } else if (printer.getDetails().status() == true) {
+        } else if (printer.getOnline() == true) {
             detailsGrid.add(new DetailPane("Statut", "En ligne", "success"));
         }
-        detailsGrid.add(new DetailPane("Ancre Noire", printer.getDetails().color().black().toString()+"%"));
-        detailsGrid.add(new DetailPane("Ancre Cyan", printer.getDetails().color().cyan().toString()+"%"));
-        detailsGrid.add(new DetailPane("Ancre Magenta", printer.getDetails().color().magenta().toString()+"%"));
-        detailsGrid.add(new DetailPane("Ancre Jaune", printer.getDetails().color().yellow().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Noire", printer.getPrinterDetails().getBlack().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Cyan", printer.getPrinterDetails().getCyan().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Magenta", printer.getPrinterDetails().getMagenta().toString()+"%"));
+        detailsGrid.add(new DetailPane("Ancre Jaune", printer.getPrinterDetails().getYellow().toString()+"%"));
 
         add(grid);
 
