@@ -1,5 +1,7 @@
 package com.arti.inventory;
 
+import com.arti.inventory.security.AuthService;
+import com.arti.inventory.security.model.AppRole;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -8,7 +10,7 @@ import com.vaadin.flow.component.sidenav.SideNavItem;
 
 public class AppNavigation extends Div{
     
-    public AppNavigation(){
+    public AppNavigation(AuthService auth){
 
         SideNav portal = new SideNav();
         portal.setLabel("Portail");
@@ -44,16 +46,23 @@ public class AppNavigation extends Div{
         missionNav.setCollapsible(true);
         missionNav.addItem(
             new SideNavItem("A valider", "/missions/pending", VaadinIcon.CHECK_CIRCLE_O.create()),
-            new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create())
-            // new SideNavItem("Déplacements", "/mobilities", VaadinIcon.ROAD.create()),
-            // new SideNavItem("Transports", "/transports", VaadinIcon.BUG.create())
-            );
+            new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create()));
 
-        VerticalLayout navWrapper = new VerticalLayout(portal, deviceNav, missionNav, vehiculeNav, adminNav);
+        VerticalLayout navWrapper = new VerticalLayout(portal, deviceNav); //, missionNav, vehiculeNav, adminNav);
         navWrapper.setSpacing(true);
         navWrapper.setSizeUndefined();
         deviceNav.setWidthFull();
         adminNav.setWidthFull();
+
+        if (auth != null) {
+            if (auth.is(AppRole.APP_MISSION_USER.name()) || auth.is(AppRole.ADMIN.name())) {
+                navWrapper.add(missionNav);
+            }
+
+            if (auth.is(AppRole.ADMIN.name())) {
+                navWrapper.add(adminNav);
+            }
+        }
 
         add(navWrapper);
     }

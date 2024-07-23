@@ -46,7 +46,7 @@ public class MainAppLayout extends AppLayout  implements AppShellConfigurator {
         toggle = new DrawerToggle();
         title = createAppTitle();
 
-        scroller = new Scroller(new AppNavigation());
+        scroller = new Scroller(new AppNavigation(auth));
 
         navLayout = createNavLayout();
         navLayoutLeftContainer = createNavLayoutLeftContainer();
