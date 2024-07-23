@@ -8,6 +8,8 @@ import org.vaadin.crudui.crud.CrudListener;
 
 import com.arti.inventory.device.backend.model.Computer;
 import com.arti.inventory.device.backend.repository.ComputerRepository;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,8 +34,15 @@ public class ComputerService implements CrudListener<Computer>, DeviceService {
     public Collection<Computer> findAll() {
         Collection<Computer> computers = repository.findAll();
         computers.forEach(computer -> {
-            Integer ipToInt = AddressService.IpToInteger(computer.getIp());
-            computer.setIpToInteger(ipToInt);
+            try {
+                Integer ipToInt = AddressService.IpToInteger(computer.getIp());
+                computer.setIpToInteger(ipToInt);
+            } catch (Exception e) {
+                Notification error = new Notification("Une ou plusieurs adresses IP sont invalides");
+                error.setDuration(5000);
+                error.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                error.open();
+            }
         });
         return computers;
     }
