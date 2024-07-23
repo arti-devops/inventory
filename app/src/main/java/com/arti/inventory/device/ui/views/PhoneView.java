@@ -42,6 +42,7 @@ public class PhoneView extends VerticalLayout {
         crud.setCrudListener(phoneService);
 
         // Crud form
+        crud.getCrudFormFactory().setUseBeanValidation(true);
         crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","ip","connexionMode","direction","assignedTo");
         crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Addresse IP","Mode de connexion","Direction","Bénéficiaire");
         

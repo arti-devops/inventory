@@ -42,6 +42,7 @@ public class PrinterView extends VerticalLayout {
         crud.setCrudListener(printerService);
 
         // Crud form
+        crud.getCrudFormFactory().setUseBeanValidation(true);
         crud.getCrudFormFactory().setVisibleProperties("name","brand","serie","label","ip","connexionMode","direction","assignedTo","ink1","ink2","ink3","ink4","detailsPage","category");
         crud.getCrudFormFactory().setFieldCaptions("Nom/Hostname","Marque","Numéro de série","Nom commercial","Addresse IP","Mode de connexion","Direction","Bénéficiaire","Cartouche Noire","Cartouche Cyan","Cartouche Magenta","Cartouche Jaune","Page de détails","Catégorie");
 
