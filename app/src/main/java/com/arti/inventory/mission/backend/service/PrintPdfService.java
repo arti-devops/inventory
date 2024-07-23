@@ -61,7 +61,7 @@ public class PrintPdfService {
         fieldValues.put("userField", "CAAM");
         fieldValues.put("memberField", member.getEmployee().getGender()+" "+member.getEmployee().getLastName()+" "+member.getEmployee().getFirstName());
         fieldValues.put("matriculeField", member.getEmployee().getMatricule());
-        fieldValues.put("positionField", member.getEmployee().getDepartment());
+        fieldValues.put("positionField", member.getEmployee().getPosition());
         fieldValues.put("locationField", mission.getType()+" ("+mission.getLocation()+")");
         fieldValues.put("subjectField", mission.getSubject());
         fieldValues.put("transportationField", member.getTransportation().toString());
