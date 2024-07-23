@@ -1,6 +1,5 @@
 package com.arti.inventory.security;
 
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.login.LoginI18n;
@@ -33,8 +32,8 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         login.setForgotPasswordButtonVisible(false);
 
         //FORM HEADER
-        Image logo = new Image("images/logo.png", "SGI ARTI");
-        formHeader.add(logo, new H2("SGI ARTI"));
+        Image logo = new Image("images/lg.png", "SGI ARTI");
+        formHeader.add(logo);
         
         //FORM LAYOUT
         LoginI18n i18n = LoginI18n.createDefault();
