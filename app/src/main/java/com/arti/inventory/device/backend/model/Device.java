@@ -1,7 +1,6 @@
 package com.arti.inventory.device.backend.model;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -9,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,12 +24,17 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @NotEmpty
     private String name;
 
+    @NotNull
+    @NotEmpty
     private String ip;
 
     private String brand;
 
+    @NotNull
     @Column(name = "connexion_mode")
     @Enumerated(EnumType.STRING)
     private ConnexionMode connexionMode;
@@ -37,11 +43,13 @@ public class Device {
 
     private String direction;
 
+    @NotNull
+    @NotEmpty
     @Column(name = "assigned_to")
     private String assignedTo;
 
     @Column(name = "purchase_date")
-    private Date purchaseDate;
+    private LocalDate purchaseDate;
 
     private Boolean online;
 }

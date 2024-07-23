@@ -67,7 +67,7 @@ public class AppCmdRunner implements CommandLineRunner{
         printers.forEach(printer -> {
             PrinterDetail detail = restTemplate.getForObject(url+printer.getId(), PrinterDetail.class);
             printer.setDetails(detail);
-            //logger.warn("Printer: {} details {}", printer, printer.getDetails());
+            // logger.warn("Printer: {} details {}", printer, printer.getDetails());
         });
     }
 

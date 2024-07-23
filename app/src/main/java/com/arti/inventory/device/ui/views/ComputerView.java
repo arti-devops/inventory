@@ -31,7 +31,8 @@ public class ComputerView extends VerticalLayout{
 
         // Crud
         GridCrud<Computer> crud = new GridCrud<>(Computer.class);
-        crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo");
+        crud.getCrudFormFactory().setUseBeanValidation(true);
+        crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo","purchaseDate");
         renameComputerDeviceTableHeader(crud);
 
         // Additional columns
