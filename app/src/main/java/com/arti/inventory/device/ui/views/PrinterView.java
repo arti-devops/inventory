@@ -4,15 +4,18 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.device.backend.model.Printer;
+import com.arti.inventory.device.backend.service.CommonsService;
 import com.arti.inventory.device.backend.service.PrinterService;
 import com.arti.inventory.device.ui.component.DeviceStatusRenderer;
 import com.arti.inventory.device.ui.render.SqlDateTimeRenderer;
+import com.arti.inventory.security.AuthService;
 import com.vaadin.flow.component.grid.contextmenu.GridContextMenu;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.security.AuthenticationContext;
 
 import jakarta.annotation.security.RolesAllowed;
 
@@ -24,7 +27,8 @@ public class PrinterView extends VerticalLayout {
     H2 title = new H2("Imprimantes");
     Paragraph subtitle = new Paragraph("Liste des imprimantes de l'ARTI");
 
-    public PrinterView(PrinterService printerService,
+    public PrinterView(AuthenticationContext context,
+        PrinterService printerService,
                        DeviceStatusRenderer<Printer> deviceStatusRenderer,
                        SqlDateTimeRenderer<Printer> sqlDateTimeRenderer) {
 
@@ -33,6 +37,7 @@ public class PrinterView extends VerticalLayout {
         GridCrud<Printer> crud = new GridCrud<>(Printer.class);
         crud.getGrid().setColumns("name","brand","serie","ip","connexionMode","direction","assignedTo");
         renameComputerDeviceTableHeader(crud);
+        CommonsService.crudActionsControl(new AuthService(context), crud);
 
         // Additional columns
         //crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");

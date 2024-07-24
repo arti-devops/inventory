@@ -23,6 +23,10 @@ public class AuthService {
         return this.is("DRH");
     }
 
+    public boolean isAppManager(){
+        return this.is("APP_MANAGER");
+    }
+
     public boolean isMissionAppStaff(){
         return this.is("APP_MISSION_STAFF");
     }

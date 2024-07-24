@@ -4,14 +4,17 @@ import org.vaadin.crudui.crud.impl.GridCrud;
 
 import com.arti.inventory.MainAppLayout;
 import com.arti.inventory.device.backend.model.Phone;
+import com.arti.inventory.device.backend.service.CommonsService;
 import com.arti.inventory.device.backend.service.PhoneService;
 import com.arti.inventory.device.ui.component.DeviceStatusRenderer;
 import com.arti.inventory.device.ui.render.SqlDateTimeRenderer;
+import com.arti.inventory.security.AuthService;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.security.AuthenticationContext;
 
 import jakarta.annotation.security.RolesAllowed;
 
@@ -23,7 +26,8 @@ public class PhoneView extends VerticalLayout {
     H2 title = new H2("Téléphones");
     Paragraph paragraph = new Paragraph("Inventaire des téléphones de l'ARTI");
 
-    public PhoneView(PhoneService phoneService,
+    public PhoneView(AuthenticationContext context,
+                    PhoneService phoneService,
                      DeviceStatusRenderer<Phone> deviceStatusRenderer,
                      SqlDateTimeRenderer<Phone> sqlDateTimeRenderer){  
         
@@ -33,6 +37,7 @@ public class PhoneView extends VerticalLayout {
         GridCrud<Phone> crud = new GridCrud<>(Phone.class);
         crud.getGrid().setColumns("assignedTo","name","brand","serie","ip","connexionMode","direction");
         renameComputerDeviceTableHeader(crud);
+        CommonsService.crudActionsControl(new AuthService(context), crud);
 
         // Additional columns
         //crud.getGrid().addColumn(sqlDateTimeRenderer.createSqlDateTimeComponentRenderer()).setHeader("Date d'achat");
