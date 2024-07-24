@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "dashboards/dgpecrp", layout = MainAppLayout.class)
-@RolesAllowed({"DRH","DG"})
+@RolesAllowed({"DRH","DG","ADMIN"})
 public class Dgpecrp extends VerticalLayout {
 
     public Dgpecrp(){

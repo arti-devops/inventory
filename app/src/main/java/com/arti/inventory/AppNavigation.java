@@ -59,7 +59,7 @@ public class AppNavigation extends Div{
             new SideNavItem("A valider", "/missions/pending", VaadinIcon.CHECK_CIRCLE_O.create()),
             new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create()));
 
-        VerticalLayout navWrapper = new VerticalLayout(portal, dashboardsNav, deviceNav); //, missionNav, vehiculeNav, adminNav);
+        VerticalLayout navWrapper = new VerticalLayout(portal, deviceNav); //, missionNav, vehiculeNav, adminNav);
         navWrapper.setSpacing(true);
         navWrapper.setSizeUndefined();
         deviceNav.setWidthFull();
@@ -73,6 +73,10 @@ public class AppNavigation extends Div{
 
             if (auth.is(AppRole.ADMIN.name())) {
                 navWrapper.add(adminNav);
+            }
+
+            if (auth.isAdmin() || auth.isDG()) {
+                navWrapper.addComponentAtIndex(1, dashboardsNav);
             }
         }
 

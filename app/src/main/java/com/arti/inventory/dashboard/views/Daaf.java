@@ -10,7 +10,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "dashboards/daaf", layout = MainAppLayout.class)
-@RolesAllowed({"DAAF","DG"})
+@RolesAllowed({"DAAF","DG","ADMIN"})
 public class Daaf extends VerticalLayout {
 
     public Daaf(){
