@@ -37,7 +37,7 @@ public class PortalView extends VerticalLayout {
       Collection<PortalItemList> externalApps = new ArrayList<>();
       externalApps.add(new PortalItemList("SYGFP", "http://finances.arti.ci", VaadinIcon.MONEY.create(), "_blank"));
       externalApps.add(new PortalItemList("Emeraude", "http://courrier.arti.ci", VaadinIcon.ENVELOPES.create(), "_blank"));
-      externalApps.add(new PortalItemList("Tableaux de boards", "/dashboards", VaadinIcon.RECORDS.create(), "_blank"));
+      externalApps.add(new PortalItemList("Tableaux de bords", "/dashboards", VaadinIcon.RECORDS.create(), "_blank"));
       externalApps.add(new PortalItemList("Congés et Absences", "https://tinyurl.com/arti-conges", VaadinIcon.COMPILE.create(), "_blank"));
       externalApps.add(new PortalItemList("Equipements", "/dashboard", VaadinIcon.RECORDS.create(), "_blank"));
       externalApps.add(new PortalItemList("Véhicules", "https://tinyurl.com/arti-vehicules", VaadinIcon.CAR.create(), "_blank"));

@@ -10,6 +10,8 @@ services:
       - SPRING_ACTIVE_PROFILE=prod
     networks:
       - prod-network
+    depends_on:
+      - api
 
   api:
     build:
