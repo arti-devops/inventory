@@ -34,12 +34,14 @@ public class AppCmdRunnerFetchApiData implements CommandLineRunner {
         RestTemplate restTemplate = new RestTemplateBuilder().build();
         String url = "http://api:3000/ipp?ip=";
 
+        logger.warn("Feching printers API data");
         printers.forEach(printer -> {
             PrinterDetail details = restTemplate.getForObject(url + printer.getIp(), PrinterDetail.class);
             printer.setPrinterDetails(details);
             printerRepository.save(printer);
             // logger.warn("Printer #{} updated", printer.getId());
         });
+        logger.warn("DONE: Feching printers API data");
     }
 
 }

@@ -18,6 +18,17 @@ public class AppNavigation extends Div{
         portal.addItem(
             new SideNavItem("Accueil", "", VaadinIcon.HOME.create()));
 
+        SideNav dashboardsNav = new SideNav();
+        dashboardsNav.setLabel("Tableaux de boards");
+        dashboardsNav.addItem(
+            new SideNavItem("Tous les tableaux", "/dashboards", VaadinIcon.DASHBOARD.create()),
+            new SideNavItem("Tableaux DAAF", "/dashboards/daaf", VaadinIcon.EYE.create()),
+            new SideNavItem("Tableaux DGPECRP", "/dashboards/dgpecrp", VaadinIcon.EYE.create())
+            // new SideNavItem("Ordinateurs", "/computers", VaadinIcon.RECORDS.create()),
+            // new SideNavItem("Imprimantes", "/printers", VaadinIcon.RECORDS.create()),
+            // new SideNavItem("Téléphones IP", "/phones", VaadinIcon.RECORDS.create())
+            );
+
         SideNav deviceNav = new SideNav();
         deviceNav.setLabel("Equipements");
         deviceNav.addItem(
@@ -48,11 +59,12 @@ public class AppNavigation extends Div{
             new SideNavItem("A valider", "/missions/pending", VaadinIcon.CHECK_CIRCLE_O.create()),
             new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create()));
 
-        VerticalLayout navWrapper = new VerticalLayout(portal, deviceNav); //, missionNav, vehiculeNav, adminNav);
+        VerticalLayout navWrapper = new VerticalLayout(portal, dashboardsNav, deviceNav); //, missionNav, vehiculeNav, adminNav);
         navWrapper.setSpacing(true);
         navWrapper.setSizeUndefined();
         deviceNav.setWidthFull();
         adminNav.setWidthFull();
+        dashboardsNav.setWidthFull();
 
         if (auth != null) {
             if (auth.is(AppRole.APP_MISSION_USER.name()) || auth.is(AppRole.ADMIN.name())) {
