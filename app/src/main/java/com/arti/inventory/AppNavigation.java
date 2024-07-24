@@ -67,16 +67,20 @@ public class AppNavigation extends Div{
         dashboardsNav.setWidthFull();
 
         if (auth != null) {
-            if (auth.is(AppRole.APP_MISSION_USER.name()) || auth.is(AppRole.ADMIN.name())) {
+            if (auth.is(AppRole.APP_MISSION_USER.name()) || auth.isAdmin()) {
                 navWrapper.add(missionNav);
             }
 
-            if (auth.is(AppRole.ADMIN.name())) {
+            if (auth.isAdmin()) {
                 navWrapper.add(adminNav);
             }
 
-            if (auth.isAdmin() || auth.isDG()) {
+            if (auth.isAdmin()) {
                 navWrapper.addComponentAtIndex(1, dashboardsNav);
+            }
+
+            if (auth.isAdmin() || auth.is("APP_FOUNISSEUR_USER")) {
+                portal.addItem(new SideNavItem("Fournisseurs", "/fournisseurs", VaadinIcon.USERS.create()));
             }
         }
 
