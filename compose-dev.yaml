@@ -17,19 +17,6 @@ services:
     depends_on:
     - api
 
-  aapi:
-    image: vimagick/json-server
-    command: -h 0.0.0.0 -p 3005 -w db.json
-    ports:
-    - "3005:3005"
-    expose:
-    - "3005"
-    volumes:
-    - ./data:/data
-    restart: always
-    networks:
-    - dev-network
-
   api:
     build:
       context: ./api
