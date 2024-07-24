@@ -14,11 +14,11 @@ import com.vaadin.flow.function.SerializableBiConsumer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "/ip", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Adresses IP")
-@PermitAll
+@RolesAllowed({"ADMIN"})
 public class AddressView extends VerticalLayout {
 
     H2 title = new H2("Adresses IP");

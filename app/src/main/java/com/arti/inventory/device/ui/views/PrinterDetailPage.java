@@ -16,10 +16,10 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "printers", layout = MainAppLayout.class)
-@PermitAll
+@RolesAllowed({"ROLE_APP_DEVICE_USER","USER"})
 public class PrinterDetailPage extends VerticalLayout implements HasUrlParameter<Long> {
 
     private Long printerId;
