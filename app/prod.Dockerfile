@@ -4,6 +4,7 @@ ENV SPRING_ACTIVE_PROFILE=prod
 WORKDIR /build
 COPY pom.xml .
 COPY src ./src
+COPY frontend ./frontend
 RUN mvn clean package -Pproduction
 
 # Deploy stage
