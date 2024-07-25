@@ -47,6 +47,7 @@ public class MainAppLayout extends AppLayout  implements AppShellConfigurator {
         title = createAppTitle();
 
         scroller = new Scroller(new AppNavigation(auth));
+        scroller.getStyle().set("scrollbar-width","none");
 
         navLayout = createNavLayout();
         navLayoutLeftContainer = createNavLayoutLeftContainer();

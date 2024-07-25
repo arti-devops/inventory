@@ -8,12 +8,12 @@ import com.vaadin.flow.router.Route;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "dashboards/dgpecrp", layout = MainAppLayout.class)
+@Route(value = "dashboards/suivi-personnel", layout = MainAppLayout.class)
 @RolesAllowed({"DRH","DG","ADMIN"})
-public class Dgpecrp extends VerticalLayout {
+public class SuiviPersonnel extends VerticalLayout {
 
-    public Dgpecrp(){
-        add(new H2("Tableau de board de la DGPEC-RP"));
+    public SuiviPersonnel(){
+        add(new H2("Tableau de bord: Suivi du Personnel"));
         
         IFrame dboard = new IFrame("https://app.powerbi.com/reportEmbed?reportId=6a17f108-6f11-4857-884b-669a379fc71a&autoAuth=true&ctid=9dc9ec34-5a5d-48aa-b616-854f17c43596");
         dboard.setWidth("100%");

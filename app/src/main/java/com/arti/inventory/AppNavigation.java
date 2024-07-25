@@ -20,10 +20,15 @@ public class AppNavigation extends Div{
 
         SideNav dashboardsNav = new SideNav();
         dashboardsNav.setLabel("Tableaux de boards");
+        collapseSection(dashboardsNav);
         dashboardsNav.addItem(
             new SideNavItem("Tous les tableaux", "/dashboards", VaadinIcon.DASHBOARD.create()),
-            new SideNavItem("Tableaux DAAF", "/dashboards/daaf", VaadinIcon.EYE.create()),
-            new SideNavItem("Tableaux DGPECRP", "/dashboards/dgpecrp", VaadinIcon.EYE.create())
+            new SideNavItem("Suivi du Personnel", "dashboards/suivi-personnel", VaadinIcon.EYE.create()),
+            new SideNavItem("Comptes & Finances", "/dashboards/finances", VaadinIcon.EYE.create()),
+            new SideNavItem("Suivi du Parc Auto", "/dashboards/parc-auto", VaadinIcon.EYE.create()),
+            new SideNavItem("Suivi des MP", "/dashboards/mp", VaadinIcon.EYE.create()),
+            new SideNavItem("Fiscalité ARTI", "/dashboards/fiscalite-arti", VaadinIcon.EYE.create()),
+            new SideNavItem("Transport en chiffres", "/dashboards/chiffres-transport", VaadinIcon.EYE.create())
             // new SideNavItem("Ordinateurs", "/computers", VaadinIcon.RECORDS.create()),
             // new SideNavItem("Imprimantes", "/printers", VaadinIcon.RECORDS.create()),
             // new SideNavItem("Téléphones IP", "/phones", VaadinIcon.RECORDS.create())
@@ -31,6 +36,7 @@ public class AppNavigation extends Div{
 
         SideNav deviceNav = new SideNav();
         deviceNav.setLabel("Equipements");
+        collapseSection(deviceNav);
         deviceNav.addItem(
             new SideNavItem("Dashboard", "/dashboard", VaadinIcon.DASHBOARD.create()),
             new SideNavItem("Ordinateurs", "/computers", VaadinIcon.RECORDS.create()),
@@ -39,22 +45,20 @@ public class AppNavigation extends Div{
                 
         SideNav adminNav = new SideNav();
         adminNav.setLabel("Administrateur");
-        adminNav.setCollapsible(true);
-        adminNav.setExpanded(false);
+        collapseSection(adminNav);
         adminNav.addItem(
             new SideNavItem("Adresses IP", "/ip", VaadinIcon.RECORDS.create()));
 
         SideNav vehiculeNav = new SideNav();
         vehiculeNav.setLabel("Véhicules ARTI");
-        vehiculeNav.setSizeFull();
+        collapseSection(vehiculeNav);
         vehiculeNav.addItem(
             new SideNavItem("Véhicules", "/vehicules", VaadinIcon.CAR.create()),
             new SideNavItem("Kilométrages", "/mileages", VaadinIcon.ROAD.create()));
 
         SideNav missionNav = new SideNav();
         missionNav.setLabel("Missions ARTI");
-        missionNav.setSizeFull();
-        missionNav.setCollapsible(true);
+        collapseSection(missionNav);
         missionNav.addItem(
             new SideNavItem("A valider", "/missions/pending", VaadinIcon.CHECK_CIRCLE_O.create()),
             new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create()));
@@ -85,5 +89,11 @@ public class AppNavigation extends Div{
         }
 
         add(navWrapper);
+    }
+
+    private void collapseSection(SideNav adminNav) {
+        adminNav.setSizeFull();
+        adminNav.setCollapsible(true);
+        // adminNav.setExpanded(false);
     }
 }
