@@ -1,2 +1,2 @@
-cp docker-compose.txt docker-compose.yaml
-docker-compose -f docker-compose.yaml --project-name inventorytest up --build -d
+cp docker-compose-test.txt docker-compose-test.yaml
+docker-compose -f docker-compose-test.yaml --project-name inventorytest up --build -d
