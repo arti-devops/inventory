@@ -52,7 +52,7 @@ public class AppCmdRunnerFetchApiData implements CommandLineRunner {
     }
 
     // Scheduled method to run every 5 minutes
-    @Scheduled(fixedRate = 600000) // 300000 milliseconds = 5 minutes
+    @Scheduled(fixedRate = 900000) // 300000 milliseconds = 15 minutes
     public void fetchAndStorePrinterDetailsScheduled() {
         fetchPrintersDetails();
     }
@@ -60,6 +60,6 @@ public class AppCmdRunnerFetchApiData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // This method is executed once at application startup
-        fetchPrintersDetails(); // Initially fetch printer details
+        //fetchPrintersDetails(); // Initially fetch printer details
     }
 }
