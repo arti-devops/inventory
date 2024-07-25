@@ -49,7 +49,7 @@ public class Device {
     private String assignedTo;
 
     @Column(name = "purchase_date")
-    private LocalDate purchaseDate;
+    private LocalDate purchaseDate = LocalDate.now();
 
     private Boolean online = false;
 }
