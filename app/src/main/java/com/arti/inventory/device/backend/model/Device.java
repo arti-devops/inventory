@@ -51,5 +51,5 @@ public class Device {
     @Column(name = "purchase_date")
     private LocalDate purchaseDate;
 
-    private Boolean online;
+    private Boolean online = false;
 }
