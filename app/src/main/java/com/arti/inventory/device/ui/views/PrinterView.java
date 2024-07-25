@@ -19,7 +19,7 @@ import com.vaadin.flow.spring.security.AuthenticationContext;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "printers", layout = MainAppLayout.class)
+@Route(value = "/devices/printers", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Imprimantes")
 @RolesAllowed({"ROLE_APP_DEVICE_USER","USER"})
 public class PrinterView extends VerticalLayout {
@@ -54,7 +54,7 @@ public class PrinterView extends VerticalLayout {
         // Add Context Menu
         GridContextMenu<Printer> contextMenu = new GridContextMenu<>(crud.getGrid());
         contextMenu.addItem("Voir les détails", event -> crud.getGrid().getSelectionModel().getFirstSelectedItem().ifPresent(printer -> {
-            getUI().ifPresent(ui -> ui.navigate("printers/" + printer.getId()));
+            getUI().ifPresent(ui -> ui.navigate("/devices/printers/" + printer.getId()));
         }));
 
         setSizeFull();

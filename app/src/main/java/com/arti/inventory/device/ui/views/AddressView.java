@@ -16,7 +16,7 @@ import com.vaadin.flow.router.Route;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "/ip", layout = MainAppLayout.class)
+@Route(value = "/devices/ip", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Adresses IP")
 @RolesAllowed({"ADMIN"})
 public class AddressView extends VerticalLayout {

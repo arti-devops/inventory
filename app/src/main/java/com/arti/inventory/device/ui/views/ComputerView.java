@@ -18,7 +18,7 @@ import com.vaadin.flow.spring.security.AuthenticationContext;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "computers", layout = MainAppLayout.class)
+@Route(value = "/devices/computers", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Ordinateurs")
 @RolesAllowed({ "ROLE_APP_DEVICE_USER", "USER" })
 public class ComputerView extends VerticalLayout {

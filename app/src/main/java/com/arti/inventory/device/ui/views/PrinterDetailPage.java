@@ -18,7 +18,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "printers", layout = MainAppLayout.class)
+@Route(value = "/devices/printers", layout = MainAppLayout.class)
 @RolesAllowed({"ROLE_APP_DEVICE_USER","USER"})
 public class PrinterDetailPage extends VerticalLayout implements HasUrlParameter<Long> {
 

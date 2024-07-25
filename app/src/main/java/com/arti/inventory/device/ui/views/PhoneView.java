@@ -18,7 +18,7 @@ import com.vaadin.flow.spring.security.AuthenticationContext;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "phones", layout = MainAppLayout.class)
+@Route(value = "/devices/phones", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Téléphones")
 @RolesAllowed({"ROLE_APP_DEVICE_USER","USER"})
 public class PhoneView extends VerticalLayout {

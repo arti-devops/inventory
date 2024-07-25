@@ -19,7 +19,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import jakarta.annotation.security.PermitAll;
 
-@Route(value = "dashboard", layout = MainAppLayout.class)
+@Route(value = "/devices/dashboard", layout = MainAppLayout.class)
 @PageTitle("INV-ARTI | Dasboard")
 @PermitAll
 public class Dashboard extends VerticalLayout{
