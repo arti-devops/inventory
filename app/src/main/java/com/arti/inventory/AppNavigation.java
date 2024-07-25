@@ -18,6 +18,14 @@ public class AppNavigation extends Div{
         portal.addItem(
             new SideNavItem("Accueil", "", VaadinIcon.HOME.create()));
 
+        SideNav managementNav = new SideNav();
+        managementNav.setLabel("Gestion");
+        managementNav.setWidthFull();
+        managementNav.addItem(
+            new SideNavItem("Congés & Absences", "/management/conges-absences", VaadinIcon.HOME.create()),
+            new SideNavItem("Fournisseurs", "/management/fournisseurs", VaadinIcon.USERS.create())
+            );
+
         SideNav dashboardsNav = new SideNav();
         dashboardsNav.setLabel("Tableaux de boards");
         collapseSection(dashboardsNav);
@@ -53,8 +61,10 @@ public class AppNavigation extends Div{
         vehiculeNav.setLabel("Véhicules ARTI");
         collapseSection(vehiculeNav);
         vehiculeNav.addItem(
-            new SideNavItem("Véhicules", "/vehicules", VaadinIcon.CAR.create()),
-            new SideNavItem("Kilométrages", "/mileages", VaadinIcon.ROAD.create()));
+            new SideNavItem("Parc Auto", "/auto/parc-auto", VaadinIcon.CAR.create()),
+            new SideNavItem("Réservation", "auto/booking", VaadinIcon.CAR.create())
+            // new SideNavItem("Kilométrages", "/mileages", VaadinIcon.ROAD.create())
+            );
 
         SideNav missionNav = new SideNav();
         missionNav.setLabel("Missions ARTI");
@@ -63,11 +73,12 @@ public class AppNavigation extends Div{
             new SideNavItem("A valider", "/missions/pending", VaadinIcon.CHECK_CIRCLE_O.create()),
             new SideNavItem("Missions", "/missions", VaadinIcon.AIRPLANE.create()));
 
-        VerticalLayout navWrapper = new VerticalLayout(portal, deviceNav); //, missionNav, vehiculeNav, adminNav);
+        VerticalLayout navWrapper = new VerticalLayout(portal, managementNav, dashboardsNav, deviceNav, vehiculeNav); //, missionNav, vehiculeNav, adminNav);
         navWrapper.setSpacing(true);
         navWrapper.setSizeUndefined();
         deviceNav.setWidthFull();
         adminNav.setWidthFull();
+        managementNav.setSizeFull();
         dashboardsNav.setWidthFull();
 
         if (auth != null) {
@@ -80,11 +91,11 @@ public class AppNavigation extends Div{
             }
 
             if (auth.isAdmin()) {
-                navWrapper.addComponentAtIndex(1, dashboardsNav);
+                navWrapper.addComponentAtIndex(2, dashboardsNav);
             }
 
             if (auth.isAdmin() || auth.is("APP_FOUNISSEUR_USER")) {
-                portal.addItem(new SideNavItem("Fournisseurs", "/fournisseurs", VaadinIcon.USERS.create()));
+                //
             }
         }
 
