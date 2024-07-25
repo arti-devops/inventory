@@ -8,14 +8,14 @@ import com.vaadin.flow.router.Route;
 
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "dashboards/dgpecrp", layout = MainAppLayout.class)
-@RolesAllowed({"DRH","DG","ADMIN"})
-public class Dgpecrp extends VerticalLayout {
+@Route(value = "/dashboards/fiscalite-arti", layout = MainAppLayout.class)
+@RolesAllowed({"APP_DBOARD_FISCALITE","ADMIN"})
+public class FiscaliteArti extends VerticalLayout {
 
-    public Dgpecrp(){
-        add(new H2("Tableau de board de la DGPEC-RP"));
+    public FiscaliteArti(){
+        add(new H2("Tableau de bord: Fiscalité ARTI"));
         
-        IFrame dboard = new IFrame("https://app.powerbi.com/reportEmbed?reportId=6a17f108-6f11-4857-884b-669a379fc71a&autoAuth=true&ctid=9dc9ec34-5a5d-48aa-b616-854f17c43596");
+        IFrame dboard = new IFrame("https://app.powerbi.com/reportEmbed?reportId=5e69ea3e-cb41-4819-9888-ef2c99a96598&autoAuth=true&ctid=9dc9ec34-5a5d-48aa-b616-854f17c43596");
         dboard.setWidth("100%");
         dboard.setHeight("100%");
         add(dboard);

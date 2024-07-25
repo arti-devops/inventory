@@ -20,7 +20,7 @@ public class Dashboards extends VerticalLayout {
 
     public Dashboards() {
 
-        add(new H2("Les tableaux de boards"));
+        add(new H2("Les tableaux de bords"));
 
         Card tbDGPECRP = new Card("Tableau", "DGPECRP", "/dashboards/dgpecrp");
         Card tbDAAF = new Card("Tableau", "DAAF", "/dashboards/daaf");

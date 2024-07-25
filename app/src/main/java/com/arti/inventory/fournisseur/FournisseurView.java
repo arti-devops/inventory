@@ -14,7 +14,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
-@Route(value = "fournisseurs", layout = MainAppLayout.class)
+@Route(value = "/management/fournisseurs", layout = MainAppLayout.class)
 @PageTitle("SGI ARTI | Portail")
 @RolesAllowed({"APP_FOURNISSEUR_USER","ADMIN"})
 public class FournisseurView extends VerticalLayout {
