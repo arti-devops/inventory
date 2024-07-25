@@ -22,19 +22,25 @@ public class Dashboards extends VerticalLayout {
 
         add(new H2("Les tableaux de bords"));
 
-        Card tbDGPECRP = new Card("Tableau", "DGPECRP", "/dashboards/dgpecrp");
-        Card tbDAAF = new Card("Tableau", "DAAF", "/dashboards/daaf");
+        Card tbDGPECRP = new Card("Tableau", "Suivi du Personnel", "/dashboards/suivi-personnel");
+        Card tbDAAF = new Card("Tableau", "Comptes & Finances", "/dashboards/finances");
+        Card parcAuto = new Card("Tableau", "Parc Auto", "/dashboards/parc-auto");
+        Card mp = new Card("Tableau", "Marchés Publics", "/dashboards/mp");
+        Card fiscalite = new Card("Tableau", "Fiscalité", "/dashboards/fiscalite-arti");
+        Card chiffreTransport = new Card("Tableau", "Le Transport en Chiffres", "/dashboards/chiffres-transport");
+        
         VerticalLayout cardContainer = new VerticalLayout();
+        cardContainer.setSizeUndefined();
         cardContainer.addClassNames(
             LumoUtility.Display.GRID,
             LumoUtility.Grid.FLOW_ROW,
             LumoUtility.Grid.Column.COLUMNS_1,
-            LumoUtility.Grid.Breakpoint.Medium.COLUMNS_2,
-            LumoUtility.Grid.Breakpoint.Large.COLUMNS_2
+            LumoUtility.Grid.Breakpoint.Medium.COLUMNS_3,
+            LumoUtility.Grid.Breakpoint.Large.COLUMNS_3
         );
 
-        cardContainer.setSizeFull();
-        cardContainer.add(tbDGPECRP, tbDAAF);
+        cardContainer.setWidthFull();
+        cardContainer.add(tbDGPECRP, tbDAAF, parcAuto, mp, fiscalite, chiffreTransport);
         
         add(cardContainer);
         setSizeFull();
@@ -44,7 +50,7 @@ public class Dashboards extends VerticalLayout {
 
         Div cardContent = new Div();
         HorizontalLayout statLayout = new HorizontalLayout();
-        H1 statNumber;
+        H2 statNumber;
         H1 statNumber2;
         H1 statNumber3;
         Anchor tableLink;
@@ -52,7 +58,7 @@ public class Dashboards extends VerticalLayout {
 
         public Card(String label, String stat, String link) {
             this.label = label;
-            statNumber = new H1(stat);
+            statNumber = new H2(stat);
             tableLink = new Anchor(link, "Voir le tableau");
 
             cardStructure();

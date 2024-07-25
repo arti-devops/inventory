@@ -37,13 +37,14 @@ public class PortalView extends VerticalLayout {
       Collection<PortalItemList> externalApps = new ArrayList<>();
       externalApps.add(new PortalItemList("SYGFP", "http://finances.arti.ci", VaadinIcon.MONEY.create(), "_blank"));
       externalApps.add(new PortalItemList("Emeraude", "http://courrier.arti.ci", VaadinIcon.ENVELOPES.create(), "_blank"));
-      externalApps.add(new PortalItemList("Tableaux de bords", "/dashboards", VaadinIcon.RECORDS.create(), "_blank"));
-      externalApps.add(new PortalItemList("Congés et Absences", "https://tinyurl.com/arti-conges", VaadinIcon.COMPILE.create(), "_blank"));
-      externalApps.add(new PortalItemList("Equipements", "/dashboard", VaadinIcon.RECORDS.create(), "_blank"));
-      externalApps.add(new PortalItemList("Véhicules", "https://tinyurl.com/arti-vehicules", VaadinIcon.CAR.create(), "_blank"));
-      externalApps.add(new PortalItemList("Missions", "http://169.239.64.130:8002/missions", VaadinIcon.AIRPLANE.create(), "_blank"));
-      externalApps.add(new PortalItemList("Immobilisations", "http://immobilisations.arti.ci", VaadinIcon.BUILDING.create(), "_blank"));
-      externalApps.add(new PortalItemList("Fournisseurs", "/fournisseurs", VaadinIcon.USERS.create(), "_blank"));
+      externalApps.add(new PortalItemList("Tableaux de bords", "/dashboards", VaadinIcon.RECORDS.create()));
+      externalApps.add(new PortalItemList("Congés et Absences", "/management/conges-absences", VaadinIcon.COMPILE.create()));
+      externalApps.add(new PortalItemList("Equipements", "/devices/dashboard", VaadinIcon.RECORDS.create()));
+      externalApps.add(new PortalItemList("Réservation de course", "/auto/booking", VaadinIcon.CAR.create()));
+      externalApps.add(new PortalItemList("Missions", "/missions", VaadinIcon.AIRPLANE.create(), "_blank"));
+      externalApps.add(new PortalItemList("Immobilisations", "http://immobilisations.arti.ci", VaadinIcon.BUILDING.create()));
+      externalApps.add(new PortalItemList("Parc Automobile", "/auto/parc-auto", VaadinIcon.CAR.create()));
+      externalApps.add(new PortalItemList("Fournisseurs", "/management/fournisseurs", VaadinIcon.USERS.create()));
       externalApps.add(new PortalItemList("Santé MCI", "http://isanet.mcicareci.com:8036/", VaadinIcon.HEALTH_CARD.create(), "_blank"));
       externalApps.forEach((item) -> {
          this.addToExternalAppsContainer(item);

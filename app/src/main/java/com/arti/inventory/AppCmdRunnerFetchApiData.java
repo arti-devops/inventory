@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,39 +17,49 @@ import com.arti.inventory.device.backend.model.PrinterDetail;
 import com.arti.inventory.device.backend.repository.PrinterRepository;
 
 @Component
+@EnableScheduling
 public class AppCmdRunnerFetchApiData implements CommandLineRunner {
 
-    Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(AppCmdRunnerFetchApiData.class);
 
     @Autowired
     private PrinterRepository printerRepository;
 
-    @Override
-    public void run(String... args) throws Exception {
-        fetchPrintersDetails();
-        // logger.info(printerRepository.findById(1L).toString());
-    }
-
-    private void fetchPrintersDetails() {
-        List<Printer> printers = printerRepository.findAll();
-
+    private void fetchPrinterDetailsFromApi(Printer printer) {
         RestTemplate restTemplate = new RestTemplateBuilder().build();
         String url = "http://api:3000/ipp?ip=";
-
-        logger.warn("Feching printers API data");
-
+        
         try {
-            printers.forEach(printer -> {
-                PrinterDetail details = restTemplate.getForObject(url + printer.getIp(), PrinterDetail.class);
-                printer.setPrinterDetails(details);
-                printerRepository.save(printer);
-                // logger.warn("Printer #{} updated", printer.getId());
-            });
-            logger.warn("DONE: Feching printers API data");
+            PrinterDetail details = restTemplate.getForObject(url + printer.getIp(), PrinterDetail.class);
+            printer.setPrinterDetails(details);
+            printerRepository.save(printer);
+            logger.warn("Printer #{} updated", printer.getId());
         } catch (Exception e) {
-            logger.error("ERROR: Feching printers API data FAILLED");
+            logger.error("Error updating printer #{}", printer.getId());
             logger.error(e.getMessage());
         }
     }
 
+    // Method to fetch details for all printers
+    private void fetchPrintersDetails() {
+        List<Printer> printers = printerRepository.findAll();
+        
+        logger.warn("Fetching printers API data");
+        
+        printers.forEach(this::fetchPrinterDetailsFromApi);
+        
+        logger.warn("DONE: Fetching printers API data");
+    }
+
+    // Scheduled method to run every 5 minutes
+    @Scheduled(fixedRate = 600000) // 300000 milliseconds = 5 minutes
+    public void fetchAndStorePrinterDetailsScheduled() {
+        fetchPrintersDetails();
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        // This method is executed once at application startup
+        fetchPrintersDetails(); // Initially fetch printer details
+    }
 }
