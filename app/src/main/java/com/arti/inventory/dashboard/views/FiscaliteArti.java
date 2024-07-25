@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "/dashboards/fiscalite-arti", layout = MainAppLayout.class)
-@RolesAllowed({"DRH","DG","ADMIN"})
+@RolesAllowed({"APP_DBOARD_FISCALITE","ADMIN"})
 public class FiscaliteArti extends VerticalLayout {
 
     public FiscaliteArti(){

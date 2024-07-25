@@ -8,7 +8,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "/management/conges-absences", layout = MainAppLayout.class)
-@RolesAllowed({"DRH","DG","ADMIN"})
+@RolesAllowed({"APP_ABSENCES","ADMIN"})
 public class CongesAbsences extends VerticalLayout {
 
     public CongesAbsences(){

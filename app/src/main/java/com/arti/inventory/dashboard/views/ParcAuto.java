@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "/dashboards/parc-auto", layout = MainAppLayout.class)
-@RolesAllowed({"DRH","DG","ADMIN"})
+@RolesAllowed({"APP_DBOARD_PARCAUTO","ADMIN"})
 public class ParcAuto extends VerticalLayout {
 
     public ParcAuto(){

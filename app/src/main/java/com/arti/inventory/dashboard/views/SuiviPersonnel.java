@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "dashboards/suivi-personnel", layout = MainAppLayout.class)
-@RolesAllowed({"DRH","DG","ADMIN"})
+@RolesAllowed({"APP_DBOARD_SUIVIDUPERSONNEL","ADMIN"})
 public class SuiviPersonnel extends VerticalLayout {
 
     public SuiviPersonnel(){

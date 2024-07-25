@@ -9,7 +9,7 @@ import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
 @Route(value = "/dashboards/mp", layout = MainAppLayout.class)
-@RolesAllowed({"DRH","DG","ADMIN"})
+@RolesAllowed({"APP_DBOARD_MARCHESPUBLICS","ADMIN"})
 public class MarchePublic extends VerticalLayout {
 
     public MarchePublic(){
