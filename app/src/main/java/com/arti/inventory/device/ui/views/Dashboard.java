@@ -39,12 +39,12 @@ public class Dashboard extends VerticalLayout{
         DeviceStats printerStats = printerService.countOnlinePrinters();
         DeviceStats phoneStats = phoneService.getStats();
 
-        Card card = new Card("Ordinateurs", computerService.getDeviceCount().toString(), "computers");
-        Card card2 = new Card("Imprimantes", printerStats.getTotalDevices().toString(), printerStats.getOnlineCounts().toString(), printerStats.getOfflineCounts().toString(), "printers");
-        Card card3 = new Card("Téléphones IP", phoneStats.getTotalDevices().toString(), phoneStats.getOnlineCounts().toString(), phoneStats.getOfflineCounts().toString(), "phones");
+        Card card = new Card("Ordinateurs", computerService.getDeviceCount().toString(), "/devices/computers");
+        Card card2 = new Card("Imprimantes", printerStats.getTotalDevices().toString(), printerStats.getOnlineCounts().toString(), printerStats.getOfflineCounts().toString(), "/devices/printers");
+        Card card3 = new Card("Téléphones IP", phoneStats.getTotalDevices().toString(), phoneStats.getOnlineCounts().toString(), phoneStats.getOfflineCounts().toString(), "/devices/phones");
 
         String totalDevices = String.valueOf(computerService.getDeviceCount() + printerService.getDeviceCount() + phoneService.getDeviceCount());
-        Card card4 = new Card("Adresses IP utilisées", totalDevices, "ip");
+        Card card4 = new Card("Adresses IP utilisées", totalDevices, "/devices/ip");
         
         cardContainer.add(card, card2, card3, card4);
         //cardContainer.add(card2);
