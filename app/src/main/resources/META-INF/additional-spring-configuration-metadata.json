@@ -8,5 +8,30 @@
     "name": "data.env",
     "type": "java.lang.String",
     "description": "Env for inapp data"
+  },
+  {
+    "name": "dboard.url.personnel_arti",
+    "type": "java.lang.String",
+    "description": "A description for 'dboard.url.personnel_arti'"
+  },
+  {
+    "name": "dboard.url.fiscalite_arti",
+    "type": "java.lang.String",
+    "description": "A description for 'dboard.url.fiscalite_arti'"
+  },
+  {
+    "name": "dboard.url.conges_absences",
+    "type": "java.lang.String",
+    "description": "A description for 'dboard.url.conges_absences'"
+  },
+  {
+    "name": "dboard.url.mp",
+    "type": "java.lang.String",
+    "description": "A description for 'dboard.url.mp'"
+  },
+  {
+    "name": "dboard.url.parc_auto",
+    "type": "java.lang.String",
+    "description": "A description for 'dboard.url.parc_auto'"
   }
 ]}

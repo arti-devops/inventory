@@ -1,5 +1,7 @@
 package com.arti.inventory.dashboard.views;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.arti.inventory.MainAppLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.IFrame;
@@ -12,10 +14,10 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed({"APP_DBOARD_MARCHESPUBLICS","ADMIN"})
 public class MarchePublic extends VerticalLayout {
 
-    public MarchePublic(){
+    public MarchePublic(@Value("${dboard.url.mp}") String mpUrl){
         add(new H2("Tableau de bord: Marché Public"));
         
-        IFrame dboard = new IFrame("https://app.powerbi.com/reportEmbed?reportId=d9478503-f4b5-4870-afba-cbeb6d118b76&autoAuth=true&ctid=9dc9ec34-5a5d-48aa-b616-854f17c43596");
+        IFrame dboard = new IFrame(mpUrl);
         dboard.setWidth("100%");
         dboard.setHeight("100%");
         add(dboard);

@@ -38,14 +38,14 @@ public class AppNavigation extends Div{
         SideNavItem sniDboardSuiviParcAuto = new SideNavItem("Suivi du Parc Auto", "/dashboards/parc-auto", VaadinIcon.EYE.create());
         SideNavItem sniDboardSuiviMP = new SideNavItem("Suivi des MP", "/dashboards/mp", VaadinIcon.EYE.create());
         SideNavItem sniDboardFiscaliteArti = new SideNavItem("Fiscalité ARTI", "/dashboards/fiscalite-arti", VaadinIcon.EYE.create());
-        SideNavItem sniDboardTransportEnChiffre = new SideNavItem("Transport en chiffres", "/dashboards/chiffres-transport", VaadinIcon.EYE.create());
+        // SideNavItem sniDboardTransportEnChiffre = new SideNavItem("Transport en chiffres", "/dashboards/chiffres-transport", VaadinIcon.EYE.create());
         if (this.auth!=null) {
             addRoleBasedMenuItem(dashboardsNav, sniDboardSuiviPersonnel, new AppRole[] {AppRole.APP_DBOARD_SUIVIDUPERSONNEL, AppRole.ADMIN});
             addRoleBasedMenuItem(dashboardsNav, sniDboardComptesFinances, new AppRole[] {AppRole.APP_DBOARD_COMPTESFINANCES, AppRole.ADMIN});
             addRoleBasedMenuItem(dashboardsNav, sniDboardSuiviParcAuto, new AppRole[] {AppRole.APP_DBOARD_PARCAUTO, AppRole.ADMIN});
             addRoleBasedMenuItem(dashboardsNav, sniDboardSuiviMP, new AppRole[] {AppRole.APP_DBOARD_MARCHESPUBLICS, AppRole.ADMIN});
             addRoleBasedMenuItem(dashboardsNav, sniDboardFiscaliteArti, new AppRole[] {AppRole.APP_DBOARD_FISCALITE, AppRole.ADMIN});
-            addRoleBasedMenuItem(dashboardsNav, sniDboardTransportEnChiffre, new AppRole[]{AppRole.APP_DBOARD_CHIFFRESTRANSPORT, AppRole.ADMIN});
+            // addRoleBasedMenuItem(dashboardsNav, sniDboardTransportEnChiffre, new AppRole[]{AppRole.APP_DBOARD_CHIFFRESTRANSPORT, AppRole.ADMIN});
         }
         
 

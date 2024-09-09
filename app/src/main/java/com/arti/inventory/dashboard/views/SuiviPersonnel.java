@@ -1,5 +1,6 @@
 package com.arti.inventory.dashboard.views;
 
+import org.springframework.beans.factory.annotation.Value;
 import com.arti.inventory.MainAppLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.IFrame;
@@ -12,10 +13,10 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed({"APP_DBOARD_SUIVIDUPERSONNEL","ADMIN"})
 public class SuiviPersonnel extends VerticalLayout {
 
-    public SuiviPersonnel(){
+    public SuiviPersonnel(@Value("${dboard.url.personnel_arti}") String suiviDuPersonnelUrl){
         add(new H2("Tableau de bord: Suivi du Personnel"));
         
-        IFrame dboard = new IFrame("https://app.powerbi.com/reportEmbed?reportId=6a17f108-6f11-4857-884b-669a379fc71a&autoAuth=true&ctid=9dc9ec34-5a5d-48aa-b616-854f17c43596");
+        IFrame dboard = new IFrame(suiviDuPersonnelUrl);
         dboard.setWidth("100%");
         dboard.setHeight("100%");
         add(dboard);

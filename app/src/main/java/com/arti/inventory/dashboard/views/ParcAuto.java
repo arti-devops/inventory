@@ -1,5 +1,7 @@
 package com.arti.inventory.dashboard.views;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.arti.inventory.MainAppLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.IFrame;
@@ -12,10 +14,10 @@ import jakarta.annotation.security.RolesAllowed;
 @RolesAllowed({"APP_DBOARD_PARCAUTO","ADMIN"})
 public class ParcAuto extends VerticalLayout {
 
-    public ParcAuto(){
+    public ParcAuto(@Value("${dboard.url.parc_auto}") String parcAutoUrl){
         add(new H2("Tableau de bord: Parc Auto"));
         
-        IFrame dboard = new IFrame("https://app.powerbi.com/reportEmbed?reportId=58a0df74-68f2-4778-aabe-81dee40d79de&autoAuth=true&ctid=9dc9ec34-5a5d-48aa-b616-854f17c43596");
+        IFrame dboard = new IFrame(parcAutoUrl);
         dboard.setWidth("100%");
         dboard.setHeight("100%");
         add(dboard);
