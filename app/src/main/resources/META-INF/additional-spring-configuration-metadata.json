@@ -33,5 +33,60 @@
     "name": "dboard.url.parc_auto",
     "type": "java.lang.String",
     "description": "A description for 'dboard.url.parc_auto'"
+  },
+  {
+    "name": "portal.app.sygfp",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.sygfp'"
+  },
+  {
+    "name": "portal.app.emeraude",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.emeraude'"
+  },
+  {
+    "name": "portal.app.tableaux",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.tableaux'"
+  },
+  {
+    "name": "portal.app.conges",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.conges'"
+  },
+  {
+    "name": "portal.app.equipements",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.equipements'"
+  },
+  {
+    "name": "portal.app.reservation",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.reservation'"
+  },
+  {
+    "name": "portal.app.missions",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.missions'"
+  },
+  {
+    "name": "portal.app.immobilisations",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.immobilisations'"
+  },
+  {
+    "name": "portal.app.parc",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.parc'"
+  },
+  {
+    "name": "portal.app.fournisseurs",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.fournisseurs'"
+  },
+  {
+    "name": "portal.app.sante",
+    "type": "java.lang.String",
+    "description": "A description for 'portal.app.sante'"
   }
 ]}
