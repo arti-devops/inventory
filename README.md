@@ -1,1 +1,1 @@
-Assets management software of ARTI
+portail.arti.ci
